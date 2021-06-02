@@ -1,0 +1,120 @@
+@import './variables.scss';
+
+/*
+    Exemplo
+
+    <div class="label-float">
+        <input type="text" placeholder=" " />
+        <label> Texto placeholder aqui </label>
+    </div>
+*/
+
+.label-float {
+	position: relative;
+	padding-top: 13px;
+}
+
+.label-float input {
+	font-size: 30px;
+	border: 1px solid $color-text-gray;
+	border-radius: 4px;
+	outline: none;
+	height: 48px;
+	width: 100%;
+	padding: 15px 20px;
+	font-size: 16px;
+	transition: all 0.1s linear;
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	-webkit-appearance: none;
+}
+.label-float select {
+	font-size: 20px;
+	border: 1px solid $color-text-gray;
+	border-radius: 4px;
+	outline: none;
+	width: 100%;
+	padding: 15px 20px;
+	font-size: 16px;
+	background-color: transparent;
+	transition: all 0.1s linear;
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	-webkit-appearance: none;
+}
+
+.label-float input:focus {
+	border: 2px solid $color-primary;
+}
+
+.label-float input::placeholder {
+	color: transparent;
+}
+
+.label-float select:focus {
+	border: 2px solid $color-primary;
+}
+
+.label-float select::placeholder {
+	color: transparent;
+}
+
+.label-float label {
+	pointer-events: none;
+	position: absolute;
+	top: calc(50% - 8px);
+	left: 15px;
+	line-height: 20px;
+	font-family: $font-dm-sans;
+	font-size: 19px;
+	font-weight: 400;
+	transition: all 0.1s linear;
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	background-color: white;
+	color: $color-text-gray;
+	padding: 5px;
+	box-sizing: border-box;
+}
+
+.label-float input:focus + label {
+	font-size: 13px;
+	top: 0;
+	color: $color-primary;
+}
+
+.label-float select:focus + label {
+	font-size: 13px;
+	top: 0;
+	color: $color-primary;
+}
+.label-float input:not(:placeholder-shown) + label {
+	font-size: 13px;
+	top: 0;
+}
+
+.label-float select:not(:placeholder-shown) + label {
+	font-size: 13px;
+	top: 0;
+}
+
+// FIELD INVALIDATION
+.label-float label.error, input.error {
+	color: $color-error;
+}
+
+.label-float input.error {
+	border-color: $color-error;
+}
+
+.label-float select.error {
+	border-color: $color-error;
+}
+
+
+// .label-float input:focus:required:invalid {
+// 	border: 2px solid red;
+// }
+// .label-float input:required:invalid + label:before {
+// 	content: '*';
+// }

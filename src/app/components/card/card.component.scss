@@ -1,0 +1,13 @@
+.body-container {
+    background-color: white;
+    min-height: calc(100vh - 60px);
+}
+
+.body-card {
+    background: #d6dee0;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 60px);
+    margin: 0;
+}

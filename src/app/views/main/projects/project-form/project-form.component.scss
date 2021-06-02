@@ -1,0 +1,103 @@
+@import '/src/assets/styles/input.scss';
+@import '/src/assets/styles/variables.scss';
+
+.form-card {
+  background-color: white;
+  padding: 30px 15px;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+input {
+  height: 40px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid #ababab;
+  font-size: 16px;
+  color: #454545;
+  box-shadow: 1px 1px 1px gainsboro;
+}
+
+
+button {
+  height: 50px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #0d76af;
+  border-radius: 3px;
+  color: white;
+  font-weight: bold;
+}
+
+.back {
+  margin: 0;
+  color: gray;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.file-input {
+  cursor: pointer;
+}
+
+.icon {
+  height: 40px;
+  width: 40px;
+  background-color: #379abf6b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #379abf00;
+  border-radius: 40px;
+  margin-bottom: 10px;
+
+  i {
+    font-size: 40px;
+    color: #5454a7;
+  }
+}
+
+.subtitle {
+  font-family: $font-dm-sans;
+  color: #7f7f7f;
+}
+
+.title {
+  font-weight: bold;
+  font-family: $font-grotesk;
+  color: #242424;
+}
+
+.datasets-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: $font-dm-sans;
+
+  p {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+    color: #7a7e8a;
+    font-family: $font-grotesk;
+  }
+
+  i {
+    color: #cc5656;
+    cursor: pointer;
+  }
+}
+
+.line {
+  width: 100%;
+  height: 2px;
+  background-color: rgb(122, 122, 122);
+}
+
+.dataset-title {
+  margin: 1px 0px;
+  color: #7a7a7a;
+}
