@@ -28,7 +28,7 @@
               <div class="label-float">
                 <select placeholder=" " formControlName="dataset">
                   <option value="1">Selecione o dataset</option>
-                  <option [value]="project.id" *ngFor="let project of projects">{{project.name}}</option>
+                  <option [value]="dataset.id" *ngFor="let dataset of selectedProject?.datasets">{{dataset.filename}}</option>
                 </select>
                 <label>Dataset</label>
               </div>
@@ -36,9 +36,9 @@
                 <p class="step-name">Step {{index + 1}}</p>
                 <div [formGroupName]="index">
                   <div class="label-float">
-                    <select placeholder=" " formControlName="service">
+                    <select placeholder=" " formControlName="provider" (change)="setProvider()">
                       <option value="1">Selecione o serviço</option>
-                      <option [value]="service.id" *ngFor="let service of services">{{service.name}}</option>
+                      <option [value]="provider.id" *ngFor="let provider of providers" >{{provider.name}}</option>
                     </select>
                     <label>Serviço</label>
                   </div>
@@ -46,7 +46,7 @@
                   <div class="label-float">
                     <select placeholder=" " formControlName="outputFormat">
                       <option value="1">Selecione o formato do output</option>
-                      <option [value]="service.id" *ngFor="let service of services">{{service.name}}</option>
+                      <option [value]="output" *ngFor="let output of selectedProviders[index]?.outputSupportedTypes">{{output}}</option>
                     </select>
                     <label>Formato do Output</label>
                   </div>

@@ -37,8 +37,22 @@ button {
   cursor: pointer;
 }
 
-.file-input {
+.datasets {
   cursor: pointer;
+  margin-top: 13px;
+  background: none;
+  color: gray;
+  font-weight: normal;
+  border: 1px solid #4f4f4f;
+  border-radius: 5px;
+  height: 48px;
+  transition: 0.3s ease-in;
+
+  &:hover {
+    background-color: #5454a7;
+    border: none;
+    color: white;
+  }
 }
 
 .icon {

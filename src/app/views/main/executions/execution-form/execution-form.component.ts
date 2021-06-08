@@ -1,27 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ProjectService } from '../../projects/project.service';
+import { IProvider } from "./../../../../interfaces/provider.interface";
+import { IProject } from "./../../../../interfaces/project.interface";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
+import { ProjectService } from "../../projects/project.service";
+import { ProviderService } from "../../providers/provider.service";
 
 @Component({
-  selector: 'app-execution-form',
-  templateUrl: './execution-form.component.html',
-  styleUrls: ['./execution-form.component.scss'],
+  selector: "app-execution-form",
+  templateUrl: "./execution-form.component.html",
+  styleUrls: ["./execution-form.component.scss"],
 })
 export class ExecutionFormComponent implements OnInit {
   executionForm: FormGroup;
-
+  selectedProject: IProject;
+  selectedProviders: IProvider[] = [];
+  providers: IProvider[];
+  projects: IProject[];
   steps: any[] = [];
-  services: any[] = [
-    {
-      id: 1,
-      name: 'Serviço de processamento',
-      outputTypes: ['PDF', 'CSV'],
-    },
-  ];
-  projects: any[] = [];
 
   constructor(
     private readonly projectService: ProjectService,
+    private readonly providerService: ProviderService,
     private readonly formBuilder: FormBuilder
   ) {}
 
@@ -32,33 +31,60 @@ export class ExecutionFormComponent implements OnInit {
       dataset: [null, [Validators.required]],
       steps: this.formBuilder.array([
         this.formBuilder.group({
-          service: [null, [Validators.required]],
+          provider: [null, [Validators.required]],
           outputFormat: [null, [Validators.required]],
         }),
       ]),
     });
+
+    this.executionForm.get("project").valueChanges.subscribe((value) => {
+      this.selectedProject = this.projects.filter(
+        (project) => project.id === value
+      )[0];
+    });
+
     this.getProjects();
+    this.getProviders();
   }
 
   getProjects() {
-    this.projects = this.projectService.listProjects();
+    this.projectService.listProjects().subscribe((response) => {
+      this.projects = response;
+    });
+  }
+
+  getProviders() {
+    this.providerService.listProviders().subscribe((response) => {
+      this.providers = response;
+    });
   }
 
   createExecution(): any {
-    console.log(this.executionForm.value)
+    console.log(this.executionForm.value);
   }
 
   initStepRow(): FormGroup {
     return this.formBuilder.group({
-      service: [null, [Validators.required]],
+      provider: [null, [Validators.required]],
       outputFormat: [null, [Validators.required]],
     });
   }
 
   addStep(): void {
-    console.log(this.steps);
     this.steps.push(this.steps.length + 1);
-    const stepsArray = <FormArray>this.executionForm.controls['steps'];
+    const stepsArray = <FormArray>this.executionForm.controls["steps"];
     stepsArray.push(this.initStepRow());
+  }
+
+  getProvider() {
+    return this.providers.filter(p => (
+      p.id === this.executionForm.get('steps').value[this.steps.length].provider 
+    ))
+  }
+
+  setProvider() {
+    this.selectedProviders.push(this.providers.filter(p => (
+      p.id === this.executionForm.get('steps').value[this.steps.length].provider 
+    ))[0]);
   }
 }

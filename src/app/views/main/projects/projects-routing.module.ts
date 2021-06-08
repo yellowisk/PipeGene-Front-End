@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'new',
     component: ProjectFormComponent
+  },
+  {
+    path: 'edit',
+    component: ProjectFormComponent
   }
 ];
 
