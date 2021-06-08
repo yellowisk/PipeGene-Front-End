@@ -24,19 +24,19 @@ export class ProjectDetailsModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setDetails(data: IProject) {
+  setDetails(data: IProject): void {
     this.project = data;
     this.modalRef = this.modalService.show(this.modal);
   }
 
-  deleteProject() {
+  deleteProject(): void {
     this.projectService.deleteProject(this.project.id);
   }
 
 
-  setEditMode() {
+  setEditMode(): void {
     this.modalRef.hide();
-    this.router.navigate([`/projects/edit/`], { queryParams: {id : this.project.id} })
+    this.router.navigate([`/projects/edit/`], { queryParams: {id : this.project.id} });
   }
 
 }

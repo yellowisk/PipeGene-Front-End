@@ -1,14 +1,14 @@
-import { IProvider } from "./../../../../interfaces/provider.interface";
-import { IProject } from "./../../../../interfaces/project.interface";
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
-import { ProjectService } from "../../projects/project.service";
-import { ProviderService } from "../../providers/provider.service";
+import { IProvider } from './../../../../interfaces/provider.interface';
+import { IProject } from './../../../../interfaces/project.interface';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { ProjectService } from '../../projects/project.service';
+import { ProviderService } from '../../providers/provider.service';
 
 @Component({
-  selector: "app-execution-form",
-  templateUrl: "./execution-form.component.html",
-  styleUrls: ["./execution-form.component.scss"],
+  selector: 'app-execution-form',
+  templateUrl: './execution-form.component.html',
+  styleUrls: ['./execution-form.component.scss'],
 })
 export class ExecutionFormComponent implements OnInit {
   executionForm: FormGroup;
@@ -37,7 +37,7 @@ export class ExecutionFormComponent implements OnInit {
       ]),
     });
 
-    this.executionForm.get("project").valueChanges.subscribe((value) => {
+    this.executionForm.get('project').valueChanges.subscribe((value) => {
       this.selectedProject = this.projects.filter(
         (project) => project.id === value
       )[0];
@@ -47,13 +47,13 @@ export class ExecutionFormComponent implements OnInit {
     this.getProviders();
   }
 
-  getProjects() {
+  getProjects(): void {
     this.projectService.listProjects().subscribe((response) => {
       this.projects = response;
     });
   }
 
-  getProviders() {
+  getProviders(): void {
     this.providerService.listProviders().subscribe((response) => {
       this.providers = response;
     });
@@ -72,19 +72,13 @@ export class ExecutionFormComponent implements OnInit {
 
   addStep(): void {
     this.steps.push(this.steps.length + 1);
-    const stepsArray = <FormArray>this.executionForm.controls["steps"];
+    const stepsArray = this.executionForm.controls.steps as FormArray;
     stepsArray.push(this.initStepRow());
   }
 
-  getProvider() {
-    return this.providers.filter(p => (
-      p.id === this.executionForm.get('steps').value[this.steps.length].provider 
-    ))
-  }
-
-  setProvider() {
+  setProvider(): void {
     this.selectedProviders.push(this.providers.filter(p => (
-      p.id === this.executionForm.get('steps').value[this.steps.length].provider 
+      p.id === this.executionForm.get('steps').value[this.steps.length].provider
     ))[0]);
   }
 }

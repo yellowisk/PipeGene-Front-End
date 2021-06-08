@@ -1,14 +1,14 @@
-import { HttpErrorResponse } from "@angular/common/http";
-import { ProjectService } from "./../project.service";
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
+import { HttpErrorResponse } from '@angular/common/http';
+import { ProjectService } from './../project.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
-  selector: "app-project-form",
-  templateUrl: "./project-form.component.html",
-  styleUrls: ["./project-form.component.scss"],
+  selector: 'app-project-form',
+  templateUrl: './project-form.component.html',
+  styleUrls: ['./project-form.component.scss'],
 })
 export class ProjectFormComponent implements OnInit {
   projectForm: FormGroup;
@@ -46,8 +46,8 @@ export class ProjectFormComponent implements OnInit {
     if (this.editMode) {
       this.projectService.saveEdit(this.projectForm.value).subscribe(
         () => {
-          alert("Projeto salvo com sucesso");
-          this.router.navigate(["/projects"]);
+          alert('Projeto salvo com sucesso');
+          this.router.navigate(['/projects']);
         },
         (error: HttpErrorResponse) => {
           console.log(error);
@@ -58,8 +58,8 @@ export class ProjectFormComponent implements OnInit {
         .addProject(this.projectForm.value, this.datasetsToUpload)
         .subscribe(
           () => {
-            alert("Projeto salvo com sucesso");
-            this.router.navigate(["/projects"]);
+            alert('Projeto salvo com sucesso');
+            this.router.navigate(['/projects']);
           },
           (error: HttpErrorResponse) => {
             console.log(error);
@@ -78,12 +78,12 @@ export class ProjectFormComponent implements OnInit {
     this.datasetsToUpload.splice(index, 1);
   }
 
-  setEditMode(id: string) {
+  setEditMode(id: string): void {
     this.projectService.getOneProject(id).subscribe((response) => {
       console.log(response);
-      this.projectForm.get("id").setValue(response.id);
-      this.projectForm.get("name").setValue(response.name);
-      this.projectForm.get("description").setValue(response.description);
+      this.projectForm.get('id').setValue(response.id);
+      this.projectForm.get('name').setValue(response.name);
+      this.projectForm.get('description').setValue(response.description);
 
       this.datasetsToUpload = response.datasets.map((file) => ({
         name: file.filename,

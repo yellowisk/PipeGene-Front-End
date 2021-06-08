@@ -1,11 +1,11 @@
-import { environment } from "./../../../../environments/environment";
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { IProvider } from "src/app/interfaces/provider.interface";
+import { environment } from './../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IProvider } from 'src/app/interfaces/provider.interface';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ProviderService {
   constructor(private http: HttpClient) {}
