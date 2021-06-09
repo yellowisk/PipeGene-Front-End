@@ -1,3 +1,4 @@
+import { ExecutionService } from './execution.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./executions.component.scss']
 })
 export class ExecutionsComponent implements OnInit {
+  executions: any[]
 
-  constructor() { }
+  constructor(
+    private readonly executionService: ExecutionService
+  ) { }
 
   ngOnInit(): void {
+    this.getExecutions();
+  }
+  
+  getExecutions() {
+    this.executionService.listExecutions().subscribe(response => {
+      this.executions = response;
+      console.log(this.executions)
+    })
   }
 
 }

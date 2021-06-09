@@ -15,7 +15,7 @@
               <div class="col-12 d-flex flex-column mb-3">
                 <div class="label-float">
                   <input type="text" placeholder=" " formControlName="executionName"/>
-                  <label>Nome da execução</label>
+                  <label>Descrição</label>
                 </div>
               </div>
               <div class="label-float">
@@ -32,11 +32,11 @@
                 </select>
                 <label>Dataset</label>
               </div>
-              <div class="steps mt-3 mb-1" *ngFor="let item of executionForm.get('steps')['controls']; let index=index" formArrayName="steps">
+              <div class="steps mt-3 mb-1" *ngFor="let item of executionForm.get('executionSteps')['controls']; let index=index" formArrayName="executionSteps">
                 <p class="step-name">Step {{index + 1}}</p>
                 <div [formGroupName]="index">
                   <div class="label-float">
-                    <select placeholder=" " formControlName="provider" (change)="setProvider()">
+                    <select placeholder=" " formControlName="providerId" (change)="setProvider()">
                       <option value="1">Selecione o serviço</option>
                       <option [value]="provider.id" *ngFor="let provider of providers" >{{provider.name}}</option>
                     </select>
@@ -44,7 +44,7 @@
                   </div>
 
                   <div class="label-float">
-                    <select placeholder=" " formControlName="outputFormat">
+                    <select placeholder=" " formControlName="outputType">
                       <option value="1">Selecione o formato do output</option>
                       <option [value]="output" *ngFor="let output of selectedProviders[index]?.outputSupportedTypes">{{output}}</option>
                     </select>
@@ -53,8 +53,8 @@
                 </div>
                 
                 <div class="d-flex justify-content-between align-items-center mt-3">
-                  <div class="line" [class.total]="(index !== executionForm.get('steps')['controls'].length -1)"></div>
-                  <button class="plus" (click)="addStep()" *ngIf="index === (executionForm.get('steps')['controls'].length -1)">+</button>
+                  <div class="line" [class.total]="(index !== executionForm.get('executionSteps')['controls'].length -1)"></div>
+                  <button class="plus" (click)="addStep()" *ngIf="index === (executionForm.get('executionSteps')['controls'].length -1)">+</button>
                 </div>
               </div>
 
