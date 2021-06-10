@@ -25,12 +25,17 @@ export class ExecutionService {
       {
         dataset: execution.dataset,
         executionSteps: execution.executionSteps,
-        descriptions: execution.executionName
+        // descriptions: execution.executionName
       }
     );
   }
 
   listExecutions(): any {
     return this.http.get<any>(`${environment.baseUrl}/v1/projects/e1d33cc3-f04d-45c8-8998-20cd0d4af878/executions`);
+  }
+
+
+  listProjectExecutions(id: string): any {
+    return this.http.get<any>(`${environment.baseUrl}/v1/projects/${id}/executions`);
   }
 }

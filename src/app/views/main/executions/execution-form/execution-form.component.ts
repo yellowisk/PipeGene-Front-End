@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ExecutionService } from './../execution.service';
 import { IProvider } from './../../../../interfaces/provider.interface';
 import { IProject } from './../../../../interfaces/project.interface';
@@ -23,7 +24,8 @@ export class ExecutionFormComponent implements OnInit {
     private readonly projectService: ProjectService,
     private readonly providerService: ProviderService,
     private readonly executionService: ExecutionService,
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +64,7 @@ export class ExecutionFormComponent implements OnInit {
 
   createExecution(): any {
     this.executionService.createExecution(this.executionForm.value).subscribe(response => {
-      console.log(response);
+      this.router.navigate(['/executions'])
     });
   }
 

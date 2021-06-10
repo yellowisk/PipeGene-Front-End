@@ -1,3 +1,4 @@
+import { ExecutionService } from './../../views/main/executions/execution.service';
 import { Router } from '@angular/router';
 import { ProjectService } from './../../views/main/projects/project.service';
 import { IProject } from 'src/app/interfaces/project.interface';
@@ -12,12 +13,14 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class ProjectDetailsModalComponent implements OnInit {
   @ViewChild('modal') modal: TemplateRef<any>;
   modalRef: BsModalRef;
+  executions: any [];
 
   project: IProject;
 
   constructor(
     private readonly modalService: BsModalService,
     private readonly projectService: ProjectService,
+    private readonly executionService: ExecutionService,
     private readonly router: Router
     ) {}
 
@@ -27,6 +30,10 @@ export class ProjectDetailsModalComponent implements OnInit {
   setDetails(data: IProject): void {
     this.project = data;
     this.modalRef = this.modalService.show(this.modal);
+    this.executionService.listProjectExecutions(data.id).subscribe(response => {
+      this.executions = response;
+      console.log(response)
+    })
   }
 
   deleteProject(): void {
