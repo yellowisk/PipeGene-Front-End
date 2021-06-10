@@ -1,3 +1,4 @@
+import { ProviderService } from './provider.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./providers.component.scss']
 })
 export class ProvidersComponent implements OnInit {
+  providers: any[] = [];
 
-  constructor() { }
+  constructor(
+    private readonly providerService: ProviderService
+  ) { }
 
   ngOnInit(): void {
+    this.getProviders()
+  }
+
+  getProviders(){
+    this.providerService.listProviders().subscribe(response => {
+      this.providers = response;
+    })
   }
 
 }

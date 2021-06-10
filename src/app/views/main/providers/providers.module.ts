@@ -5,7 +5,7 @@ import { NgModule } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ProvidersRoutingModule } from "./executions-routing.module";
+import { ProvidersRoutingModule } from "./providers-routing.module";
 import { ProviderFormComponent } from './provider-form/provider-form.component';
 
 @NgModule({

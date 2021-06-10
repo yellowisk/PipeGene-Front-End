@@ -28,6 +28,13 @@ const routes: Routes = [
           (m) => m.ExecutionsModule
         ),
       },
+      {
+        path: 'services',
+        loadChildren: () =>
+        import('./providers/providers.module').then(
+          (m) => m.ProvidersModule
+        ),
+      },
     ],
   },
 ];

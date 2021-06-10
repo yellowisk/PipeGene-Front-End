@@ -7,7 +7,6 @@ import { MainComponent } from './main.component';
 import { TopBarComponent } from 'src/app/components/top-bar/top-bar.component';
 import { CommonModule } from '@angular/common';
 import { MainRoutingModule } from './main-routing.module';
-import { ProvidersComponent } from './providers/providers.component';
 
 
 @NgModule({
@@ -15,7 +14,6 @@ import { ProvidersComponent } from './providers/providers.component';
     MainComponent,
     TopBarComponent,
     DashboardComponent,
-    ProvidersComponent
   ],
   imports: [
     CommonModule,
