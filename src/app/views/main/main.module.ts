@@ -7,6 +7,7 @@ import { MainComponent } from './main.component';
 import { TopBarComponent } from 'src/app/components/top-bar/top-bar.component';
 import { CommonModule } from '@angular/common';
 import { MainRoutingModule } from './main-routing.module';
+import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { MainRoutingModule } from './main-routing.module';
     MainComponent,
     TopBarComponent,
     DashboardComponent,
+    SidebarComponent
   ],
   imports: [
     CommonModule,

@@ -1,3 +1,5 @@
+import { SignupComponent } from './views/signup/signup.component';
+import { LoginComponent } from './views/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -8,6 +10,14 @@ const routes: Routes = [
       import('./views/main/main.module').then(
         (m) => m.MainModule
       ),
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent
   },
   {
     path: '',

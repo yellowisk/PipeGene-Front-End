@@ -1,3 +1,9 @@
 .main{
     height: calc(100vh - 60px);
+    display: flex;
+}
+
+.col-10{
+    padding-left: 0;
+    overflow-y: auto;
 }

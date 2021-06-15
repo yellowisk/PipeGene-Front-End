@@ -1,0 +1,21 @@
+<div class="sidebar-body">
+    <div class="home"  [routerLink]="['/']">
+        <i class="fas fa-home"></i>
+    </div>
+    <div class="sidebar-item" [routerLink]="['/projects']" [routerLinkActive]="['active']">
+        <i class="far fa-folder-open"></i>
+        <p>Projetos</p>
+    </div>
+    <div class="sidebar-item">
+        <i class="fas fa-stream"></i>
+        <p>Pipelines</p>
+    </div>
+    <div class="sidebar-item" [routerLink]="['/executions']" [routerLinkActive]="['active']">
+        <i class="fas fa-tasks"></i>
+        <p>Execuções</p>
+    </div>
+    <div class="sidebar-item" [routerLink]="['/services']" [routerLinkActive]="['active']">
+        <i class="fas fa-cogs"></i>
+        <p>Serviços</p>
+    </div>
+</div>

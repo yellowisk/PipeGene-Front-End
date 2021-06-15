@@ -1,4 +1,11 @@
 <app-top-bar></app-top-bar>
 <div class="main">
-  <router-outlet></router-outlet>
+  <div class="col-2 p-0">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="col-10">
+    <app-card>
+      <router-outlet></router-outlet>
+    </app-card>
+  </div>
 </div>
