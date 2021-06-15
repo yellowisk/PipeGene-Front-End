@@ -1,11 +1,12 @@
-import { ProvidersComponent } from "./providers.component";
-import { CardModule } from "../../../components/card/card.module";
-import { RouterModule } from "@angular/router";
-import { NgModule } from "@angular/core";
+import { EmptyStateModule } from './../../../components/empty-state/empty-state.module';
+import { ProvidersComponent } from './providers.component';
+import { CardModule } from '../../../components/card/card.module';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
-import { CommonModule } from "@angular/common";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ProvidersRoutingModule } from "./providers-routing.module";
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProvidersRoutingModule } from './providers-routing.module';
 import { ProviderFormComponent } from './provider-form/provider-form.component';
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ProviderFormComponent } from './provider-form/provider-form.component';
     RouterModule,
     ProvidersRoutingModule,
     CardModule,
+    EmptyStateModule
   ],
   providers: [],
   bootstrap: [],

@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ProjectsComponent implements OnInit {
   @ViewChild('detailsModal') readonly detailsModal: ProjectDetailsModalComponent;
-  projects: IProject[];
+  projects: IProject[] = [];
 
   constructor(private readonly projectService: ProjectService) {}
 

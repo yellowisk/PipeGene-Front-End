@@ -1,30 +1,26 @@
 import { EmptyStateModule } from '../../../components/empty-state/empty-state.module';
-import { CardModule } from './../../../components/card/card.module';
-import { ExecutionFormComponent } from './execution-form/execution-form.component';
-import { ExecutionsComponent } from './executions.component';
+import { PipelinesRoutingModule } from './pipelines-routing.module';
+import { PipelineFormComponent } from './pipeline-form/pipeline-form.component';
+import { PipelinesComponent } from './pipelines.component';
+import { CardModule } from '../../../components/card/card.module';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ExecutionsRoutingModule } from './executions-routing.module';
-
 
 @NgModule({
-  declarations: [
-    ExecutionsComponent,
-    ExecutionFormComponent
-  ],
+  declarations: [PipelinesComponent, PipelineFormComponent],
   imports: [
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
     RouterModule,
-    ExecutionsRoutingModule,
+    PipelinesRoutingModule,
     CardModule,
     EmptyStateModule
   ],
   providers: [],
-  bootstrap: []
+  bootstrap: [],
 })
-export class ExecutionsModule { }
+export class PipelinesModule {}

@@ -35,6 +35,13 @@ const routes: Routes = [
           (m) => m.ProvidersModule
         ),
       },
+      {
+        path: 'pipelines',
+        loadChildren: () =>
+        import('./pipelines/pipelines.module').then(
+          (m) => m.PipelinesModule
+        ),
+      },
     ],
   },
 ];

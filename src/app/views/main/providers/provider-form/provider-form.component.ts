@@ -32,8 +32,8 @@ export class ProviderFormComponent implements OnInit {
   submitProvider(): void {
     this.providerService.submitProviders(this.providerForm.value).subscribe(response => {
       console.log(response);
-      this.router.navigate(['/services'])
-    })
+      this.router.navigate(['/services']);
+    });
   }
 
 }

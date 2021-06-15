@@ -1,18 +1,17 @@
-import { Router } from '@angular/router';
-import { ExecutionService } from './../execution.service';
-import { IProvider } from './../../../../interfaces/provider.interface';
-import { IProject } from './../../../../interfaces/project.interface';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ProjectService } from '../../projects/project.service';
+import { Router } from '@angular/router';
+import { IProject } from 'src/app/interfaces/project.interface';
+import { IProvider } from 'src/app/interfaces/provider.interface';
+import { ExecutionService } from '../../executions/execution.service';
 import { ProviderService } from '../../providers/provider.service';
 
 @Component({
-  selector: 'app-execution-form',
-  templateUrl: './execution-form.component.html',
-  styleUrls: ['./execution-form.component.scss'],
+  selector: 'app-pipeline-form',
+  templateUrl: './pipeline-form.component.html',
+  styleUrls: ['./pipeline-form.component.scss'],
 })
-export class ExecutionFormComponent implements OnInit {
+export class PipelineFormComponent implements OnInit {
   executionForm: FormGroup;
   selectedProject: IProject;
   selectedProviders: IProvider[] = [];
@@ -21,7 +20,6 @@ export class ExecutionFormComponent implements OnInit {
   steps: any[] = [];
 
   constructor(
-    private readonly projectService: ProjectService,
     private readonly providerService: ProviderService,
     private readonly executionService: ExecutionService,
     private readonly formBuilder: FormBuilder,
@@ -33,27 +31,16 @@ export class ExecutionFormComponent implements OnInit {
       executionName: [null, [Validators.required]],
       project: [null, [Validators.required]],
       dataset: [null, [Validators.required]],
-      executionSteps: this.formBuilder.array([]),
+      executionSteps: this.formBuilder.array([
+        {
+          providerId: [null, [Validators.required]],
+          inputType: [null],
+          outputType: [null, [Validators.required]],
+        },
+      ]),
     });
 
-    this.executionForm.get('project').valueChanges.subscribe((value) => {
-      this.selectedProject = this.projects.filter(
-        (project) => project.id === value
-      )[0];
-    });
-
-    this.executionForm.get('dataset').valueChanges.subscribe((value) => {
-      this.addStep();
-    });
-
-    this.getProjects();
     this.getProviders();
-  }
-
-  getProjects(): void {
-    this.projectService.listProjects().subscribe((response) => {
-      this.projects = response;
-    });
   }
 
   getProviders(): void {
@@ -62,10 +49,8 @@ export class ExecutionFormComponent implements OnInit {
     });
   }
 
-  createExecution(): any {
-    this.executionService.createExecution(this.executionForm.value).subscribe(response => {
-      this.router.navigate(['/executions']);
-    });
+  createPipeline(): void {
+
   }
 
   initStepRow(inputType: string): FormGroup {
@@ -87,23 +72,23 @@ export class ExecutionFormComponent implements OnInit {
       return this.executionForm.get('executionSteps').value[
         this.executionForm.get('executionSteps').value.length - 1
       ].outputType;
-    } else {
-      let file;
-      const fileId = this.executionForm.get('dataset').value;
-
-      this.projects.forEach((p) => {
-        p.datasets.forEach((d) => {
-          if (d.id === fileId) {
-            file = d.filename;
-          }
-        });
-      });
-      return file.substring(file.lastIndexOf('.') + 1, file.length) || file;
     }
+    // else {
+    //   let file;
+    //   const fileId = this.executionForm.get("dataset").value;
+
+    //   this.projects.forEach((p) => {
+    //     p.datasets.forEach((d) => {
+    //       if (d.id === fileId) {
+    //         file = d.filename;
+    //       }
+    //     });
+    //   });
+    //   return file.substring(file.lastIndexOf(".") + 1, file.length) || file;
+    // }
   }
 
   setProvider(): void {
-    console.log('ola');
     this.selectedProviders.push(
       this.providers.filter(
         (p) =>
@@ -112,6 +97,5 @@ export class ExecutionFormComponent implements OnInit {
             .providerId
       )[0]
     );
-    console.log(this.selectedProviders);
   }
 }

@@ -4,23 +4,20 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-providers',
   templateUrl: './providers.component.html',
-  styleUrls: ['./providers.component.scss']
+  styleUrls: ['./providers.component.scss'],
 })
 export class ProvidersComponent implements OnInit {
   providers: any[] = [];
 
-  constructor(
-    private readonly providerService: ProviderService
-  ) { }
+  constructor(private readonly providerService: ProviderService) {}
 
   ngOnInit(): void {
-    this.getProviders()
+    this.getProviders();
   }
 
-  getProviders(){
-    this.providerService.listProviders().subscribe(response => {
+  getProviders(): void {
+    this.providerService.listProviders().subscribe((response) => {
       this.providers = response;
-    })
+    });
   }
-
 }

@@ -8,6 +8,8 @@ import { TopBarComponent } from 'src/app/components/top-bar/top-bar.component';
 import { CommonModule } from '@angular/common';
 import { MainRoutingModule } from './main-routing.module';
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
+import { PipelinesComponent } from './pipelines/pipelines.component';
+import { PipelineFormComponent } from './pipelines/pipeline-form/pipeline-form.component';
 
 
 @NgModule({
@@ -15,7 +17,7 @@ import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
     MainComponent,
     TopBarComponent,
     DashboardComponent,
-    SidebarComponent
+    SidebarComponent,
   ],
   imports: [
     CommonModule,

@@ -1,55 +1,58 @@
-<div class="row form-card">
-    <div class="col-12 mt-3">
-        <form [formGroup]="providerForm" (ngSubmit)="submitProvider()">
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-6">
-                    <div class="icon-wave">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h4 class="title">Submeter um novo serviço</h4>
-                    <p class="subtitle">Para submeter um novo serviço, informe um nome, descrição
-                        e as configurações necessárias para sua execução.
-                    </p>
-                    <div class="row">
-                        <div class="col-12 d-flex flex-column mb-3">
-                            <div class="label-float">
-                                <input type="text" placeholder=" " formControlName="name" />
-                                <label>Nome</label>
-                            </div>
-                            <div class="label-float">
-                                <input type="text" placeholder=" " formControlName="description" />
-                                <label>Descrição</label>
-                            </div>
-                            <div class="label-float">
-                                <input type="text" placeholder=" " formControlName="url" />
-                                <label>Url</label>
-                            </div>
-                            <div class="label-float">
-                                <input type="text" placeholder=" " formControlName="inputSupportedTypes" />
-                                <label>Inputs</label>
-                            </div>
-                            <p class="bottom-label">Insira aqui os tipos de arquivo suportados pelo seu serviço
-                                separados por virgula</p>
-
-                            <div class="label-float">
-                                <input type="text" placeholder=" " formControlName="outputSupportedTypes" />
-                                <label>Outputs</label>
-                            </div>
-                            <p class="bottom-label">Insira aqui os formatos exportados pelo seu serviço separados por
-                                virgula</p>
-
+<app-card>
+    <div class="row form-card">
+        <div class="col-12 mt-3">
+            <form [formGroup]="providerForm" (ngSubmit)="submitProvider()">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-6">
+                        <div class="icon-wave">
+                            <i class="fas fa-cogs"></i>
                         </div>
+                        <h4 class="title">Submeter um novo serviço</h4>
+                        <p class="subtitle">Para submeter um novo serviço, informe um nome, descrição
+                            e as configurações necessárias para sua execução.
+                        </p>
+                        <div class="row">
+                            <div class="col-12 d-flex flex-column mb-3">
+                                <div class="label-float">
+                                    <input type="text" placeholder=" " formControlName="name" />
+                                    <label>Nome</label>
+                                </div>
+                                <div class="label-float">
+                                    <input type="text" placeholder=" " formControlName="description" />
+                                    <label>Descrição</label>
+                                </div>
+                                <div class="label-float">
+                                    <input type="text" placeholder=" " formControlName="url" />
+                                    <label>Url</label>
+                                </div>
+                                <div class="label-float">
+                                    <input type="text" placeholder=" " formControlName="inputSupportedTypes" />
+                                    <label>Inputs</label>
+                                </div>
+                                <p class="bottom-label">Insira aqui os tipos de arquivo suportados pelo seu serviço
+                                    separados por virgula</p>
 
-                        <div class="col-6 d-flex align-items-end mt-5 mb-3">
-                            <p class="back" [routerLink]="['/services']" routerLinkActive="router-link-active">
-                                Voltar</p>
-                        </div>
-                        <div class="col-6 d-flex flex-column mt-5 mb-3">
-                            <button>Submeter</button>
+                                <div class="label-float">
+                                    <input type="text" placeholder=" " formControlName="outputSupportedTypes" />
+                                    <label>Outputs</label>
+                                </div>
+                                <p class="bottom-label">Insira aqui os formatos exportados pelo seu serviço separados
+                                    por
+                                    virgula</p>
+
+                            </div>
+
+                            <div class="col-6 d-flex align-items-end mt-5 mb-3">
+                                <p class="back" [routerLink]="['/services']" routerLinkActive="router-link-active">
+                                    Voltar</p>
+                            </div>
+                            <div class="col-6 d-flex flex-column mt-5 mb-3">
+                                <button>Submeter</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+</app-card>

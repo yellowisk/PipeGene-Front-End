@@ -1,15 +1,20 @@
-i {
-  font-size: 20px;
-  color: #ffffff;
-}
-
-button {
-  background-color: #3595be;
+.add-button {
+  background-color: #3997c0;
   color: white;
   margin: 30px 10px;
-  padding: 10px 20px;
-  border-radius: 3px;
+  padding: 8px 9px;
+  width: 200px;
+  border-radius: 20px;
   border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  i {
+    color: #1e6b8c;
+    font-size: 24px;
+  }
+
 }
 
 h3 {

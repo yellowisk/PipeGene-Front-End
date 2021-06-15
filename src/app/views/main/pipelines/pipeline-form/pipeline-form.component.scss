@@ -1,0 +1,90 @@
+@import '/src/assets/styles/input.scss';
+@import '/src/assets/styles/variables.scss';
+
+.form-card {
+  background-color: white;
+  padding: 30px 15px;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: $font-dm-sans;
+  color: #7f7f7f;
+}
+
+.title {
+  font-weight: bold;
+  font-family: $font-grotesk;
+  color: #242424;
+}
+
+input {
+  height: 40px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  border: 1px solid #ababab;
+  font-size: 16px;
+  color: #454545;
+  box-shadow: 1px 1px 1px gainsboro;
+}
+
+
+button {
+  height: 50px;
+  padding: 2px 10px;
+  border: none;
+  background-color: #0d76af;
+  border-radius: 3px;
+  color: white;
+  font-weight: bold;
+}
+
+.back {
+  margin: 0;
+  color: gray;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.line {
+  width: 85%;
+  height: 2px;
+  background-color: rgb(122, 122, 122);
+}
+
+.step-name {
+  margin: 0;
+  color: #a5a5a5;
+  font-weight: bold;
+}
+
+.total {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.plus {
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  border-radius: 30px;
+}
+
+.icon-wave {
+    height: 40px;
+    width: 40px;
+    background-color: #379abf6b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #379abf00;
+    border-radius: 40px;
+    margin-bottom: 10px;
+
+    i {
+        font-size: 40px;
+        color: #5454a7;
+    }
+}

@@ -1,3 +1,4 @@
+import { EmptyStateModule } from '../../../components/empty-state/empty-state.module';
 import { ProjectDetailsModalComponent } from './../../../components/project-details-modal/project-details-modal.component';
 import { CardModule } from './../../../components/card/card.module';
 import { ProjectFormComponent } from './project-form/project-form.component';
@@ -24,7 +25,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     RouterModule,
     ProjectsRoutingModule,
-    CardModule
+    CardModule,
+    EmptyStateModule
   ],
   providers: [],
   bootstrap: []

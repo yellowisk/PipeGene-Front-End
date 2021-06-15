@@ -1,8 +1,10 @@
+@import '/src/assets/styles/variables.scss'; 
+
 .option {
-  background-color: #f3f3f3;
-  border: 2px solid #e1e1e1;
+  background-color: #ffffff;
+  border: 1px solid #e1e1e1;
   height: 100px;
-  border-radius: 5px;
+  border-radius: 3px;
   box-shadow: 1px 2px 3px 0px #c6c6c6;
   display: flex;
   justify-content: center;
@@ -11,7 +13,7 @@
   flex-direction: column;
   font-size: 16px;
   font-weight: bold;
-  color: #4d4f55;
+  color: #656565;
   cursor: pointer;
 }
 
@@ -25,4 +27,32 @@ i {
   color: #379abf;
 }
 
+.card-body {
+  background-color: #ebeeef;
+  height: calc(100vh - 60px);
+}
 
+.c-card{
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 15px 20px;
+  box-shadow: 1px 2px 3px 0px #c6c6c6;
+
+  h5 {
+    margin: 0;
+    font-family: $font-dm-sans;
+    color: #656565;
+  }
+
+  p {
+    margin: 0;
+    color: #656565;
+    font-size: 14px;
+  }
+}

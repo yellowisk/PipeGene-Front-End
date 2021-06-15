@@ -2,21 +2,24 @@
   <div class="row d-flex justify-content-center">
     <div class="col-md-10 col-12 mt-3">
       <div class="d-flex justify-content-between align-items-center">
-        <h3>Projetos</h3>
+        <h3>Pipelines</h3>
         <button class="add-button" [routerLink]="['new']">
-          Novo Projeto
+          Criar Pipeline
           <i class="fas fa-plus-circle"></i>
         </button>
       </div>
     </div>
+
     <div class="col-md-10 col-12 d-flex justify-content-center mt-3">
-      <div class="list-group w-100" *ngIf="projects.length > 0">
-        <div class="list-group-item list-group-item-action" (click)="showProjectDetails(project)" *ngFor="let project of projects">
-          <p class="p-name">{{project.name}}</p>
+      <div class="list-group w-100" *ngIf="pipelines.length > 0">
+        <div class="list-group-item list-group-item-action" *ngFor="let pipeline of pipelines">
+          <p class="p-name">{{pipeline.name}}</p>
         </div>
       </div>
-      <app-empty-state *ngIf="projects.length === 0"></app-empty-state>
+
+      <app-empty-state *ngIf="pipelines.length === 0"></app-empty-state>
     </div>
+
+    
   </div>
-  <app-project-details-modal #detailsModal></app-project-details-modal>
 </app-card>

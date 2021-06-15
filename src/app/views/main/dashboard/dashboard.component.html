@@ -1,26 +1,21 @@
 <div class='card-body'>
-  <div class="row d-flex justify-content-center">
+  <div class="c-card">
+    <h5>Bem-vindo ao PipeGene, Guilherme</h5>
+    <p>{{today}}</p>
+  </div>
+  <div class="row d-flex justify-content-center mb-3">    
     <div class="col-12">
       <div class="row">
-        <div class="col-md-4 col-12" (click)="redirect('projects')">
-          <div class="option">
-            <i class="far fa-folder-open"></i>
-            Projetos
-          </div>
-        </div>
-        <div class="col-md-4 col-12" (click)="redirect('executions')">
-          <div class="option">
-            <i class="fas fa-wave-square"></i>
-            Suas Execuções
-          </div>
-        </div>
-        <div class="col-md-4 col-12" (click)="redirect('services')">
-          <div class="option">
-            <i class="fas fa-cogs"></i>
-            Serviços
+        <div class="col-md-3 col-12" *ngFor="let option of options">
+          <div class="option" [routerLink]="[option.url]"  >
+            <i [class]="option.icon"></i>
+            {{option.name}}
           </div>
         </div>
       </div>
     </div>
   </div>
+  <!-- <div class="c-card">
+    <h5>Execuções em Andamento</h5>
+  </div> -->
 </div>

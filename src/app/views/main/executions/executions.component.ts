@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./executions.component.scss']
 })
 export class ExecutionsComponent implements OnInit {
-  executions: any[];
+  executions: any[] = [];
 
   constructor(
     private readonly executionService: ExecutionService
