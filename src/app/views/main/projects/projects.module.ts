@@ -1,3 +1,4 @@
+import { InputValidationModule } from './../../../components/input-validation/input-validation.module';
 import { EmptyStateModule } from '../../../components/empty-state/empty-state.module';
 import { ProjectDetailsModalComponent } from './../../../components/project-details-modal/project-details-modal.component';
 import { CardModule } from './../../../components/card/card.module';
@@ -26,7 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     ProjectsRoutingModule,
     CardModule,
-    EmptyStateModule
+    EmptyStateModule,
+    InputValidationModule
   ],
   providers: [],
   bootstrap: []

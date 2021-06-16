@@ -1,3 +1,4 @@
+import { InputValidationModule } from './../../../components/input-validation/input-validation.module';
 import { OperationsModule } from './../../../components/operations-modal-form/operations.module';
 import { EmptyStateModule } from './../../../components/empty-state/empty-state.module';
 import { ProvidersComponent } from './providers.component';
@@ -21,6 +22,7 @@ import { ProviderFormComponent } from './provider-form/provider-form.component';
     CardModule,
     EmptyStateModule,
     OperationsModule,
+    InputValidationModule
   ],
   providers: [],
   bootstrap: [],

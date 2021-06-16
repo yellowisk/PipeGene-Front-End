@@ -1,30 +1,38 @@
 <form [formGroup]="parametersForm" class="row">
     <div class="col-12">
         <div class="label-float">
-            <select placeholder=" " formControlName="type">
+            <select placeholder=" " formControlName="type" [class.error]="getControlError('type')">
                 <option value="">Selecione o serviço</option>
                 <option [value]="type" *ngFor="let type of fieldTypes">{{type}}</option>
             </select>
-            <label>Tipo</label>
+            <label [class.error]="getControlError('type')">Tipo</label>
         </div>
+        <app-input-validation [control]="parametersForm.get('type')">
+        </app-input-validation>
     </div>
     <div class="col-md-6 col-12">
         <div class="label-float">
-            <input type="text" placeholder=" " formControlName="name" />
-            <label>Nome</label>
+            <input [class.error]="getControlError('name')" type="text" placeholder=" " formControlName="name" />
+            <label [class.error]="getControlError('name')">Nome</label>
         </div>
+        <app-input-validation [control]="parametersForm.get('name')">
+        </app-input-validation>
     </div>
     <div class="col-md-6 col-12">
         <div class="label-float">
-            <input type="text" placeholder=" " formControlName="key" />
-            <label>Key</label>
+            <input [class.error]="getControlError('key')" type="text" placeholder=" " formControlName="key" />
+            <label [class.error]="getControlError('key')">Key</label>
         </div>
+        <app-input-validation [control]="parametersForm.get('key')">
+        </app-input-validation>
     </div>
     <div class="col-12">
         <div class="label-float">
-            <input type="text" placeholder=" " formControlName="example" />
-            <label>Exemplo</label>
+            <input [class.error]="getControlError('example')" type="text" placeholder=" " formControlName="example" />
+            <label [class.error]="getControlError('example')" >Exemplo</label>
         </div>
+        <app-input-validation [control]="parametersForm.get('example')">
+        </app-input-validation>
     </div>
 </form>
 

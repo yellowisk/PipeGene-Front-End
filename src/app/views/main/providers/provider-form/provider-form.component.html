@@ -14,45 +14,59 @@
                         <div class="row">
                             <div class="col-12 d-flex flex-column mb-3">
                                 <div class="label-float">
-                                    <input type="text" placeholder=" " formControlName="name" />
-                                    <label>Nome</label>
+                                    <input type="text" placeholder=" " formControlName="name"
+                                        [class.error]="getControlError('name')" />
+                                    <label [class.error]="getControlError('name')">Nome</label>
                                 </div>
-                                <div class="label-float">
-                                    <input type="text" placeholder=" " formControlName="description" />
-                                    <label>Descrição</label>
-                                </div>
-                                <div class="label-float">
-                                    <input type="text" placeholder=" " formControlName="url" />
-                                    <label>Url</label>
-                                </div>
-                                <div class="label-float">
-                                    <input type="text" placeholder=" " formControlName="inputSupportedTypes" />
-                                    <label>Inputs</label>
-                                </div>
-                                <p class="bottom-label">Insira aqui os tipos de arquivo suportados pelo seu serviço
-                                    separados por virgula</p>
+                                <app-input-validation [control]="providerForm.get('name')"></app-input-validation>
 
                                 <div class="label-float">
-                                    <input type="text" placeholder=" " formControlName="outputSupportedTypes" />
-                                    <label>Outputs</label>
+                                    <input type="text" placeholder=" " formControlName="description"
+                                        [class.error]="getControlError('description')" />
+                                    <label [class.error]="getControlError('description')">Descrição</label>
                                 </div>
-                                <p class="bottom-label">Insira aqui os formatos exportados pelo seu serviço separados
-                                    por
-                                    virgula</p>
-                                
-                                    <div class="operations-list">
-                                        <div *ngIf="operations.length > 0">
-                                            <p class="title">Operações</p>
-                                            <hr>
-                                        </div>
-                                        <div class="item" *ngFor="let operation of operations; let i=index">
-                                            <p>{{operation.name}}</p>
-                                            <i class="fas fa-trash" (click)="operations.splice(i, 1)"></i>
-                                        </div>
-                                        <button class="operation-btn" (click)="openOperationsModal()">Adicionar Operação</button>
+                                <app-input-validation [control]="providerForm.get('description')">
+                                </app-input-validation>
+
+                                <div class="label-float">
+                                    <input type="text" placeholder=" " formControlName="url"
+                                        [class.error]="getControlError('url')" />
+                                    <label [class.error]="getControlError('url')">Url</label>
+                                </div>
+                                <app-input-validation [control]="providerForm.get('url')"></app-input-validation>
+
+                                <div class="label-float">
+                                    <input [class.error]="getControlError('inputSupportedTypes')" type="text"
+                                        placeholder=" " formControlName="inputSupportedTypes" />
+                                    <label [class.error]="getControlError('inputSupportedTypes')">Inputs</label>
+                                </div>
+                                <app-input-validation [control]="providerForm.get('inputSupportedTypes')">
+                                </app-input-validation>
+                                <p class="bottom-label" *ngIf="!getControlError('inputSupportedTypes')">Insira aqui os
+                                    tipos de arquivo suportados pelo seu serviço separados por virgula</p>
+
+                                <div class="label-float">
+                                    <input [class.error]="getControlError('outputSupportedTypes')" type="text"
+                                        placeholder=" " formControlName="outputSupportedTypes" />
+                                    <label [class.error]="getControlError('outputSupportedTypes')">Outputs</label>
+                                </div>
+                                <app-input-validation [control]="providerForm.get('outputSupportedTypes')">
+                                </app-input-validation>
+                                <p class="bottom-label" *ngIf="!getControlError('outputSupportedTypes')">Insira aqui os
+                                    formatos exportados pelo seu serviço separados por virgula</p>
+
+                                <div class="operations-list">
+                                    <div *ngIf="operations.length > 0">
+                                        <p class="title">Operações</p>
+                                        <hr>
                                     </div>
-                                
-
+                                    <div class="item" *ngFor="let operation of operations; let i=index">
+                                        <p>{{operation.name}}</p>
+                                        <i class="fas fa-trash" (click)="operations.splice(i, 1)"></i>
+                                    </div>
+                                    <button class="operation-btn" (click)="openOperationsModal()">Adicionar
+                                        Operação</button>
+                                </div>
                             </div>
 
                             <div class="col-6 d-flex align-items-end mt-5 mb-3">
@@ -67,7 +81,8 @@
                 </div>
             </form>
 
-            <app-operations-modal-form #operationModal (newOperation)="addOperation($event)"></app-operations-modal-form>
+            <app-operations-modal-form #operationModal (newOperation)="addOperation($event)">
+            </app-operations-modal-form>
         </div>
     </div>
 </app-card>

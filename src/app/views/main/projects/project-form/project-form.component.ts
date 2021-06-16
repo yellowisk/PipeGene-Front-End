@@ -24,7 +24,7 @@ export class ProjectFormComponent implements OnInit {
     this.projectForm = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required]],
-      datasets: [[], [Validators.required]],
+      datasets: [[]],
       description: [null],
     });
 
@@ -43,10 +43,10 @@ export class ProjectFormComponent implements OnInit {
   }
 
   saveProject(): void {
+    if (!this.validateForm()) { return; }
     if (this.editMode) {
       this.projectService.saveEdit(this.projectForm.value).subscribe(
         () => {
-          alert('Projeto salvo com sucesso');
           this.router.navigate(['/projects']);
         },
         (error: HttpErrorResponse) => {
@@ -58,7 +58,6 @@ export class ProjectFormComponent implements OnInit {
         .addProject(this.projectForm.value, this.datasetsToUpload)
         .subscribe(
           () => {
-            alert('Projeto salvo com sucesso');
             this.router.navigate(['/projects']);
           },
           (error: HttpErrorResponse) => {
@@ -66,6 +65,14 @@ export class ProjectFormComponent implements OnInit {
           }
         );
     }
+  }
+
+  validateForm(): boolean {
+    if (this.projectForm.valid) {
+      return true;
+    }
+    this.projectForm.markAllAsTouched();
+    return false;
   }
 
   handleFileInput(files: FileList): void {
@@ -90,5 +97,10 @@ export class ProjectFormComponent implements OnInit {
       }));
       console.log(this.datasetsToUpload);
     });
+  }
+
+  getControlError(control: string): boolean {
+    const formControl = this.projectForm.get(control);
+    return formControl.errors && formControl.touched;
   }
 }

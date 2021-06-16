@@ -1,3 +1,4 @@
+import { InputValidationModule } from './../../../components/input-validation/input-validation.module';
 import { EmptyStateModule } from '../../../components/empty-state/empty-state.module';
 import { CardModule } from './../../../components/card/card.module';
 import { ExecutionFormComponent } from './execution-form/execution-form.component';
@@ -22,7 +23,8 @@ import { ExecutionsRoutingModule } from './executions-routing.module';
     RouterModule,
     ExecutionsRoutingModule,
     CardModule,
-    EmptyStateModule
+    EmptyStateModule,
+    InputValidationModule
   ],
   providers: [],
   bootstrap: []
