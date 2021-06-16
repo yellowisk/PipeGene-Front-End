@@ -8,8 +8,6 @@ import { AppComponent } from './app.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LoginComponent } from './views/login/login.component';
 import { SignupComponent } from './views/signup/signup.component';
-import { ProviderParametersFormComponent } from './components/provider-parameters-form/provider-parameters-form.component';
-
 @NgModule({
   declarations: [AppComponent, LoginComponent, SignupComponent],
   imports: [

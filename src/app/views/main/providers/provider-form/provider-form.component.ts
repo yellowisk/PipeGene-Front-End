@@ -1,9 +1,9 @@
-import { ProviderParametersFormComponent } from './../../../../components/provider-parameters-form/provider-parameters-form.component';
+import { OperationsModalFormComponent } from './../../../../components/operations-modal-form/operations-modal-form.component';
 import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProviderService } from '../provider.service';
-import { IParameter } from 'src/app/interfaces/parameter.interface';
+import { IOperation } from 'src/app/interfaces/provider.interface';
 
 @Component({
   selector: 'app-provider-form',
@@ -11,9 +11,9 @@ import { IParameter } from 'src/app/interfaces/parameter.interface';
   styleUrls: ['./provider-form.component.scss']
 })
 export class ProviderFormComponent implements OnInit {
-  @ViewChild('parametersModal') readonly parametersModal: ProviderParametersFormComponent;
+  @ViewChild('operationModal') readonly operationModal: OperationsModalFormComponent;
   providerForm: FormGroup;
-  parameters: IParameter[] = [];
+  operations: IOperation[] = [];
 
   constructor(
     private readonly providerService: ProviderService,
@@ -40,12 +40,12 @@ export class ProviderFormComponent implements OnInit {
     });
   }
 
-  openParametersModal(): void {
-    this.parametersModal.open();
+  openOperationsModal(): void {
+    this.operationModal.open();
   }
 
-  addParameter(event: any): void {
-    this.parameters.push(event);
+  addOperation(event: any): void {
+    this.operations.push(event);
   }
 
 }

@@ -40,16 +40,16 @@
                                     por
                                     virgula</p>
                                 
-                                    <div class="parameters-list">
-                                        <div *ngIf="parameters.length > 0">
-                                            <p class="title">Parâmetros</p>
+                                    <div class="operations-list">
+                                        <div *ngIf="operations.length > 0">
+                                            <p class="title">Operações</p>
                                             <hr>
                                         </div>
-                                        <div class="item" *ngFor="let parameter of parameters; let i=index">
-                                            <p>{{parameter.key}}</p>
-                                            <i class="fas fa-trash" (click)="parameters.splice(i, 1)"></i>
+                                        <div class="item" *ngFor="let operation of operations; let i=index">
+                                            <p>{{operation.key}}</p>
+                                            <i class="fas fa-trash" (click)="operations.splice(i, 1)"></i>
                                         </div>
-                                        <button class="parameters-btn" (click)="openParametersModal()">Adicionar Parâmetro</button>
+                                        <button class="operation-btn" (click)="openOperationsModal()">Adicionar Operação</button>
                                     </div>
                                 
 
@@ -67,7 +67,7 @@
                 </div>
             </form>
 
-            <app-provider-parameters-form #parametersModal (newParameter)="addParameter($event)"></app-provider-parameters-form>
+            <app-operations-modal-form #operationModal (newOperation)="addOperation($event)"></app-operations-modal-form>
         </div>
     </div>
 </app-card>
