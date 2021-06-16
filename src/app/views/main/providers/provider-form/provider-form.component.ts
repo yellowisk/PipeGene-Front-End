@@ -40,12 +40,12 @@ export class ProviderFormComponent implements OnInit {
     });
   }
 
-  openParametersModal() {
+  openParametersModal(): void {
     this.parametersModal.open();
   }
 
   addParameter(event: any): void {
-    this.parameters.push(event)
+    this.parameters.push(event);
   }
 
 }

@@ -5,22 +5,22 @@ import {
   Output,
   TemplateRef,
   ViewChild,
-} from "@angular/core";
-import { FormBuilder, Validators, FormArray, FormGroup } from "@angular/forms";
-import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+} from '@angular/core';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
-  selector: "app-provider-parameters-form",
-  templateUrl: "./provider-parameters-form.component.html",
-  styleUrls: ["./provider-parameters-form.component.scss"],
+  selector: 'app-provider-parameters-form',
+  templateUrl: './provider-parameters-form.component.html',
+  styleUrls: ['./provider-parameters-form.component.scss'],
 })
 export class ProviderParametersFormComponent implements OnInit {
-  @ViewChild("modal") modal: TemplateRef<any>;
+  @ViewChild('modal') modal: TemplateRef<any>;
   @Output() newParameter: EventEmitter<any> = new EventEmitter();
 
   modalRef: BsModalRef;
   parametersForm: FormGroup;
-  fieldTypes = ["text"];
+  fieldTypes = ['text'];
 
   constructor(
     private readonly modalService: BsModalService,
@@ -36,11 +36,11 @@ export class ProviderParametersFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  open() {
+  open(): void {
     this.modalRef = this.modalService.show(this.modal);
   }
 
-  return() {
+  return(): void {
     if (this.parametersForm.valid) {
       this.newParameter.emit(this.parametersForm.value);
       this.parametersForm.reset();
