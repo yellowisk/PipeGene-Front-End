@@ -1,3 +1,4 @@
+import { ProviderParametersFormComponent } from './../../../components/provider-parameters-form/provider-parameters-form.component';
 import { EmptyStateModule } from './../../../components/empty-state/empty-state.module';
 import { ProvidersComponent } from './providers.component';
 import { CardModule } from '../../../components/card/card.module';
@@ -10,7 +11,7 @@ import { ProvidersRoutingModule } from './providers-routing.module';
 import { ProviderFormComponent } from './provider-form/provider-form.component';
 
 @NgModule({
-  declarations: [ProvidersComponent, ProviderFormComponent],
+  declarations: [ProvidersComponent, ProviderFormComponent, ProviderParametersFormComponent],
   imports: [
     ReactiveFormsModule,
     FormsModule,

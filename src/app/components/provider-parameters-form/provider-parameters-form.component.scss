@@ -1,0 +1,23 @@
+@import '/src/assets/styles/input.scss';
+@import '/src/assets/styles/variables.scss';
+
+
+.description {
+    font-family: $font-dm-sans;
+    color: #7f7f7f;
+}
+
+.close.pull-right {
+    background-color: white;
+    border: none;
+}
+
+.modal-title{
+    font-family: $font-dm-sans !important;
+}
+
+.save-btn {
+    color: white;
+    background-color: #0d76af;
+    font-weight: bold;
+}

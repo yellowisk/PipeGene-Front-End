@@ -71,3 +71,52 @@ button {
     font-weight: bold;
     cursor: pointer;
 }
+
+.parameters-list {
+    width: 100%;
+    margin-top: 10px;
+
+    hr {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+    .title {
+        margin: 0;
+        color: gray
+    }
+
+    .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+            margin: 0;
+            font-size: 16px;
+            color: gray
+        }
+
+        i {
+            color: #de4040;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    }
+
+    .parameters-btn {
+        height: auto;
+        padding: 5px;
+        background-color: #c9c9c9;
+        border-radius: 1px;
+        color: #4c4c4c;
+        margin-top: 20px;
+        transition: 0.3s ease;
+        width: 100%;
+
+        &:hover {
+            background-color: #919191;
+            color: white;
+        }
+    }
+}

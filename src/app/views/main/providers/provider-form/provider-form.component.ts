@@ -1,7 +1,9 @@
+import { ProviderParametersFormComponent } from './../../../../components/provider-parameters-form/provider-parameters-form.component';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProviderService } from '../provider.service';
+import { IParameter } from 'src/app/interfaces/parameter.interface';
 
 @Component({
   selector: 'app-provider-form',
@@ -9,7 +11,9 @@ import { ProviderService } from '../provider.service';
   styleUrls: ['./provider-form.component.scss']
 })
 export class ProviderFormComponent implements OnInit {
+  @ViewChild('parametersModal') readonly parametersModal: ProviderParametersFormComponent;
   providerForm: FormGroup;
+  parameters: IParameter[] = [];
 
   constructor(
     private readonly providerService: ProviderService,
@@ -34,6 +38,14 @@ export class ProviderFormComponent implements OnInit {
       console.log(response);
       this.router.navigate(['/services']);
     });
+  }
+
+  openParametersModal() {
+    this.parametersModal.open();
+  }
+
+  addParameter(event: any): void {
+    this.parameters.push(event)
   }
 
 }

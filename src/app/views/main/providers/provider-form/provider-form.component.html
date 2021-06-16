@@ -1,7 +1,7 @@
 <app-card>
     <div class="row form-card">
         <div class="col-12 mt-3">
-            <form [formGroup]="providerForm" (ngSubmit)="submitProvider()">
+            <form [formGroup]="providerForm">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-6">
                         <div class="icon-wave">
@@ -39,6 +39,19 @@
                                 <p class="bottom-label">Insira aqui os formatos exportados pelo seu serviço separados
                                     por
                                     virgula</p>
+                                
+                                    <div class="parameters-list">
+                                        <div *ngIf="parameters.length > 0">
+                                            <p class="title">Parâmetros</p>
+                                            <hr>
+                                        </div>
+                                        <div class="item" *ngFor="let parameter of parameters; let i=index">
+                                            <p>{{parameter.key}}</p>
+                                            <i class="fas fa-trash" (click)="parameters.splice(i, 1)"></i>
+                                        </div>
+                                        <button class="parameters-btn" (click)="openParametersModal()">Adicionar Parâmetro</button>
+                                    </div>
+                                
 
                             </div>
 
@@ -47,12 +60,14 @@
                                     Voltar</p>
                             </div>
                             <div class="col-6 d-flex flex-column mt-5 mb-3">
-                                <button>Submeter</button>
+                                <button (click)="submitProvider()">Submeter</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
+
+            <app-provider-parameters-form #parametersModal (newParameter)="addParameter($event)"></app-provider-parameters-form>
         </div>
     </div>
 </app-card>
