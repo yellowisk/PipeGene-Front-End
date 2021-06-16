@@ -1,7 +1,7 @@
 <app-card>
   <div class="row form-card">
     <div class="col-12 mt-3">
-      <form [formGroup]="executionForm" (ngSubmit)="createExecution()">
+      <form [formGroup]="executionForm">
         <div class="row d-flex justify-content-center">
           <div class="col-md-6">
             <div class="icon-wave">
@@ -12,38 +12,45 @@
             </p>
             <div class="row">
               <div class="col-12 d-flex flex-column mb-3">
+
                 <div class="label-float">
-                  <input type="text" placeholder=" " formControlName="executionName" />
-                  <label>Descrição</label>
+                  <input [class.error]="getControlError('description')" type="text" placeholder=" " formControlName="description" />
+                  <label [class.error]="getControlError('description')">Descrição</label>
                 </div>
-              </div>
+                <app-input-validation [control]="executionForm.get('description')"></app-input-validation>
 
-              <div class="label-float">
-                <select placeholder=" " formControlName="project">
-                  <option value="1">Selecione o projeto</option>
-                  <option [value]="project.id" *ngFor="let project of projects">{{project.name}}</option>
-                </select>
-                <label>Projeto</label>
-              </div>
+                <div class="label-float">
+                  <select [class.error]="getControlError('project')" placeholder=" " formControlName="project">
+                    <option value="1">Selecione o projeto</option>
+                    <option [value]="project.id" *ngFor="let project of projects">{{project.name}}</option>
+                  </select>
+                  <label [class.error]="getControlError('project')">Projeto</label>
+                </div>
+                <app-input-validation [control]="executionForm.get('project')"></app-input-validation>
 
-              <div class="label-float">
-                <select placeholder=" " formControlName="dataset">
-                  <option value="1">Selecione o dataset</option>
-                  <option [value]="dataset.id" *ngFor="let dataset of selectedProject?.datasets">{{dataset.filename}}
-                  </option>
-                </select>
-                <label>Dataset</label>
-              </div>
-              
-              <div class="label-float">
-                <select placeholder=" " formControlName="dataset">
-                  <option value="1">Selecione o pipeline</option>
-                  <option [value]="dataset.id" *ngFor="let dataset of selectedProject?.datasets">{{dataset.filename}}
-                  </option>
-                </select>
-                <label>Pipeline</label>
-              </div>
-              <!-- <div class="steps mt-3 mb-1"
+
+                <div class="label-float">
+                  <select [class.error]="getControlError('dataset')" placeholder=" " formControlName="dataset">
+                    <option value="1">Selecione o dataset</option>
+                    <option [value]="dataset.id" *ngFor="let dataset of selectedProject?.datasets">{{dataset.filename}}
+                    </option>
+                  </select>
+                  <label [class.error]="getControlError('dataset')">Dataset</label>
+                </div>
+                <app-input-validation [control]="executionForm.get('dataset')"></app-input-validation>
+
+
+                <div class="label-float">
+                  <select [class.error]="getControlError('pipeline')" placeholder=" " formControlName="pipeline">
+                    <option value="1">Selecione o pipeline</option>
+                    <option [value]="dataset.id" *ngFor="let dataset of selectedProject?.datasets">{{dataset.filename}}
+                    </option>
+                  </select>
+                  <label [class.error]="getControlError('dataset')">Pipeline</label>
+                </div>
+                <app-input-validation [control]="executionForm.get('pipeline')"></app-input-validation>
+
+                <!-- <div class="steps mt-3 mb-1"
                 *ngFor="let item of executionForm.get('executionSteps')['controls']; let index=index"
                 formArrayName="executionSteps">
                 <p class="step-name">Step {{index + 1}}</p>
@@ -73,13 +80,13 @@
                   <button class="plus" (click)="addStep()"
                     *ngIf="index === (executionForm.get('executionSteps')['controls'].length -1)">+</button>
                 </div>
-              </div> -->
-
+                </div> -->
+              </div>
               <div class="col-6 d-flex align-items-end mt-5 mb-3">
                 <p class="back" [routerLink]="['/executions']" routerLinkActive="router-link-active">Voltar</p>
               </div>
               <div class="col-6 d-flex flex-column mt-5 mb-3">
-                <button>Iniciar Execução</button>
+                <button (click)="createExecution()">Iniciar Execução</button>
               </div>
             </div>
           </div>

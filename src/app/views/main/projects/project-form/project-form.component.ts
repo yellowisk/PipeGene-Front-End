@@ -67,14 +67,6 @@ export class ProjectFormComponent implements OnInit {
     }
   }
 
-  validateForm(): boolean {
-    if (this.projectForm.valid) {
-      return true;
-    }
-    this.projectForm.markAllAsTouched();
-    return false;
-  }
-
   handleFileInput(files: FileList): void {
     Array.from(files).forEach((file: File) => {
       this.datasetsToUpload.push(file);
@@ -102,5 +94,13 @@ export class ProjectFormComponent implements OnInit {
   getControlError(control: string): boolean {
     const formControl = this.projectForm.get(control);
     return formControl.errors && formControl.touched;
+  }
+
+  validateForm(): boolean {
+    if (this.projectForm.valid) {
+      return true;
+    }
+    this.projectForm.markAllAsTouched();
+    return false;
   }
 }

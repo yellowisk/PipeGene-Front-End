@@ -1,11 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ExecutionService } from './../execution.service';
-import { IProvider } from './../../../../interfaces/provider.interface';
 import { IProject } from './../../../../interfaces/project.interface';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ProjectService } from '../../projects/project.service';
-import { ProviderService } from '../../providers/provider.service';
 
 @Component({
   selector: 'app-execution-form',
@@ -14,15 +13,13 @@ import { ProviderService } from '../../providers/provider.service';
 })
 export class ExecutionFormComponent implements OnInit {
   executionForm: FormGroup;
-  selectedProject: IProject;
-  selectedProviders: IProvider[] = [];
-  providers: IProvider[];
+
   projects: IProject[];
-  steps: any[] = [];
+  selectedProject: IProject;
+  // pipelines: IPipelines[];
 
   constructor(
     private readonly projectService: ProjectService,
-    private readonly providerService: ProviderService,
     private readonly executionService: ExecutionService,
     private readonly formBuilder: FormBuilder,
     private readonly router: Router
@@ -30,10 +27,10 @@ export class ExecutionFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.executionForm = this.formBuilder.group({
-      executionName: [null, [Validators.required]],
+      description: [null, [Validators.required]],
       project: [null, [Validators.required]],
       dataset: [null, [Validators.required]],
-      executionSteps: this.formBuilder.array([]),
+      pipeline: [null, [Validators.required]],
     });
 
     this.executionForm.get('project').valueChanges.subscribe((value) => {
@@ -42,12 +39,7 @@ export class ExecutionFormComponent implements OnInit {
       )[0];
     });
 
-    this.executionForm.get('dataset').valueChanges.subscribe((value) => {
-      this.addStep();
-    });
-
     this.getProjects();
-    this.getProviders();
   }
 
   getProjects(): void {
@@ -56,62 +48,28 @@ export class ExecutionFormComponent implements OnInit {
     });
   }
 
-  getProviders(): void {
-    this.providerService.listProviders().subscribe((response) => {
-      this.providers = response;
-    });
-  }
-
   createExecution(): any {
-    this.executionService.createExecution(this.executionForm.value).subscribe(response => {
-      this.router.navigate(['/executions']);
-    });
-  }
-
-  initStepRow(inputType: string): FormGroup {
-    return this.formBuilder.group({
-      providerId: [null, [Validators.required]],
-      inputType: [inputType],
-      outputType: [null, [Validators.required]],
-    });
-  }
-
-  addStep(): void {
-    this.steps.push(this.steps.length + 1);
-    const stepsArray = this.executionForm.controls.executionSteps as FormArray;
-    stepsArray.push(this.initStepRow(this.getFileType()));
-  }
-
-  getFileType(): string {
-    if (this.executionForm.get('executionSteps').value.length > 0) {
-      return this.executionForm.get('executionSteps').value[
-        this.executionForm.get('executionSteps').value.length - 1
-      ].outputType;
-    } else {
-      let file;
-      const fileId = this.executionForm.get('dataset').value;
-
-      this.projects.forEach((p) => {
-        p.datasets.forEach((d) => {
-          if (d.id === fileId) {
-            file = d.filename;
-          }
-        });
-      });
-      return file.substring(file.lastIndexOf('.') + 1, file.length) || file;
-    }
-  }
-
-  setProvider(): void {
-    console.log('ola');
-    this.selectedProviders.push(
-      this.providers.filter(
-        (p) =>
-          p.id ===
-          this.executionForm.get('executionSteps').value[this.steps.length - 1]
-            .providerId
-      )[0]
+    if (!this.validateForm()) { return; }
+    this.executionService.createExecution(this.executionForm.value).subscribe(
+      () => {
+        this.router.navigate(['/executions']);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
     );
-    console.log(this.selectedProviders);
+  }
+
+  getControlError(control: string): boolean {
+    const formControl = this.executionForm.get(control);
+    return formControl.errors && formControl.touched;
+  }
+
+  validateForm(): boolean {
+    if (this.executionForm.valid) {
+      return true;
+    }
+    this.executionForm.markAllAsTouched();
+    return false;
   }
 }
