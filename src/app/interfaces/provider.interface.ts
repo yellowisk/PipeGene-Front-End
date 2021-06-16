@@ -5,12 +5,12 @@ export interface IParameter {
     key: string;
 }
 export interface IOperation {
-    name: string;
+    type: string;
     description: string;
     params: IParameter[];
 }
 export interface IProvider {
-    id: string;
+    id?: string;
     name: string;
     description: string;
     url: string;

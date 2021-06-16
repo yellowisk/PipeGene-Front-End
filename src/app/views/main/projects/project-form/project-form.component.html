@@ -17,13 +17,13 @@
               <h4 class="title">Editar Projeto</h4>
             </div>
             <div class="row">
-              <div class="col-md-6 d-flex flex-column mb-3">
+              <div class="d-flex flex-column mb-3" [class]="editMode? 'col-12' : 'col-md-6'">
                 <div class="label-float">
                   <input type="text" placeholder=" " formControlName="name" />
                   <label>Nome</label>
                 </div>
               </div>
-              <div class="col-md-6 d-flex flex-column mb-3">
+              <div class="col-md-6 d-flex flex-column mb-3" *ngIf="!editMode">
                 <button class="datasets" (click)="openFileInput(inputFile)">Datasets</button>
                 <input type="file" multiple hidden #inputFile formControlName="datasets"
                   (change)="handleFileInput($event.target.files)" />

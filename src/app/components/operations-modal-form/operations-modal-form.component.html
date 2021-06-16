@@ -6,15 +6,15 @@
         </button>
     </div>
     <div class="modal-body">
-        <p class="description">Para criar uma operação, forneça o nome, descrição e parâmetros de execução se
+        <p class="description">Para criar uma operação, informe o tipo, descrição e parâmetros de execução se
             necessário.
         </p>
 
         <form [formGroup]="operationForm" class="row">
             <div class="col-12">
                 <div class="label-float">
-                    <input type="text" placeholder=" " formControlName="name" />
-                    <label>Nome</label>
+                    <input type="text" placeholder=" " formControlName="type" />
+                    <label>Tipo</label>
                 </div>
             </div>
             <div class="col-12">
@@ -25,10 +25,26 @@
             </div>
         </form>
 
+
+        <div class="parameters-list">
+            <div *ngIf="parameters.length > 0 || showParameterForm">
+                <p class="title">Parâmetros</p>
+                <hr>
+            </div>
+            <div class="item" *ngFor="let item of parameters; let i=index">
+                <p>{{item.key}}</p>
+                <i class="fas fa-trash" (click)="parameters.splice(i, 1)"></i>
+            </div>
+        </div>
+
         <div class="mt-3 mb-5">
-            <hr class="mb-1">
-        <app-provider-parameters-form *ngIf="showParameterForm" (close)="showParameterForm = false"></app-provider-parameters-form>
-            <p class="add-parameter" (click)="showParameterForm = true" *ngIf="!showParameterForm">+ Adicionar Parâmetro</p>
+            <app-provider-parameters-form 
+            *ngIf="showParameterForm" 
+            (close)="showParameterForm = false" 
+            (newParameter)="addParameter($event)">
+            </app-provider-parameters-form>
+            <p class="add-parameter" (click)="showParameterForm = true" *ngIf="!showParameterForm">+ Adicionar Parâmetro
+            </p>
         </div>
 
 

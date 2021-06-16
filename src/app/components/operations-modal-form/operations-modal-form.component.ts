@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { IParameter } from 'src/app/interfaces/provider.interface';
 
 @Component({
   selector: 'app-operations-modal-form',
@@ -13,18 +14,24 @@ export class OperationsModalFormComponent implements OnInit {
   modalRef: BsModalRef;
   operationForm: FormGroup;
   showParameterForm = false;
+  parameters: IParameter[] = [];
 
   constructor(
     private readonly modalService: BsModalService,
     private readonly formBuilder: FormBuilder
   ) {
     this.operationForm = this.formBuilder.group({
-      name: [null, [Validators.required]],
+      type: [null, [Validators.required]],
       description: [null, [Validators.required]],
     });
   }
 
   ngOnInit(): void {
+  }
+
+  addParameter(event: IParameter) {
+    this.parameters.push(event);
+    this.showParameterForm = false;
   }
 
   open(): void {
@@ -33,7 +40,12 @@ export class OperationsModalFormComponent implements OnInit {
 
   return(): void {
     if (this.operationForm.valid) {
-      this.newOperation.emit(this.operationForm.value);
+      const operation = {
+        name: this.operationForm.get('name').value,
+        description: this.operationForm.get('description').value,
+        parameters: this.parameters
+      }
+      this.newOperation.emit(operation);
       this.operationForm.reset();
       this.modalRef.hide();
     } else {

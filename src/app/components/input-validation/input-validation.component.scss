@@ -1,0 +1,8 @@
+@import '/src/assets/styles/variables.scss';
+
+.error {
+    font-size: 14px;
+    color: $color-error;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}

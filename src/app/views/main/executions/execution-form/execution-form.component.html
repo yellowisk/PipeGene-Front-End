@@ -8,8 +8,7 @@
               <i class="fas fa-wave-square"></i>
             </div>
             <h4 class="title">Nova Execução</h4>
-            <p class="subtitle">Uma nova execução pode ser criada através de um dataset de um projeto.
-              Execuções encadeadas são realizadas partindo do output da etapa anterior
+            <p class="subtitle">Para criar uma execução, selecione um dataset e o pipeline desejado
             </p>
             <div class="row">
               <div class="col-12 d-flex flex-column mb-3">
@@ -18,6 +17,7 @@
                   <label>Descrição</label>
                 </div>
               </div>
+
               <div class="label-float">
                 <select placeholder=" " formControlName="project">
                   <option value="1">Selecione o projeto</option>
@@ -25,6 +25,7 @@
                 </select>
                 <label>Projeto</label>
               </div>
+
               <div class="label-float">
                 <select placeholder=" " formControlName="dataset">
                   <option value="1">Selecione o dataset</option>
@@ -33,7 +34,16 @@
                 </select>
                 <label>Dataset</label>
               </div>
-              <div class="steps mt-3 mb-1"
+              
+              <div class="label-float">
+                <select placeholder=" " formControlName="dataset">
+                  <option value="1">Selecione o pipeline</option>
+                  <option [value]="dataset.id" *ngFor="let dataset of selectedProject?.datasets">{{dataset.filename}}
+                  </option>
+                </select>
+                <label>Pipeline</label>
+              </div>
+              <!-- <div class="steps mt-3 mb-1"
                 *ngFor="let item of executionForm.get('executionSteps')['controls']; let index=index"
                 formArrayName="executionSteps">
                 <p class="step-name">Step {{index + 1}}</p>
@@ -63,7 +73,7 @@
                   <button class="plus" (click)="addStep()"
                     *ngIf="index === (executionForm.get('executionSteps')['controls'].length -1)">+</button>
                 </div>
-              </div>
+              </div> -->
 
               <div class="col-6 d-flex align-items-end mt-5 mb-3">
                 <p class="back" [routerLink]="['/executions']" routerLinkActive="router-link-active">Voltar</p>

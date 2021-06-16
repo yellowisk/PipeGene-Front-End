@@ -34,8 +34,16 @@ export class ProviderFormComponent implements OnInit {
   }
 
   submitProvider(): void {
-    this.providerService.submitProviders(this.providerForm.value).subscribe(response => {
-      console.log(response);
+    const newProvider = {
+      name: this.providerForm.get('name').value,
+      url: this.providerForm.get('url').value,
+      description: this.providerForm.get('description').value,
+      inputSupportedTypes: this.providerForm.get('inputSupportedTypes').value.split(','),
+      outputSupportedTypes: this.providerForm.get('outputSupportedTypes').value.split(','),
+      operations: this.operations
+    }
+    
+    this.providerService.submitProviders(newProvider).subscribe(response => {
       this.router.navigate(['/services']);
     });
   }
