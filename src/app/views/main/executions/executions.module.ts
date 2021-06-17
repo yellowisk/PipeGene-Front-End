@@ -1,3 +1,4 @@
+import { ExecutionDetailsComponent } from './../../../components/execution-details/execution-details.component';
 import { InputValidationModule } from './../../../components/input-validation/input-validation.module';
 import { EmptyStateModule } from '../../../components/empty-state/empty-state.module';
 import { CardModule } from './../../../components/card/card.module';
@@ -14,7 +15,8 @@ import { ExecutionsRoutingModule } from './executions-routing.module';
 @NgModule({
   declarations: [
     ExecutionsComponent,
-    ExecutionFormComponent
+    ExecutionFormComponent,
+    ExecutionDetailsComponent
   ],
   imports: [
     ReactiveFormsModule,

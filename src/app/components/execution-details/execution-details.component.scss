@@ -1,0 +1,91 @@
+.details-body {
+    padding: 10px;
+    background-color: #ebeeef;
+}
+
+div {
+    display: flex;
+    align-items: center;
+
+}
+
+.steps-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+    overflow-x: auto;
+
+    .step-item {
+        display: flex;
+        align-items: center;
+
+        .step-info {
+            background-color: #ffffff;
+            padding: 3px 10px;
+            border-radius: 4px;
+            width: 200px;
+            margin-bottom: 10px;
+            padding: 5px 8px;
+
+            i {
+                font-size: 20px;
+            }
+        }
+    }
+
+    .line {
+        margin-bottom: 10px;
+        border: 1px solid #3997c0;
+        width: 100px;
+    }
+}
+
+.fa-check-circle {
+    color: #9ddf9d;
+}
+
+.fa-clock {
+    color: #f1d30d
+}
+
+.fa-pause-circle {
+    color: #aeaeae
+}
+
+.fa-exclamation-circle {
+    color: #fa7070;
+}
+
+.success {
+    border: 2px solid #9ddf9d;
+}
+
+.in-progress {
+    border: 2px solid #f1d30d;
+}
+
+.n-executed {
+    border: 2px solid #aeaeae;
+}
+
+.error {
+    border: 2px solid #fa7070;
+
+}
+
+#steps::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+#steps::-webkit-scrollbar {
+    width: 12px;
+    height: 5px;
+    background-color: transparent;
+}
+
+#steps::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgb(158, 158, 158);
+}

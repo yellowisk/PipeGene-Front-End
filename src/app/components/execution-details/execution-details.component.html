@@ -1,0 +1,13 @@
+<div class="details-body">
+    <div class="steps-line" id="steps">
+        <div *ngFor="let item of execution.steps; let i=index">
+            <div class="step-item">
+                <div class="step-info" [class]="getStatus(item)">
+                    <i [class]="getIconStatus(item)"></i>
+                </div>
+            </div>
+            <div class="line" *ngIf="i < execution.steps.length - 1"></div>
+        </div>
+    </div>
+
+</div>

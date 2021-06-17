@@ -14,7 +14,7 @@ export class ExecutionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getExecutions();
+    //this.getExecutions();
   }
 
   getExecutions(): any {
