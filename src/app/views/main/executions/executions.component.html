@@ -11,25 +11,28 @@
       </div>
     </div>
 
-    <app-execution-details></app-execution-details>
-
     <div class="col-md-10 col-12 mt-3">
-      <table class="table table-striped table-hover" *ngIf="executions.length > 0">
-        <thead>
-          <tr>
-            <th scope="col">Descrição</th>
-            <th scope="col">ID Execução</th>
-            <th scope="col">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let execution of executions">
-            <td>{{execution.project.name}}</td>
-            <td>{{execution.id}}</td>
-            <td>{{execution.status}}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="" *ngFor="let execution of executions">
+        <div class="execution-body">
+          <div class="execution-header row">
+            <div class="col-md-3 col-12 status" [class]="getStatus(execution.status)">
+              <i [class]="getIconStatus(execution.status)"></i>
+            </div>
+            <div class="col-md-9 col-12 description">
+              <div class="execution-description">
+                <p class="e-title">Execução de Cadeia Genética 1</p>
+                <p class="dataset">Dataset: dataset_name.mat</p>
+              </div>
+              <i class="fas fa-chevron-down" (click)="showDetails(execution.id)"></i>
+            </div>
+          </div>
+          <div class="row animate__animated animate__fadeInDown" *ngIf="showExecutionsDetails === execution.id">
+            <div class="col-12 p-0">
+              <app-execution-details *ngIf="showExecutionsDetails === execution.id"></app-execution-details>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <app-empty-state *ngIf="executions.length === 0"></app-empty-state>
     </div>

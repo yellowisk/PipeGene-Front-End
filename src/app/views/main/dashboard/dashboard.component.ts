@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
     {
       name: 'Execuções',
       icon: 'fas fa-tasks',
-      url: '/projects',
+      url: '/executions',
     },
     {
       name: 'Serviços',

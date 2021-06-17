@@ -1,9 +1,9 @@
 .details-body {
-    padding: 10px;
+    padding: 30px 20px 20px 20px;
     background-color: #ebeeef;
 }
 
-div {
+.base {
     display: flex;
     align-items: center;
 
@@ -27,9 +27,18 @@ div {
             width: 200px;
             margin-bottom: 10px;
             padding: 5px 8px;
+            display: flex;
+            align-items: center;
 
             i {
                 font-size: 20px;
+                margin-right: 20px;
+            }
+
+            p {
+                font-size: 14px;
+                margin: 0;
+                color: #2e2e2e;
             }
         }
     }
@@ -71,7 +80,6 @@ div {
 
 .error {
     border: 2px solid #fa7070;
-
 }
 
 #steps::-webkit-scrollbar-track {
@@ -88,4 +96,48 @@ div {
 #steps::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: rgb(158, 158, 158);
+}
+
+
+.details-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+
+    button {
+        background-color: #3997c0;
+        border: none;
+        padding: 5px 10px;
+        color: white;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: 0.3s ease;
+
+        i {
+            color: #1e6b8c;
+            margin-left: 20px;
+        }
+
+        &:hover {
+            background-color: #175e7c;
+        }
+    }
+}
+
+.error-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    img {
+        width: 40px;
+    }
+
+    p {
+        margin: 0
+    }
 }

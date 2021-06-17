@@ -1,13 +1,24 @@
 <div class="details-body">
     <div class="steps-line" id="steps">
-        <div *ngFor="let item of execution.steps; let i=index">
+        <div class="base" *ngFor="let item of execution.steps; let i=index">
             <div class="step-item">
                 <div class="step-info" [class]="getStatus(item)">
                     <i [class]="getIconStatus(item)"></i>
+                    <p>{{item.provider.name}}</p>
                 </div>
             </div>
             <div class="line" *ngIf="i < execution.steps.length - 1"></div>
         </div>
     </div>
+    <div class="details-footer">
+        <button *ngIf="execution.executionResult">
+            Baixar Resultado
+            <i class="fas fa-arrow-circle-down"></i>
+        </button>
 
+        <div class="error-msg" *ngIf="execution.errorMessage">
+            <img src="../../../assets/img/warning.png">
+            <p>Sua execução falhou.</p>
+        </div>
+    </div>
 </div>

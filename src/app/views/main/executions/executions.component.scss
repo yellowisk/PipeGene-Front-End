@@ -21,3 +21,77 @@ h3 {
   font-weight: bold;
   color: gray;
 }
+
+.execution-body {
+  margin-bottom: 25px;
+}
+
+.execution-header {
+  height: 50px;
+  box-shadow: 1px 2px 4px 0px #c8c8c8;
+  position: relative;
+
+  .status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 30px;
+      color: white;
+    }
+  }
+
+  .description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .execution-description {
+      width: 100%;
+
+      .e-title {
+        margin: 0;
+        color: #5f5e5e;
+      }
+
+      .dataset {
+        margin: 0;
+        color: grey;
+        font-size: 12px;
+      }
+    }
+
+    i {
+      color: grey;
+      cursor: pointer;
+    }
+  }
+}
+
+
+.success {
+  background-color: #9ddf9d;
+}
+
+.in-progress {
+  background-color: #f1d30d;
+}
+
+.n-executed {
+  background-color: #aeaeae;
+}
+
+.error {
+  background-color: #fa7070;
+
+}
+
+.expandle {
+  transition: all .5s ease-in-out;
+  height: 0;
+
+  .expandable:target {
+    height: 100%;
+  }
+}
