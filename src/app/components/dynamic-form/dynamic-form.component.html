@@ -1,1 +1,10 @@
-<p>dynamic-form works!</p>
+<div *ngFor="let param of operation.params">
+    <div [ngSwitch]="param.type">
+        <div class="label-float" *ngSwitchCase="'text'">
+            <input [class.error]="getControlError(param.key)" type="text" placeholder=" " />
+            <label [class.error]="getControlError(param.key)">{{param.name}}</label>
+        </div>
+    </div>
+    <!-- <app-input-validation [control]="operationForm.get(param.key)">
+    </app-input-validation> -->
+</div>

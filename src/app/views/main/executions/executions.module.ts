@@ -1,3 +1,4 @@
+import { DynamicFormComponent } from './../../../components/dynamic-form/dynamic-form.component';
 import { ExecutionDetailsComponent } from './../../../components/execution-details/execution-details.component';
 import { InputValidationModule } from './../../../components/input-validation/input-validation.module';
 import { EmptyStateModule } from '../../../components/empty-state/empty-state.module';
@@ -16,7 +17,8 @@ import { ExecutionsRoutingModule } from './executions-routing.module';
   declarations: [
     ExecutionsComponent,
     ExecutionFormComponent,
-    ExecutionDetailsComponent
+    ExecutionDetailsComponent,
+    DynamicFormComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -26,7 +28,8 @@ import { ExecutionsRoutingModule } from './executions-routing.module';
     ExecutionsRoutingModule,
     CardModule,
     EmptyStateModule,
-    InputValidationModule
+    InputValidationModule,
+    
   ],
   providers: [],
   bootstrap: []
