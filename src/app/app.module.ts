@@ -10,12 +10,14 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { LoginComponent } from './views/login/login.component';
 import { SignupComponent } from './views/signup/signup.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
     LoadingComponent,
+    DynamicFormComponent,
   ],
   imports: [
     BrowserModule,
