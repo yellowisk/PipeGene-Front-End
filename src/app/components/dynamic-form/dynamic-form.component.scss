@@ -1,2 +1,11 @@
 @import '/src/assets/styles/input.scss';
 @import '/src/assets/styles/variables.scss';
+
+.tip {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px 6px;
+    font-size: 14px;
+    color: grey;
+}

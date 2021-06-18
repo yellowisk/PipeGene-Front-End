@@ -8,6 +8,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./executions.component.scss'],
 })
 export class ExecutionsComponent implements OnInit {
+  operation = {
+    params: [
+      {
+        type: 'text',
+        name: 'Columns',
+        key: 'columns',
+        example: 'Hugo_Symbol, Chromosome',
+      },
+      {
+        type: 'text',
+        name: 'TestOne',
+        key: 'testOne',
+        example: 'Hugo_Symbol, Chromosome',
+      },
+      {
+        type: 'text',
+        name: 'Teste two',
+        key: 'testTwo',
+        example: 'Hugo_Symbol, Chromosome',
+      },
+    ],
+  };
+
   showExecutionsDetails: string;
   executions: IExecution[] = [
     {
@@ -85,7 +108,7 @@ export class ExecutionsComponent implements OnInit {
     });
   }
 
-  showDetails(id: string): void{
+  showDetails(id: string): void {
     this.showExecutionsDetails = this.showExecutionsDetails === id ? null : id;
   }
 
@@ -115,4 +138,3 @@ export class ExecutionsComponent implements OnInit {
     }
   }
 }
-

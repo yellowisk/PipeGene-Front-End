@@ -1,38 +1,37 @@
-import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: "app-dynamic-form",
-  templateUrl: "./dynamic-form.component.html",
-  styleUrls: ["./dynamic-form.component.scss"],
+  selector: 'app-dynamic-form',
+  templateUrl: './dynamic-form.component.html',
+  styleUrls: ['./dynamic-form.component.scss'],
 })
 export class DynamicFormComponent implements OnInit {
-  operation = {
-    params: [
-      {
-        type: "text",
-        name: "Columns",
-        key: "columns",
-        example: "Hugo_Symbol, Chromosome",
-      },
-      {
-        type: "text",
-        name: "TestOne",
-        key: "columns",
-        example: "Hugo_Symbol, Chromosome",
-      },
-      {
-        type: "text",
-        name: "Teste two",
-        key: "columns",
-        example: "Hugo_Symbol, Chromosome",
-      },
-    ],
-  };
+  @Input() operation: any;
+  ready = false;
+  paramsForm: FormGroup;
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.generateForm();
+  }
 
-  getControlError(control: any): void {
-    console.log(control)
+  getControlError(control: any): boolean {
+    const formControl = this.paramsForm.get(control);
+    return formControl.errors && formControl.touched;
+  }
+
+  generateForm(): void {
+    if (this.operation?.params.length > 0) {
+      const group: any = {};
+
+      this.operation.params.forEach(param => {
+        group[param.key] = new FormControl(null, Validators.required);
+      });
+
+
+      this.paramsForm = new FormGroup(group);
+      this.ready = true;
+    }
   }
 }

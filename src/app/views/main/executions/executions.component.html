@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <app-dynamic-form></app-dynamic-form>
+      <app-dynamic-form [operation]="operation"></app-dynamic-form>
       <app-empty-state *ngIf="executions.length === 0"></app-empty-state>
     </div>
   </div>

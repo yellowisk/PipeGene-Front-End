@@ -18,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     PipelinesRoutingModule,
     CardModule,
-    EmptyStateModule
+    EmptyStateModule,
+
   ],
   providers: [],
   bootstrap: [],

@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExecutionsRoutingModule } from './executions-routing.module';
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import { ExecutionsRoutingModule } from './executions-routing.module';
     CardModule,
     EmptyStateModule,
     InputValidationModule,
-    
+    TooltipModule
   ],
   providers: [],
   bootstrap: []
