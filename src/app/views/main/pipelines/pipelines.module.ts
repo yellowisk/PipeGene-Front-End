@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfigProviderModalModule } from 'src/app/components/config-provider-modal/config-provider-modal.module';
 
 @NgModule({
   declarations: [PipelinesComponent, PipelineFormComponent],
@@ -19,7 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PipelinesRoutingModule,
     CardModule,
     EmptyStateModule,
-
+    ConfigProviderModalModule
   ],
   providers: [],
   bootstrap: [],

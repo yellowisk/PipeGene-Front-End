@@ -1,0 +1,56 @@
+@import '/src/assets/styles/variables.scss';
+
+.operation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 1px 2px 4px grey;
+    border-radius: 5px;
+
+    p {
+        margin: 0;
+        color: #424242;
+    }
+
+    button {
+        background-color: white;
+        border: 1px solid #599cc8;
+        color: #599cc8;
+        border-radius: 3px;
+        padding: 2px 10px;
+        transition: 0.3s ease;
+
+        &:hover {
+            background-color: #599cc8;
+            color: white;
+        }
+    }
+}
+
+
+
+.description {
+    font-family: $font-dm-sans;
+    color: #7f7f7f;
+}
+
+.close.pull-right {
+    background-color: white;
+    border: none;
+}
+
+.modal-title {
+    font-family: $font-dm-sans !important;
+}
+
+.save-btn {
+    color: white;
+    background-color: #0d76af;
+    font-weight: bold;
+}
+
+.fa-check-circle {
+    color: #48c248;
+    font-size: 20px;
+}

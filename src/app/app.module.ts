@@ -16,7 +16,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
-    LoadingComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

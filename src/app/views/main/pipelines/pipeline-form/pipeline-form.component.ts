@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ConfigProviderModalComponent } from 'src/app/components/config-provider-modal/config-provider-modal.component';
 import { IProject } from 'src/app/interfaces/project.interface';
 import { IProvider } from 'src/app/interfaces/provider.interface';
 import { ExecutionService } from '../../executions/execution.service';
@@ -12,6 +13,8 @@ import { ProviderService } from '../../providers/provider.service';
   styleUrls: ['./pipeline-form.component.scss'],
 })
 export class PipelineFormComponent implements OnInit {
+  @ViewChild('configProviderModal')
+  readonly configProviderModal: ConfigProviderModalComponent;
   executionForm: FormGroup;
   selectedProject: IProject;
   selectedProviders: IProvider[] = [];
@@ -49,9 +52,7 @@ export class PipelineFormComponent implements OnInit {
     });
   }
 
-  createPipeline(): void {
-
-  }
+  createPipeline(): void {}
 
   initStepRow(inputType: string): FormGroup {
     return this.formBuilder.group({
@@ -97,5 +98,9 @@ export class PipelineFormComponent implements OnInit {
             .providerId
       )[0]
     );
+  }
+
+  openConfigProviderModal(): void {
+    this.configProviderModal.open();
   }
 }

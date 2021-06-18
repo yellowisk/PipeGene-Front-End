@@ -1,4 +1,3 @@
-import { DynamicFormComponent } from './../../../components/dynamic-form/dynamic-form.component';
 import { ExecutionDetailsComponent } from './../../../components/execution-details/execution-details.component';
 import { InputValidationModule } from './../../../components/input-validation/input-validation.module';
 import { EmptyStateModule } from '../../../components/empty-state/empty-state.module';
@@ -19,7 +18,6 @@ import { TooltipModule } from 'ng2-tooltip-directive';
     ExecutionsComponent,
     ExecutionFormComponent,
     ExecutionDetailsComponent,
-    DynamicFormComponent
   ],
   imports: [
     ReactiveFormsModule,
