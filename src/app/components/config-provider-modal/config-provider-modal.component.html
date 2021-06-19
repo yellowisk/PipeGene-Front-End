@@ -13,13 +13,18 @@
             <div class="col-12" *ngFor="let operation of operations">
                 <div class="operation">
                     <p>{{operation.type}}</p>
-                    <button (click)="configForm(operation)">Configurar</button>
-                    <!-- <i class="fas fa-check-circle"></i> -->
+                    <button (click)="configForm(operation)" *ngIf="!configuredOperations.includes(operation.type)">Configurar</button>
+                    <i class="fas fa-check-circle" *ngIf="configuredOperations.includes(operation.type)"></i>
                 </div>
             </div>
         </div>
 
-        <app-dynamic-form *ngIf="openForm" [params]="selectedOperation.params" [description]="selectedOperation.description"></app-dynamic-form>
+        <app-dynamic-form 
+        *ngIf="openForm" 
+        [params]="selectedOperation.params" 
+        [description]="selectedOperation.description"
+        (saveInput)="saveOperationParams($event)"
+        (closeForm)="closeForm($event)"></app-dynamic-form>
 
 
         <div class="modal-footer d-flex justify-content-between align-items-center mt-5 pr-0" *ngIf="!openForm">

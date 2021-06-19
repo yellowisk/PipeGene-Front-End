@@ -45,8 +45,8 @@ export class PipelineFormComponent implements OnInit {
       this.addStep();
     });
 
-    this.getProviders();
-    this.getProjects()
+    // this.getProviders();
+    // this.getProjects()
   }
 
   getProviders(): void {

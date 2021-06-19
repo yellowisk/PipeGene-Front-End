@@ -84,10 +84,10 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div>   
 
-    <app-config-provider-modal #configProviderModal [operations]="selectedProviders[steps.length -1].operations"
-        *ngIf="selectedProviders.length > 0">
+    <app-config-provider-modal #configProviderModal [operations]=""
+        >
     </app-config-provider-modal>
     <button (click)="openConfigProviderModal()">open</button>
 </app-card>
