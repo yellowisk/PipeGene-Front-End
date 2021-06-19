@@ -9,8 +9,8 @@
   box-shadow: 1px 1px 3px #00000040;
 
   .header-container {
-    margin-left: 5%;
-	height: 60px;
+    margin-left: 20px;
+    height: 60px;
   }
 
   .title {
@@ -26,9 +26,19 @@
   }
 }
 
-.logOut {
-	margin: 0;
-    color: #969696;
-    font-weight: bold;
-	cursor: pointer;
+.log-out {
+  margin: 0;
+  margin-right: 20px;
+  color: #969696;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+i {
+  color: #379abf;
+  font-size: 22px;
+  padding: 10px;
+  margin-right: 30px;
+  cursor: pointer;
+  border-radius: 5px;
 }
