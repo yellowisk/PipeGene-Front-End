@@ -1,7 +1,7 @@
 <app-card>
     <div class="row form-card">
         <div class="col-12 mt-3">
-            <form [formGroup]="executionForm" (ngSubmit)="createPipeline()">
+            <form [formGroup]="pipelineForm" (ngSubmit)="createPipeline()">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-6">
                         <div class="icon-wave">
@@ -17,41 +17,61 @@
                                     <input type="text" placeholder=" " formControlName="executionName" />
                                     <label>Nome</label>
                                 </div>
-                            </div>
-                            <div class="steps mt-2 mb-1"
-                                *ngFor="let item of executionForm.get('executionSteps')['controls']; let index=index"
-                                formArrayName="executionSteps">
-                                <p class="step-name">Step {{index + 1}}</p>
-                                <div [formGroupName]="index">
-                                    <div class="label-float">
-                                        <select placeholder=" " formControlName="providerId" (change)="setProvider()">
-                                            <option value="1">Selecione o serviço</option>
-                                            <option [value]="provider.id" *ngFor="let provider of providers">
-                                                {{provider.name}}</option>
-                                        </select>
-                                        <label>Serviço</label>
-                                    </div>
-
-                                    <div class="label-float">
-                                        <select placeholder=" " formControlName="outputType">
-                                            <option value="1">Selecione o formato do output</option>
-                                            <option [value]="output"
-                                                *ngFor="let output of selectedProviders[index]?.outputSupportedTypes">
-                                                {{output}}</option>
-                                        </select>
-                                        <label>Formato do Output</label>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="line"
-                                        [class.total]="(index !== executionForm.get('executionSteps')['controls'].length -1)">
-                                    </div>
-                                    <button class="plus" (click)="addStep()"
-                                        *ngIf="index === (executionForm.get('executionSteps')['controls'].length -1)">+</button>
+                                <div class="label-float">
+                                    <select placeholder=" " formControlName="projectId">
+                                        <option value="1">Selecione o Projeto</option>
+                                        <option [value]="project.id" *ngFor="let project of projects">
+                                            {{project.name}}</option>
+                                    </select>
+                                    <label>Projeto</label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="steps mt-2 mb-1"
+                            *ngFor="let item of pipelineForm.get('executionSteps')['controls']; let index=index"
+                            formArrayName="executionSteps">
+                            <p class="step-name">Step {{index + 1}}</p>
+                            <div [formGroupName]="index">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="label-float">
+                                            <select placeholder=" " formControlName="providerId"
+                                                (change)="setProvider()">
+                                                <option value="1">Selecione o serviço</option>
+                                                <option [value]="provider.id" *ngFor="let provider of providers">
+                                                    {{provider.name}}</option>
+                                            </select>
+                                            <label>Serviço</label>
+                                        </div>
+                                    </div>
 
+                                    <div class="col-md-6 col-12">
+                                        <div class="label-float">
+                                            <select placeholder=" " formControlName="outputType">
+                                                <option value="1">Selecione o formato do output</option>
+                                                <option [value]="output"
+                                                    *ngFor="let output of selectedProviders[index]?.outputSupportedTypes">
+                                                    {{output}}</option>
+                                            </select>
+                                            <label>Output</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 pt-2">
+                                        <button class="configure-btn">Configurar Serviço</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="line"
+                                    [class.total]="(index !== pipelineForm.get('executionSteps')['controls'].length -1)">
+                                </div>
+                                <button class="plus" (click)="addStep()"
+                                    *ngIf="index === (pipelineForm.get('executionSteps')['controls'].length -1)">+</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-6 d-flex align-items-end mt-5 mb-3">
                                 <p class="back" [routerLink]="['/pipelines']" routerLinkActive="router-link-active">
                                     Voltar</p>
@@ -66,6 +86,8 @@
         </div>
     </div>
 
-    <app-config-provider-modal #configProviderModal></app-config-provider-modal>
+    <app-config-provider-modal #configProviderModal [operations]="selectedProviders[steps.length -1].operations"
+        *ngIf="selectedProviders.length > 0">
+    </app-config-provider-modal>
     <button (click)="openConfigProviderModal()">open</button>
 </app-card>

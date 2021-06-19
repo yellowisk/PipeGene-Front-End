@@ -7,30 +7,34 @@ import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./dynamic-form.component.scss'],
 })
 export class DynamicFormComponent implements OnInit {
-  @Input() operation: any;
+  @Input() params: any;
+  @Input() description: string;
   ready = false;
   paramsForm: FormGroup;
   constructor() {}
 
   ngOnInit(): void {
+    this.params[0].name = "teste"
     this.generateForm();
   }
 
   getControlError(control: any): boolean {
     const formControl = this.paramsForm.get(control);
-    return formControl.errors && formControl.touched;
+    console.log(this.paramsForm.get(control).value);
+    return  formControl.touched;
   }
 
   generateForm(): void {
-    if (this.operation?.params.length > 0) {
+    if (this.params?.length > 0) {
       const group: any = {};
 
-      this.operation.params.forEach(param => {
+      this.params.forEach(param => {
         group[param.key] = new FormControl(null, Validators.required);
       });
 
 
       this.paramsForm = new FormGroup(group);
+      console.log(this.paramsForm)
       this.ready = true;
     }
   }

@@ -10,6 +10,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { LoginComponent } from './views/login/login.component';
 import { SignupComponent } from './views/signup/signup.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     MainModule,
     HttpClientModule,
     ModalModule.forRoot(),
+    PopoverModule.forRoot()
   ],
   providers: [
     {

@@ -1,12 +1,13 @@
 <form [formGroup]="paramsForm" *ngIf="ready">
-    <div *ngFor="let param of operation.params">
+    <p class="description">{{description}}</p>
+    <div *ngFor="let param of params">
         <div [ngSwitch]="param.type">
             <div class="label-float" *ngSwitchCase="'text'">
-                <i class="fas fa-question-circle tip" [tooltip]="param.example" placement="top" show-delay="500"></i>
                 <input [class.error]="getControlError(param.key)" type="text" placeholder=" " [formControlName]="param.key"/>
                 <label [class.error]="getControlError(param.key)">{{param.name}}</label>
             </div>
         </div>
+        <p class="example" *ngIf="!getControlError(param.key)">Ex: {{param.example}}</p>
         <app-input-validation [control]="paramsForm.get(param.key)">
         </app-input-validation>
     </div>

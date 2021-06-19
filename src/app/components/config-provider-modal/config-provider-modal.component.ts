@@ -28,10 +28,12 @@ export class ConfigProviderModalComponent implements OnInit {
   }
 
   open(): void {
-    this.modalRef = this.modalService.show(this.modal);
+    this.modalRef = this.modalService.show(this.modal, Object.assign({}, { class: 'modal-index' }));
+    console.log(this.operations)
   }
 
   configForm(operation: string): void {
+    console.log(operation)
     this.selectedOperation = operation;
     this.openForm = true;
   }

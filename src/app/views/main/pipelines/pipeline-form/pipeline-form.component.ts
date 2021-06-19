@@ -1,3 +1,4 @@
+import { ProjectService } from './../../projects/project.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,35 +16,37 @@ import { ProviderService } from '../../providers/provider.service';
 export class PipelineFormComponent implements OnInit {
   @ViewChild('configProviderModal')
   readonly configProviderModal: ConfigProviderModalComponent;
-  executionForm: FormGroup;
-  selectedProject: IProject;
-  selectedProviders: IProvider[] = [];
   providers: IProvider[];
   projects: IProject[];
+
+  pipelineForm: FormGroup;
+  selectedProject: IProject;
+  selectedProviders: IProvider[] = [];
   steps: any[] = [];
 
   constructor(
     private readonly providerService: ProviderService,
-    private readonly executionService: ExecutionService,
+    private readonly projectService: ProjectService,
     private readonly formBuilder: FormBuilder,
     private readonly router: Router
   ) {}
 
   ngOnInit(): void {
-    this.executionForm = this.formBuilder.group({
+    this.pipelineForm = this.formBuilder.group({
       executionName: [null, [Validators.required]],
-      project: [null, [Validators.required]],
-      dataset: [null, [Validators.required]],
-      executionSteps: this.formBuilder.array([
-        {
-          providerId: [null, [Validators.required]],
-          inputType: [null],
-          outputType: [null, [Validators.required]],
-        },
-      ]),
+      projectId: [null, [Validators.required]],
+      executionSteps: this.formBuilder.array([]),
+    });
+
+    this.pipelineForm.get("projectId").valueChanges.subscribe((value) => {
+      this.selectedProject = this.projects.filter(
+        (project) => project.id === value
+      )[0];
+      this.addStep();
     });
 
     this.getProviders();
+    this.getProjects()
   }
 
   getProviders(): void {
@@ -52,41 +55,35 @@ export class PipelineFormComponent implements OnInit {
     });
   }
 
+  getProjects(): void {
+    this.projectService.listProjects().subscribe((response) => {
+      this.projects = response;
+    })
+  }
+
   createPipeline(): void {}
 
-  initStepRow(inputType: string): FormGroup {
+  initStepRow(inputType: string | null): FormGroup {
     return this.formBuilder.group({
       providerId: [null, [Validators.required]],
-      inputType: [inputType],
+      inputType: [inputType || null],
       outputType: [null, [Validators.required]],
     });
   }
 
   addStep(): void {
     this.steps.push(this.steps.length + 1);
-    const stepsArray = this.executionForm.controls.executionSteps as FormArray;
+    const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
     stepsArray.push(this.initStepRow(this.getFileType()));
   }
 
-  getFileType(): string {
-    if (this.executionForm.get('executionSteps').value.length > 0) {
-      return this.executionForm.get('executionSteps').value[
-        this.executionForm.get('executionSteps').value.length - 1
+  getFileType(): string | null {
+    if (this.pipelineForm.get('executionSteps').value.length > 0) {
+      return this.pipelineForm.get('executionSteps').value[
+        this.pipelineForm.get('executionSteps').value.length - 1
       ].outputType;
     }
-    // else {
-    //   let file;
-    //   const fileId = this.executionForm.get("dataset").value;
-
-    //   this.projects.forEach((p) => {
-    //     p.datasets.forEach((d) => {
-    //       if (d.id === fileId) {
-    //         file = d.filename;
-    //       }
-    //     });
-    //   });
-    //   return file.substring(file.lastIndexOf(".") + 1, file.length) || file;
-    // }
+    return null;
   }
 
   setProvider(): void {
@@ -94,7 +91,7 @@ export class PipelineFormComponent implements OnInit {
       this.providers.filter(
         (p) =>
           p.id ===
-          this.executionForm.get('executionSteps').value[this.steps.length - 1]
+          this.pipelineForm.get('executionSteps').value[this.steps.length -1]
             .providerId
       )[0]
     );
