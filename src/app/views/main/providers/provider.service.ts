@@ -14,9 +14,8 @@ export class ProviderService {
     return this.http.get<IProvider[]>(`${environment.baseUrl}/v1/providers/`);
   }
 
-  submitProviders(provider: IProvider): any {
-    console.log(provider);
-    return this.http.post<any>(
+  submitProviders(provider: IProvider): Observable<IProvider> {
+    return this.http.post<IProvider>(
       `${environment.baseUrl}/v1/providers/`,
       provider
     );

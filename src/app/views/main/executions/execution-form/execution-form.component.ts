@@ -1,3 +1,4 @@
+import { PipelineService } from './../../pipelines/pipeline.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ExecutionService } from './../execution.service';
@@ -5,6 +6,7 @@ import { IProject } from './../../../../interfaces/project.interface';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ProjectService } from '../../projects/project.service';
+import { IPipeline } from 'src/app/interfaces/pipeline.interface';
 
 @Component({
   selector: 'app-execution-form',
@@ -16,11 +18,13 @@ export class ExecutionFormComponent implements OnInit {
 
   projects: IProject[];
   selectedProject: IProject;
-  // pipelines: IPipelines[];
+
+  pipelines: IPipeline[] = [];
 
   constructor(
     private readonly projectService: ProjectService,
     private readonly executionService: ExecutionService,
+    private readonly pipelineService: PipelineService,
     private readonly formBuilder: FormBuilder,
     private readonly router: Router
   ) {}
@@ -28,15 +32,16 @@ export class ExecutionFormComponent implements OnInit {
   ngOnInit(): void {
     this.executionForm = this.formBuilder.group({
       description: [null, [Validators.required]],
-      project: [null, [Validators.required]],
-      dataset: [null, [Validators.required]],
-      pipeline: [null, [Validators.required]],
+      projectId: [null, [Validators.required]],
+      datasetId: [null, [Validators.required]],
+      pipelineId: [null, [Validators.required]],
     });
 
-    this.executionForm.get('project').valueChanges.subscribe((value) => {
+    this.executionForm.get('projectId').valueChanges.subscribe((value) => {
       this.selectedProject = this.projects.filter(
         (project) => project.id === value
       )[0];
+      this.getPipelines(this.selectedProject.id);
     });
 
     this.getProjects();
@@ -48,16 +53,33 @@ export class ExecutionFormComponent implements OnInit {
     });
   }
 
+  getPipelines(id: string): void {
+    this.pipelineService.listPipelines(id).subscribe((response) => {
+      this.pipelines = response;
+    });
+  }
+
   createExecution(): any {
-    if (!this.validateForm()) { return; }
-    this.executionService.createExecution(this.executionForm.value).subscribe(
-      () => {
-        this.router.navigate(['/executions']);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error);
-      }
-    );
+    if (!this.validateForm()) {
+      return;
+    }
+    this.executionService
+      .createExecution(
+        {
+          datasetId: this.executionForm.get('datasetId').value,
+          pipelineId: this.executionForm.get('pipelineId').value,
+          description: this.executionForm.get('description').value,
+        },
+        this.executionForm.get('projectId').value
+      )
+      .subscribe(
+        () => {
+          this.router.navigate(['/executions']);
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+        }
+      );
   }
 
   getControlError(control: string): boolean {

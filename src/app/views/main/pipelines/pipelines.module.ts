@@ -23,6 +23,7 @@ import { ConfigProviderModalModule } from 'src/app/components/config-provider-mo
     CardModule,
     EmptyStateModule,
     ConfigProviderModalModule,
+    InputValidationModule
   ],
   providers: [],
   bootstrap: [],

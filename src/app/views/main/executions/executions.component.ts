@@ -8,103 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./executions.component.scss'],
 })
 export class ExecutionsComponent implements OnInit {
-  operation = {
-    params: [
-      {
-        type: 'text',
-        name: 'Columns',
-        key: 'columns',
-        example: 'Hugo_Symbol, Chromosome',
-      },
-      {
-        type: 'text',
-        name: 'TestOne',
-        key: 'testOne',
-        example: 'Hugo_Symbol, Chromosome',
-      },
-      {
-        type: 'text',
-        name: 'Teste two',
-        key: 'testTwo',
-        example: 'Hugo_Symbol, Chromosome',
-      },
-    ],
-  };
-
-  showExecutionsDetails: string;
-  executions: IExecution[] = [
-    {
-      id: '1',
-      pipeline: {
-        id: 'string',
-        description: 'string',
-
-        steps: [
-          {
-            id: 'string',
-            provider: {
-              name: 'string?',
-            },
-            inputType: 'string',
-            outputType: 'string',
-            state: 'string',
-            params: {
-              key: 'any',
-            },
-          },
-        ],
-      },
-      dataset: {
-        id: 'string',
-        filename: 'string',
-      },
-      description: 'string',
-      status: 'ERROR',
-      executionResult: 'string?',
-      errorMessage: '',
-    },
-    {
-      id: '2',
-      pipeline: {
-        id: 'string',
-        description: 'string',
-
-        steps: [
-          {
-            id: 'string',
-            provider: {
-              name: 'string?',
-            },
-            inputType: 'string',
-            outputType: 'string',
-            state: 'string',
-            params: {
-              key: 'any',
-            },
-          },
-        ],
-      },
-      dataset: {
-        id: 'string',
-        filename: 'string',
-      },
-      description: 'string',
-      status: 'DONE',
-      executionResult: 'string?',
-      errorMessage: '',
-    },
-  ];
+   showExecutionsDetails: string;
+  executions: IExecution[];
 
   constructor(private readonly executionService: ExecutionService) {}
 
   ngOnInit(): void {
-    // this.getExecutions();
+    this.getExecutions();
   }
 
   getExecutions(): any {
     this.executionService.listExecutions().subscribe((response) => {
       this.executions = response;
-      console.log(this.executions);
     });
   }
 

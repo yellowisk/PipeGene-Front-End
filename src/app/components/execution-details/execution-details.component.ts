@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-execution-details',
@@ -6,52 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./execution-details.component.scss'],
 })
 export class ExecutionDetailsComponent implements OnInit {
-  execution = {
-    executionResult: '',
-    errorMessage: '',
-    steps: [
-      {
-        id: 'string',
-        provider: {
-          name: 'Jorge Service',
-        },
-        state: 'SUCCESS',
-        params: {
-          key: 'any',
-        },
-      },
-      {
-        id: 'string',
-        provider: {
-          name: 'Jorge Service',
-        },
-        state: 'IN_PROGRESS',
-        params: {
-          key: 'IN_PROGRESS',
-        },
-      },
-      {
-        id: 'string',
-        provider: {
-          name: 'Jorge Service',
-        },
-        state: 'NOT_EXECUTED',
-        params: {
-          key: 'NOT_EXECUTED',
-        },
-      },
-      {
-        id: 'string',
-        provider: {
-          name: 'Jorge Service',
-        },
-        state: 'ERROR',
-        params: {
-          key: 'ERROR',
-        },
-      },
-    ],
-  };
+  @Input() execution;
 
   constructor() {}
 

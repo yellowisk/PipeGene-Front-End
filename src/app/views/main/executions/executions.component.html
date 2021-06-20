@@ -20,15 +20,15 @@
             </div>
             <div class="col-md-9 col-12 description">
               <div class="execution-description">
-                <p class="e-title">Execução de Cadeia Genética 1</p>
-                <p class="dataset">Dataset: dataset_name.mat</p>
+                <p class="e-title">{{execution.description}}</p>
+                <p class="dataset">{{execution.dataset.filename}}</p>
               </div>
               <i class="fas fa-chevron-down" (click)="showDetails(execution.id)"></i>
             </div>
           </div>
           <div class="row animate__animated animate__fadeInDown" *ngIf="showExecutionsDetails === execution.id">
             <div class="col-12 p-0">
-              <app-execution-details *ngIf="showExecutionsDetails === execution.id"></app-execution-details>
+              <app-execution-details *ngIf="showExecutionsDetails === execution.id" [execution]="execution"></app-execution-details>
             </div>
           </div>
         </div>

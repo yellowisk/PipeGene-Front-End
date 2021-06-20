@@ -1,3 +1,4 @@
+import { PipelineService } from './pipeline.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PipelinesComponent implements OnInit {
   pipelines: any[] = [];
-  constructor() { }
+  constructor(
+    private readonly pipelineService: PipelineService
+  ) { }
 
   ngOnInit(): void {
+    this.getPipelines();
+  }
+
+  getPipelines(): void {
+    this.pipelineService.listPipelines('').subscribe(response => {
+      this.pipelines = response;
+    });
   }
 
 }

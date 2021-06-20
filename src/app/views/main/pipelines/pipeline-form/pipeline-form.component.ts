@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { PipelineService } from './../pipeline.service';
 import { ProjectService } from './../../projects/project.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -24,7 +25,7 @@ export class PipelineFormComponent implements OnInit {
   selectedProviders: IProvider[] = [];
   steps: any[] = [];
 
-  serviceConfigIndex: number;
+  serviceConfigIndex: number | null;
 
   constructor(
     private readonly providerService: ProviderService,
@@ -45,7 +46,8 @@ export class PipelineFormComponent implements OnInit {
       this.selectedProject = this.projects.filter(
         (project) => project.id === value
       )[0];
-      this.addStep();
+      const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
+      if (stepsArray.length < 1) { this.addStep(); }
     });
 
     this.getProviders();
@@ -67,9 +69,9 @@ export class PipelineFormComponent implements OnInit {
   initStepRow(inputType: string | null): FormGroup {
     return this.formBuilder.group({
       providerId: [null, [Validators.required]],
-      inputType: [inputType || null],
+      inputType: [inputType || ''],
       outputType: [null, [Validators.required]],
-      params: [null]
+      params: [null],
     });
   }
 
@@ -100,35 +102,41 @@ export class PipelineFormComponent implements OnInit {
   }
 
   initServiceConfig(index: number): void {
-    console.log(this.serviceConfigIndex);
     this.serviceConfigIndex = index;
     this.configProviderModal.setOperations(
-      this.providers.filter(
-        (p) =>
-          p.id ===
-          this.selectedProviders[index].id
-      )[0].operations
-
+      this.providers.filter((p) => p.id === this.selectedProviders[index].id)[0]
+        .operations
     );
   }
 
   saveServiceConfigs(event: any): void {
     const controlArray = this.pipelineForm.get('executionSteps') as FormArray;
-    controlArray.controls[this.serviceConfigIndex].get('params').setValue(event);
+    controlArray.controls[this.serviceConfigIndex]
+      .get('params')
+      .setValue(event);
+    this.serviceConfigIndex = null;
   }
 
-  serviceIsConfigured(): boolean {
+  serviceIsConfigured(index: number): boolean {
     const controlArray = this.pipelineForm.get('executionSteps') as FormArray;
-    return controlArray.controls[this.serviceConfigIndex]?.get('params').value?.length > 0;
+    return (
+      controlArray.controls[index]?.get('params').value
+    );
   }
 
   createPipeline(): void {
     if (!this.validateForm()) { return; }
     const pipeline = this.pipelineForm.value;
-    this.pipelineService.createPipeline({
-      description: pipeline.executionName,
-      steps: pipeline.executionSteps,
-    }, pipeline.projectId);
+    this.pipelineService.createPipeline(
+      {
+        description: pipeline.executionName,
+        steps: pipeline.executionSteps,
+      },
+      pipeline.projectId
+    ).subscribe(
+      () => this.router.navigate(['/pipelines']),
+      (error: HttpErrorResponse) => console.log(error)
+    );
   }
 
   getControlError(control: string): boolean {

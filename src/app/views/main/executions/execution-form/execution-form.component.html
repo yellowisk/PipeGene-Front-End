@@ -20,35 +20,35 @@
                 <app-input-validation [control]="executionForm.get('description')"></app-input-validation>
 
                 <div class="label-float">
-                  <select [class.error]="getControlError('project')" placeholder=" " formControlName="project">
+                  <select [class.error]="getControlError('projectId')" placeholder=" " formControlName="projectId">
                     <option value="1">Selecione o projeto</option>
                     <option [value]="project.id" *ngFor="let project of projects">{{project.name}}</option>
                   </select>
-                  <label [class.error]="getControlError('project')">Projeto</label>
+                  <label [class.error]="getControlError('projectId')">Projeto</label>
                 </div>
-                <app-input-validation [control]="executionForm.get('project')"></app-input-validation>
+                <app-input-validation [control]="executionForm.get('projectId')"></app-input-validation>
 
 
                 <div class="label-float">
-                  <select [class.error]="getControlError('dataset')" placeholder=" " formControlName="dataset">
+                  <select [class.error]="getControlError('datasetId')" placeholder=" " formControlName="datasetId">
                     <option value="1">Selecione o dataset</option>
                     <option [value]="dataset.id" *ngFor="let dataset of selectedProject?.datasets">{{dataset.filename}}
                     </option>
                   </select>
-                  <label [class.error]="getControlError('dataset')">Dataset</label>
+                  <label [class.error]="getControlError('datasetId')">Dataset</label>
                 </div>
-                <app-input-validation [control]="executionForm.get('dataset')"></app-input-validation>
+                <app-input-validation [control]="executionForm.get('datasetId')"></app-input-validation>
 
 
                 <div class="label-float">
-                  <select [class.error]="getControlError('pipeline')" placeholder=" " formControlName="pipeline">
+                  <select [class.error]="getControlError('pipelineId')" placeholder=" " formControlName="pipelineId">
                     <option value="1">Selecione o pipeline</option>
-                    <option [value]="dataset.id" *ngFor="let dataset of selectedProject?.datasets">{{dataset.filename}}
+                    <option [value]="pipeline.id" *ngFor="let pipeline of pipelines">{{pipeline.description}}
                     </option>
                   </select>
-                  <label [class.error]="getControlError('dataset')">Pipeline</label>
+                  <label [class.error]="getControlError('pipelineId')">Pipeline</label>
                 </div>
-                <app-input-validation [control]="executionForm.get('pipeline')"></app-input-validation>
+                <app-input-validation [control]="executionForm.get('pipelineId')"></app-input-validation>
 
                 <!-- <div class="steps mt-3 mb-1"
                 *ngFor="let item of executionForm.get('executionSteps')['controls']; let index=index"

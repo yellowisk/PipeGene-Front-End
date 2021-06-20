@@ -34,7 +34,7 @@ export class ProjectService {
   }
 
   saveEdit(project: IProject): Observable<IProject> {
-    return this.http.post<IProject>(
+    return this.http.put<IProject>(
       `${environment.baseUrl}/v1/projects/${project.id}`,
       {
         name: project.name,

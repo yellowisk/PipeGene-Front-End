@@ -87,7 +87,6 @@ export class ProjectFormComponent implements OnInit {
       this.datasetsToUpload = response.datasets.map((file) => ({
         name: file.filename,
       }));
-      console.log(this.datasetsToUpload);
     });
   }
 

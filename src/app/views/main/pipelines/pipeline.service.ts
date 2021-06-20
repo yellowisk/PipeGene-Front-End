@@ -15,13 +15,15 @@ export class PipelineService {
     pipeline: IPipeline,
     projectId: string
   ): Observable<IPipeline> {
+    console.log('service', pipeline, projectId);
     return this.http.post<IPipeline>(
       `${environment.baseUrl}/v1/projects/${projectId}/pipelines`,
       pipeline
     );
   }
 
-  listPipelines(): Observable<IProject[]> {
-    return this.http.get<IProject[]>(`${environment.baseUrl}/v1/projects/`);
+  listPipelines(projectId: string): Observable<IPipeline[]> {
+    projectId = 'f2d6a949-8bb5-4df5-8ca7-e5b8d2292488';
+    return this.http.get<IPipeline[]>(`${environment.baseUrl}/v1/projects/${projectId}/pipelines`);
   }
 }

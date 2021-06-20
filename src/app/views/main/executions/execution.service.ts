@@ -1,3 +1,5 @@
+import { ICreateExecution, IExecution } from './../../../interfaces/execution.interface';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -8,34 +10,19 @@ import { environment } from 'src/environments/environment';
 export class ExecutionService {
   constructor(private readonly http: HttpClient) {}
 
-  createExecution(execution: any): any {
-    execution.executionSteps[0].params = {
-      columns:
-        'Hugo_Symbol, Chromosome, Start_Position, End_Position, Reference_Allele, Tumor_Seq_Allele2, Variant_Classification, Variant_Type, Tumor_Sample_Barcode',
-    };
-
-    execution.executionSteps[1].params = {
-      columns: 'Hugo_Symbol, Chromosome',
-    };
-
-    console.log(execution);
-
-    return this.http.post<any>(
-      `${environment.baseUrl}/v1/projects/${execution.project}/executions`,
-      {
-        dataset: execution.dataset,
-        executionSteps: execution.executionSteps,
-        // descriptions: execution.executionName
-      }
+  createExecution(execution: ICreateExecution, projectId: string): Observable<IExecution> {
+    return this.http.post<IExecution>(
+      `${environment.baseUrl}/v1/projects/${projectId}/executions`,
+      execution
     );
   }
 
-  listExecutions(): any {
-    return this.http.get<any>(`${environment.baseUrl}/v1/projects/e1d33cc3-f04d-45c8-8998-20cd0d4af878/executions`);
+  listExecutions(): Observable<IExecution[]> {
+    return this.http.get<IExecution[]>(`${environment.baseUrl}/v1/users/78cec5db-6396-4fd9-803f-1fd469d76330/executions`);
   }
 
 
-  listProjectExecutions(id: string): any {
-    return this.http.get<any>(`${environment.baseUrl}/v1/projects/${id}/executions`);
+  listProjectExecutions(id: string): Observable<IExecution[]> {
+    return this.http.get<IExecution[]>(`${environment.baseUrl}/v1/projects/${id}/executions`);
   }
 }
