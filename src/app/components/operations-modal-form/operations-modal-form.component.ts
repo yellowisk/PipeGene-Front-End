@@ -47,9 +47,9 @@ export class OperationsModalFormComponent implements OnInit {
   return(): void {
     if (!this.validateForm()) { return; }
     const operation = {
-      name: this.operationForm.get('type').value,
+      type: this.operationForm.get('type').value,
       description: this.operationForm.get('description').value,
-      parameters: this.parameters,
+      params: this.parameters,
     };
     this.newOperation.emit(operation);
     this.operationForm.reset();

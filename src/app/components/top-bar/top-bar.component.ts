@@ -14,8 +14,8 @@ export class TopBarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  toggle() {
-    this.toggleMenu.emit(true)
+  toggle(): void {
+    this.toggleMenu.emit(true);
   }
 
 }

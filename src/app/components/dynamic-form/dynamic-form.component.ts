@@ -1,10 +1,10 @@
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: "app-dynamic-form",
-  templateUrl: "./dynamic-form.component.html",
-  styleUrls: ["./dynamic-form.component.scss"],
+  selector: 'app-dynamic-form',
+  templateUrl: './dynamic-form.component.html',
+  styleUrls: ['./dynamic-form.component.scss'],
 })
 export class DynamicFormComponent implements OnInit {
   @Output() saveInput: EventEmitter<any> = new EventEmitter();
@@ -39,12 +39,12 @@ export class DynamicFormComponent implements OnInit {
     }
   }
 
-  save() {
-    if(!this.validateForm()) return;
+  save(): void {
+    if (!this.validateForm()) { return; }
     this.saveInput.emit(this.paramsForm.value);
   }
 
-  close() {
+  close(): void {
     this.closeForm.emit(true);
   }
 

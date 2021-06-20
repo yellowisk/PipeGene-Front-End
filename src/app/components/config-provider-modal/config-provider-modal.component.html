@@ -6,30 +6,23 @@
         </button>
     </div>
     <div class="modal-body">
-        <p class="description" *ngIf="!openForm">É necessário configurar as operações do serviço.</p>
+        <p class="description" *ngIf="!openForm">Selecione uma das operações realizadas pelo serviço abaixo e preencha
+            os parâmetros necessários.</p>
 
 
         <div class="row" *ngIf="!openForm">
             <div class="col-12" *ngFor="let operation of operations">
                 <div class="operation">
                     <p>{{operation.type}}</p>
-                    <button (click)="configForm(operation)" *ngIf="!configuredOperations.includes(operation.type)">Configurar</button>
-                    <i class="fas fa-check-circle" *ngIf="configuredOperations.includes(operation.type)"></i>
+                    <button (click)="configForm(operation)">
+                        Selecionar
+                    </button>
                 </div>
             </div>
         </div>
 
-        <app-dynamic-form 
-        *ngIf="openForm" 
-        [params]="selectedOperation.params" 
-        [description]="selectedOperation.description"
-        (saveInput)="saveOperationParams($event)"
-        (closeForm)="closeForm($event)"></app-dynamic-form>
+        <app-dynamic-form *ngIf="openForm" [params]="selectedOperation.params"
+            [description]="selectedOperation.description" (saveInput)="saveOperationParams($event)"></app-dynamic-form>
 
-
-        <div class="modal-footer d-flex justify-content-between align-items-center mt-5 pr-0" *ngIf="!openForm">
-            <div></div>
-            <button class="btn save-btn" (click)="return()">Concluir</button>
-        </div>
     </div>
 </ng-template>

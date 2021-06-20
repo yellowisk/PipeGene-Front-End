@@ -22,7 +22,7 @@ export class ProjectsComponent implements OnInit {
   getProjects(): void {
     this.projectService.listProjects().subscribe(
       (response) => {
-        console.log(response)
+        console.log(response);
         this.projects = response;
       },
       (error: HttpErrorResponse) => {

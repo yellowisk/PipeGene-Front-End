@@ -1,3 +1,4 @@
+import { PipelineService } from './../pipeline.service';
 import { ProjectService } from './../../projects/project.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -5,7 +6,6 @@ import { Router } from '@angular/router';
 import { ConfigProviderModalComponent } from 'src/app/components/config-provider-modal/config-provider-modal.component';
 import { IProject } from 'src/app/interfaces/project.interface';
 import { IProvider } from 'src/app/interfaces/provider.interface';
-import { ExecutionService } from '../../executions/execution.service';
 import { ProviderService } from '../../providers/provider.service';
 
 @Component({
@@ -24,9 +24,12 @@ export class PipelineFormComponent implements OnInit {
   selectedProviders: IProvider[] = [];
   steps: any[] = [];
 
+  serviceConfigIndex: number;
+
   constructor(
     private readonly providerService: ProviderService,
     private readonly projectService: ProjectService,
+    private readonly pipelineService: PipelineService,
     private readonly formBuilder: FormBuilder,
     private readonly router: Router
   ) {}
@@ -38,15 +41,15 @@ export class PipelineFormComponent implements OnInit {
       executionSteps: this.formBuilder.array([]),
     });
 
-    this.pipelineForm.get("projectId").valueChanges.subscribe((value) => {
+    this.pipelineForm.get('projectId').valueChanges.subscribe((value) => {
       this.selectedProject = this.projects.filter(
         (project) => project.id === value
       )[0];
       this.addStep();
     });
 
-    // this.getProviders();
-    // this.getProjects()
+    this.getProviders();
+    this.getProjects();
   }
 
   getProviders(): void {
@@ -58,16 +61,15 @@ export class PipelineFormComponent implements OnInit {
   getProjects(): void {
     this.projectService.listProjects().subscribe((response) => {
       this.projects = response;
-    })
+    });
   }
-
-  createPipeline(): void {}
 
   initStepRow(inputType: string | null): FormGroup {
     return this.formBuilder.group({
       providerId: [null, [Validators.required]],
       inputType: [inputType || null],
       outputType: [null, [Validators.required]],
+      params: [null]
     });
   }
 
@@ -91,13 +93,54 @@ export class PipelineFormComponent implements OnInit {
       this.providers.filter(
         (p) =>
           p.id ===
-          this.pipelineForm.get('executionSteps').value[this.steps.length -1]
+          this.pipelineForm.get('executionSteps').value[this.steps.length - 1]
             .providerId
       )[0]
     );
   }
 
-  openConfigProviderModal(): void {
-    this.configProviderModal.open();
+  initServiceConfig(index: number): void {
+    console.log(this.serviceConfigIndex);
+    this.serviceConfigIndex = index;
+    this.configProviderModal.setOperations(
+      this.providers.filter(
+        (p) =>
+          p.id ===
+          this.selectedProviders[index].id
+      )[0].operations
+
+    );
+  }
+
+  saveServiceConfigs(event: any): void {
+    const controlArray = this.pipelineForm.get('executionSteps') as FormArray;
+    controlArray.controls[this.serviceConfigIndex].get('params').setValue(event);
+  }
+
+  serviceIsConfigured(): boolean {
+    const controlArray = this.pipelineForm.get('executionSteps') as FormArray;
+    return controlArray.controls[this.serviceConfigIndex]?.get('params').value?.length > 0;
+  }
+
+  createPipeline(): void {
+    if (!this.validateForm()) { return; }
+    const pipeline = this.pipelineForm.value;
+    this.pipelineService.createPipeline({
+      description: pipeline.executionName,
+      steps: pipeline.executionSteps,
+    }, pipeline.projectId);
+  }
+
+  getControlError(control: string): boolean {
+    const formControl = this.pipelineForm.get(control);
+    return formControl.errors && formControl.touched;
+  }
+
+  validateForm(): boolean {
+    if (this.pipelineForm.valid) {
+      return true;
+    }
+    this.pipelineForm.markAllAsTouched();
+    return false;
   }
 }

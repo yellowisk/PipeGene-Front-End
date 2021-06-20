@@ -6,62 +6,49 @@ import {
   Output,
   TemplateRef,
   ViewChild,
-} from "@angular/core";
-import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
+} from '@angular/core';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { IOperation } from 'src/app/interfaces/provider.interface';
 
 @Component({
-  selector: "app-config-provider-modal",
-  templateUrl: "./config-provider-modal.component.html",
-  styleUrls: ["./config-provider-modal.component.scss"],
+  selector: 'app-config-provider-modal',
+  templateUrl: './config-provider-modal.component.html',
+  styleUrls: ['./config-provider-modal.component.scss'],
 })
 export class ConfigProviderModalComponent implements OnInit {
-  @ViewChild("modal") modal: TemplateRef<any>;
+  @ViewChild('modal') modal: TemplateRef<any>;
   @Output() newOperation: EventEmitter<any> = new EventEmitter();
   modalRef: BsModalRef;
   openForm = false;
+
   selectedOperation: any | null = null;
 
-  configuredOperations: any[] = [];
-  paramsInput: any[] = [];
+  filledParams: any;
 
-  @Input() operations: any[];
+  @Input() operations: IOperation[];
 
   constructor(private readonly modalService: BsModalService) {}
-  ngOnInit(): void {
-    this.operations = [
-      {
-        type: "column",
-        description: "operation description",
-        params: [
-          {
-            type: "text",
-            name: "teste",
-            key: "columns",
-            example: "Hugo_Symbol, Chromosome",
-          },
-        ],
-      },
-    ];
-  }
+  ngOnInit(): void {}
 
-  open(): void {
+  setOperations(operations: IOperation[]): void {
     this.modalRef = this.modalService.show(this.modal);
+    this.operations = operations;
   }
 
   configForm(operation: string): void {
-    console.log(operation);
     this.selectedOperation = operation;
     this.openForm = true;
   }
 
   saveOperationParams(event: any): void {
-    this.paramsInput.push(event);
-    this.configuredOperations.push(this.selectedOperation.type);
-    this.closeForm(null);
+    this.filledParams = event;
+    this.selectedOperation = null;
+    this.openForm = false;
+    this.return();
   }
 
-  closeForm(event: any) {
-    this.openForm = false;
-    this.selectedOperation = null;
+  return(): void {
+    this.newOperation.emit(this.filledParams);
+    this.modalRef.hide();
   }
 }

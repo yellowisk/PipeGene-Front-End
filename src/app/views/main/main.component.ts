@@ -11,14 +11,14 @@ export class MainComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    if (window.matchMedia("(min-width: 768px)").matches) {
-      this.showMenu = true
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      this.showMenu = true;
     } else {
-      this.showMenu = false
+      this.showMenu = false;
     }
   }
 
-  toggleMenu(event: any) {
+  toggleMenu(event: any): void {
     this.showMenu = !this.showMenu;
   }
 
