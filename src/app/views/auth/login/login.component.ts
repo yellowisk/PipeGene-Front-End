@@ -8,37 +8,42 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  invalid = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly signService: SignService,
     private readonly authService: AuthService,
-    private readonly router: Router) {
+    private readonly router: Router
+  ) {
     this.loginForm = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]]
-    })
-   }
-
-  ngOnInit(): void {
+      username: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+    });
   }
 
-  login() {
-    if (!this.validateForm()) return;
+  ngOnInit(): void {}
+
+  login(): void {
+    if (!this.validateForm()) {
+      return;
+    }
     this.signService.login(this.loginForm.value).subscribe(
       (response) => {
-        console.log(response)
-        sessionStorage.setItem('user_id', "teste");
-        this.authService.initSession("teste");
+        sessionStorage.setItem('username', 'Guilherme Sigoli');
+        sessionStorage.setItem('user_id', 'teste');
+        this.authService.initSession('teste');
         this.router.navigate(['/']);
       },
       (error: HttpErrorResponse) => {
-        console.log(error)
-      });
+        console.log(error);
+        this.invalid = true;
+      }
+    );
   }
 
   getControlError(control: string): boolean {
@@ -53,5 +58,4 @@ export class LoginComponent implements OnInit {
     this.loginForm.markAllAsTouched();
     return false;
   }
-
 }

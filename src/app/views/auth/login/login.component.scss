@@ -65,3 +65,14 @@ button {
         cursor: pointer;
     }
 }
+
+.error-message {
+    background-color: #ffcaca;
+    color: #404040;
+    padding: 10px;
+    border-radius: 5px;
+    
+    p{
+        margin: 0;
+    }
+}

@@ -1,11 +1,11 @@
-import { IExecution } from "./../../../interfaces/execution.interface";
-import { ExecutionService } from "./execution.service";
-import { Component, OnInit } from "@angular/core";
+import { IExecution } from './../../../interfaces/execution.interface';
+import { ExecutionService } from './execution.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: "app-executions",
-  templateUrl: "./executions.component.html",
-  styleUrls: ["./executions.component.scss"],
+  selector: 'app-executions',
+  templateUrl: './executions.component.html',
+  styleUrls: ['./executions.component.scss'],
 })
 export class ExecutionsComponent implements OnInit {
   showExecutionsDetails: string;

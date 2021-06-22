@@ -1,3 +1,4 @@
+import { ILogin } from './../../interfaces/auth.interface';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -13,10 +14,10 @@ export class SignService {
   ) { }
 
 
-  login(login: any): Observable<any> {
+  login(login: ILogin): Observable<any> {
     return this.http.post<any>(`http://localhost:8080/login`, {
-      username: "annasmith",
-      password: "password"
+      username: 'annasmith',
+      password: 'password'
     });
   }
 }

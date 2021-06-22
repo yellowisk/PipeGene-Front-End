@@ -10,12 +10,15 @@
             <form [formGroup]="loginForm">
                 <div class="row mt-5">
                     <div class="col-12 d-flex flex-column mb-3">
-                        <div class="label-float">
-                            <input [class.error]="getControlError('email')" type="text" placeholder=" "
-                                formControlName="email" />
-                            <label [class.error]="getControlError('email')">Email</label>
+                        <div class="error-message" *ngIf="invalid"> 
+                            <p>Username ou senha incorretos</p>
                         </div>
-                        <app-input-validation class="mb-3" [control]="loginForm.get('email')"></app-input-validation>
+                        <div class="label-float">
+                            <input [class.error]="getControlError('username')" type="text" placeholder=" "
+                                formControlName="username" />
+                            <label [class.error]="getControlError('username')">Username</label>
+                        </div>
+                        <app-input-validation class="mb-3" [control]="loginForm.get('username')"></app-input-validation>
 
                         <div class="label-float">
                             <input [class.error]="getControlError('password')" type="password" placeholder=" "

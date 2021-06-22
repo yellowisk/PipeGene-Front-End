@@ -19,7 +19,7 @@ export class TopBarComponent implements OnInit {
     this.toggleMenu.emit(true);
   }
 
-  signout(){
+  signout(): void{
     this.authService.resetSession();
   }
 

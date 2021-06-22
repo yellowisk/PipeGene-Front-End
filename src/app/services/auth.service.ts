@@ -19,11 +19,11 @@ export class AuthService {
         return this.cookieService.get('token');
     }
 
-    initSession(token: string) {
+    initSession(token: string): void {
         this.cookieService.put('token', token);
     }
 
-    resetSession() {
+    resetSession(): void {
         this.cookieService.removeAll();
         this.router.navigate(['login']);
     }
