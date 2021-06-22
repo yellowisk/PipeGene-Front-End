@@ -64,7 +64,6 @@ export class ProviderFormComponent implements OnInit {
   }
 
   addOperation(event: any): void {
-    console.log(event);
     this.operations.push(event);
   }
 

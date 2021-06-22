@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit {
   }
 
   getExecutions(): any {
-    console.log('oi');
     this.executionService.listExecutions().subscribe((response) => {
       this.executions = response;
     });

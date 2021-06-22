@@ -50,5 +50,18 @@ export class ConfigProviderModalComponent implements OnInit {
   return(): void {
     this.newOperation.emit(this.filledParams);
     this.modalRef.hide();
+    this.selectedOperation = null;
+    this.openForm = false;
+  }
+
+  closeModal(): void {
+    this.modalRef.hide();
+    this.selectedOperation = null;
+    this.openForm = false;
+  }
+
+  closeForm(): void {
+    this.selectedOperation = null;
+    this.openForm = false;
   }
 }

@@ -15,7 +15,6 @@ export class ProjectService {
     formData.append('name', project.name);
     formData.append('description', project.description);
     files.forEach((file) => formData.append('files', file, file.name));
-    console.log(project, files, formData);
 
     return this.http.post<IProject>(
       `${environment.baseUrl}/v1/projects/`,

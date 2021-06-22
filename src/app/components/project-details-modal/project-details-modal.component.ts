@@ -32,7 +32,6 @@ export class ProjectDetailsModalComponent implements OnInit {
     this.modalRef = this.modalService.show(this.modal);
     this.executionService.listProjectExecutions(data.id).subscribe(response => {
       this.executions = response;
-      console.log(response);
     });
   }
 

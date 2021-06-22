@@ -79,7 +79,6 @@ export class ProjectFormComponent implements OnInit {
 
   setEditMode(id: string): void {
     this.projectService.getOneProject(id).subscribe((response) => {
-      console.log(response);
       this.projectForm.get('id').setValue(response.id);
       this.projectForm.get('name').setValue(response.name);
       this.projectForm.get('description').setValue(response.description);

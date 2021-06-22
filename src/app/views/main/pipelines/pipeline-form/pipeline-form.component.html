@@ -38,7 +38,7 @@
                                     <div class="col-12">
                                         <div class="label-float">
                                             <select placeholder=" " formControlName="providerId"
-                                                (change)="setProvider()">
+                                                (change)="setProvider(index)">
                                                 <option value="1">Selecione o serviço</option>
                                                 <option [value]="provider.id" *ngFor="let provider of providers">
                                                     {{provider.name}}</option>

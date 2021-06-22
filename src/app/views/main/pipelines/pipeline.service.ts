@@ -15,7 +15,6 @@ export class PipelineService {
     pipeline: IPipeline,
     projectId: string
   ): Observable<IPipeline> {
-    console.log('service', pipeline, projectId);
     return this.http.post<IPipeline>(
       `${environment.baseUrl}/v1/projects/${projectId}/pipelines`,
       pipeline

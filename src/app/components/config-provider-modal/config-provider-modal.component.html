@@ -1,7 +1,7 @@
 <ng-template #modal>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Configurar Serviço</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -22,7 +22,7 @@
         </div>
 
         <app-dynamic-form *ngIf="openForm" [params]="selectedOperation.params"
-            [description]="selectedOperation.description" (saveInput)="saveOperationParams($event)"></app-dynamic-form>
+            [description]="selectedOperation.description" (saveInput)="saveOperationParams($event)" (closeForm)="closeForm()"></app-dynamic-form>
 
     </div>
 </ng-template>

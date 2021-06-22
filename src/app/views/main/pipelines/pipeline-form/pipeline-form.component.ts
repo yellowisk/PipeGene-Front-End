@@ -56,7 +56,6 @@ export class PipelineFormComponent implements OnInit {
 
   getProviders(): void {
     this.providerService.listProviders().subscribe((response) => {
-      console.log(response);
       this.providers = response;
     });
   }
@@ -91,15 +90,15 @@ export class PipelineFormComponent implements OnInit {
     return null;
   }
 
-  setProvider(): void {
-    this.selectedProviders.push(
+  setProvider(index: number): void {
+    this.selectedProviders[index] =
       this.providers.filter(
         (p) =>
           p.id ===
           this.pipelineForm.get('executionSteps').value[this.steps.length - 1]
             .providerId
-      )[0]
-    );
+      )[0];
+
   }
 
   initServiceConfig(index: number): void {
