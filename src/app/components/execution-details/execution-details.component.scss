@@ -1,6 +1,12 @@
 .details-body {
-    padding: 30px 20px 20px 20px;
+    padding: 10px 20px 20px 20px;
     background-color: #ebeeef;
+}
+
+.fa-redo-alt {
+    margin-bottom: 15px;
+    color: #555555;
+    cursor: pointer;
 }
 
 .base {
@@ -82,6 +88,80 @@
     border: 2px solid #fa7070;
 }
 
+.execution-body {
+    margin-bottom: 25px;
+}
+
+.execution-header {
+    min-height: 50px;
+    box-shadow: 1px 2px 4px 0px #c8c8c8;
+    position: relative;
+
+    .status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        i {
+            font-size: 30px;
+            color: white;
+        }
+    }
+
+    .description {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .execution-description {
+            width: 100%;
+
+            .e-title {
+                margin: 0;
+                color: #5f5e5e;
+            }
+
+            .dataset {
+                margin: 0;
+                color: grey;
+                font-size: 12px;
+            }
+        }
+
+        i {
+            color: grey;
+            cursor: pointer;
+        }
+    }
+}
+
+
+.h-success {
+    background-color: #9ddf9d;
+}
+
+.h-in-progress {
+    background-color: #f1d30d;
+}
+
+.h-n-executed {
+    background-color: #aeaeae;
+}
+
+.h-error {
+    background-color: #fa7070;
+
+}
+
+.expandle {
+    transition: all .5s ease-in-out;
+    height: 0;
+
+    .expandable:target {
+        height: 100%;
+    }
+}
+
 #steps::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: transparent;
@@ -104,7 +184,7 @@
     justify-content: flex-end;
     margin-top: 50px;
 
-    button {
+    a {
         background-color: #3997c0;
         border: none;
         padding: 5px 10px;
@@ -114,6 +194,7 @@
         align-items: center;
         justify-content: space-between;
         transition: 0.3s ease;
+        text-decoration: none;
 
         i {
             color: #1e6b8c;

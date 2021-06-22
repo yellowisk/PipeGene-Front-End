@@ -10,6 +10,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 import { PipelinesComponent } from './pipelines/pipelines.component';
 import { PipelineFormComponent } from './pipelines/pipeline-form/pipeline-form.component';
+import { ExecutionDetailsModule } from 'src/app/components/execution-details/execution-details.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { PipelineFormComponent } from './pipelines/pipeline-form/pipeline-form.c
     CommonModule,
     MainRoutingModule,
     RouterModule,
-    CardModule
+    CardModule,
+    ExecutionDetailsModule
   ],
   providers: [],
   bootstrap: []

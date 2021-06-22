@@ -12,27 +12,8 @@
     </div>
 
     <div class="col-md-10 col-12 mt-3">
-      <div class="" *ngFor="let execution of executions">
-        <div class="execution-body">
-          <div class="execution-header row">
-            <div class="col-md-3 col-12 status" [class]="getStatus(execution.status)">
-              <i [class]="getIconStatus(execution.status)"></i>
-            </div>
-            <div class="col-md-9 col-12 description">
-              <div class="execution-description">
-                <p class="e-title">{{execution.description}}</p>
-                <p class="dataset">{{execution.dataset.filename}}</p>
-              </div>
-              <i class="fas fa-chevron-down" (click)="showDetails(execution.id)"></i>
-            </div>
-          </div>
-          <div class="row animate__animated animate__fadeInDown" *ngIf="showExecutionsDetails === execution.id">
-            <div class="col-12 p-0">
-              <app-execution-details *ngIf="showExecutionsDetails === execution.id" [execution]="execution"></app-execution-details>
-            </div>
-          </div>
-        </div>
-      </div>
+      <app-execution-details *ngIf="executions.length > 0" [executions]="executions" (refresh)="getExecutions()">
+      </app-execution-details>
 
       <app-empty-state *ngIf="executions.length === 0"></app-empty-state>
     </div>

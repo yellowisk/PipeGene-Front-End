@@ -1,4 +1,3 @@
-import { ExecutionDetailsComponent } from './../../../components/execution-details/execution-details.component';
 import { InputValidationModule } from './../../../components/input-validation/input-validation.module';
 import { EmptyStateModule } from '../../../components/empty-state/empty-state.module';
 import { CardModule } from './../../../components/card/card.module';
@@ -10,13 +9,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExecutionsRoutingModule } from './executions-routing.module';
+import { ExecutionDetailsModule } from 'src/app/components/execution-details/execution-details.module';
 
 
 @NgModule({
   declarations: [
     ExecutionsComponent,
     ExecutionFormComponent,
-    ExecutionDetailsComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -26,7 +25,8 @@ import { ExecutionsRoutingModule } from './executions-routing.module';
     ExecutionsRoutingModule,
     CardModule,
     EmptyStateModule,
-    InputValidationModule
+    InputValidationModule,
+    ExecutionDetailsModule
   ],
   providers: [],
   bootstrap: []

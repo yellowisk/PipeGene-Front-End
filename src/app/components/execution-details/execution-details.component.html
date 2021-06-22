@@ -1,24 +1,47 @@
-<div class="details-body">
-    <div class="steps-line" id="steps">
-        <div class="base" *ngFor="let item of execution.steps; let i=index">
-            <div class="step-item">
-                <div class="step-info" [class]="getStatus(item)">
-                    <i [class]="getIconStatus(item)"></i>
-                    <p>{{item.provider.name}}</p>
+<div class="" *ngFor="let execution of executions">
+    <div class="execution-body">
+        <div class="execution-header row">
+            <div class="col-md-3 col-12 status" [class]="getHeaderStatus(execution.status)">
+                <i [class]="getIconStatus(execution.status)"></i>
+            </div>
+            <div class="col-md-9 col-12 description">
+                <div class="execution-description">
+                    <p class="e-title">{{execution.description}}</p>
+                    <p class="dataset">{{execution.dataset.filename}}</p>
+                </div>
+                <i class="fas fa-chevron-down" (click)="showDetails(execution.id)"></i>
+            </div>
+        </div>
+        <div class="row animate__animated animate__fadeInDown" *ngIf="showExecutionsDetails === execution.id">
+            <div class="col-12 p-0">
+                <div class="details-body">
+                    <div class="d-flex w-100 justify-content-end">
+                        <i class="fas fa-redo-alt" (click)="refreshExecutions()"></i>
+                    </div>
+                    <div class="steps-line" id="steps">
+                        <div class="base" *ngFor="let item of execution.steps; let i=index">
+                            <div class="step-item">
+                                <div class="step-info" [class]="getStatus(item)">
+                                    <i [class]="getIconStatus(item.state)"></i>
+                                    <p>{{item.provider.name}}</p>
+                                </div>
+                            </div>
+                            <div class="line" *ngIf="i < execution.steps.length - 1"></div>
+                        </div>
+                    </div>
+                    <div class="details-footer">
+                        <a *ngIf="execution.executionResult" [href]="execution.executionResult" target="_blank">
+                            Baixar Resultado
+                            <i class="fas fa-arrow-circle-down"></i>
+                        </a>
+
+                        <div class="error-msg" *ngIf="execution.errorMessage">
+                            <img src="../../../assets/img/warning.png">
+                            <p>Sua execução falhou.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="line" *ngIf="i < execution.steps.length - 1"></div>
-        </div>
-    </div>
-    <div class="details-footer">
-        <button *ngIf="execution.executionResult">
-            Baixar Resultado
-            <i class="fas fa-arrow-circle-down"></i>
-        </button>
-
-        <div class="error-msg" *ngIf="execution.errorMessage">
-            <img src="../../../assets/img/warning.png">
-            <p>Sua execução falhou.</p>
         </div>
     </div>
 </div>

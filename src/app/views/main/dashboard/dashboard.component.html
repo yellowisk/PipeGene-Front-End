@@ -15,7 +15,13 @@
       </div>
     </div>
   </div>
-  <div class="c-card">
-    <h5>Execuções em Andamento</h5>
+  <div class="c-card" *ngIf="executions.length > 0">
+    <h5 class="mb-4">Suas Execuções</h5>
+    <div class="d-flex flex-column w-100 justify-content-center">
+      <div class="col-12">
+        <app-execution-details *ngIf="executions.length > 0" [executions]="executions" (refresh)="getExecutions()">
+        </app-execution-details>
+      </div>
+    </div>
   </div>
 </div>

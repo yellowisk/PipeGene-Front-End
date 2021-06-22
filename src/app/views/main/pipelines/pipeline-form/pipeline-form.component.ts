@@ -56,6 +56,7 @@ export class PipelineFormComponent implements OnInit {
 
   getProviders(): void {
     this.providerService.listProviders().subscribe((response) => {
+      console.log(response)
       this.providers = response;
     });
   }
