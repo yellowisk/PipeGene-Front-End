@@ -13,7 +13,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class ProjectDetailsModalComponent implements OnInit {
   @ViewChild('modal') modal: TemplateRef<any>;
   modalRef: BsModalRef;
-  executions: any [];
+  executions: any [] = [];
 
   project: IProject;
 

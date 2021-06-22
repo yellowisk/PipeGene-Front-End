@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExecutionsComponent implements OnInit {
    showExecutionsDetails: string;
-  executions: IExecution[];
+  executions: IExecution[] = [];
 
   constructor(private readonly executionService: ExecutionService) {}
 
