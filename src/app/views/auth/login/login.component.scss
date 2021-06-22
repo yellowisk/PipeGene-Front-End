@@ -2,7 +2,7 @@
 @import '/src/assets/styles/variables.scss';
 
 .login-body {
-    background: url("../../../assets/img/image.png") no-repeat;
+    background: url("../../../../assets/img/image.png") no-repeat;
     background-size: cover;
     min-height: 100vh;
     display: flex;
@@ -10,7 +10,7 @@
 }
 
 .login-card {
-    margin: 40px 0px;
+    margin-top: 40px;
     min-height: 500px;
     background-color: white;
     border-radius: 10px;
@@ -64,9 +64,4 @@ button {
         color: #379abf;
         cursor: pointer;
     }
-}
-
-.opcional {
-    font-size: 12px;
-    color: gray;
 }

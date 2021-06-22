@@ -1,7 +1,8 @@
-import { SignupComponent } from './views/signup/signup.component';
-import { LoginComponent } from './views/login/login.component';
+import { SignupComponent } from './views/auth/signup/signup.component';
+import { LoginComponent } from './views/auth/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -10,6 +11,7 @@ const routes: Routes = [
       import('./views/main/main.module').then(
         (m) => m.MainModule
       ),
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',

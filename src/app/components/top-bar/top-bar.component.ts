@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -9,13 +10,17 @@ export class TopBarComponent implements OnInit {
   @Output() toggleMenu: EventEmitter<boolean> = new EventEmitter();
 
 
-  constructor() { }
+  constructor(private readonly authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
   toggle(): void {
     this.toggleMenu.emit(true);
+  }
+
+  signout(){
+    this.authService.resetSession();
   }
 
 }
