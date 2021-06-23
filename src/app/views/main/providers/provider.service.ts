@@ -11,12 +11,12 @@ export class ProviderService {
   constructor(private http: HttpClient) {}
 
   listProviders(): Observable<IProvider[]> {
-    return this.http.get<IProvider[]>(`${environment.baseUrl}/v1/providers/`);
+    return this.http.get<IProvider[]>(`${environment.baseUrl}/api/v1/providers/`);
   }
 
   submitProviders(provider: IProvider): Observable<IProvider> {
     return this.http.post<IProvider>(
-      `${environment.baseUrl}/v1/providers/`,
+      `${environment.baseUrl}/api/v1/providers/`,
       provider
     );
   }

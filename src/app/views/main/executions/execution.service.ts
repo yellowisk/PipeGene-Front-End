@@ -12,17 +12,17 @@ export class ExecutionService {
 
   createExecution(execution: ICreateExecution, projectId: string): Observable<IExecution> {
     return this.http.post<IExecution>(
-      `${environment.baseUrl}/v1/projects/${projectId}/executions`,
+      `${environment.baseUrl}/api/v1/projects/${projectId}/executions`,
       execution
     );
   }
 
   listExecutions(): Observable<IExecution[]> {
-    return this.http.get<IExecution[]>(`${environment.baseUrl}/v1/users/78cec5db-6396-4fd9-803f-1fd469d76330/executions`);
+    return this.http.get<IExecution[]>(`${environment.baseUrl}/api/v1/users/78cec5db-6396-4fd9-803f-1fd469d76330/executions`);
   }
 
 
   listProjectExecutions(id: string): Observable<IExecution[]> {
-    return this.http.get<IExecution[]>(`${environment.baseUrl}/v1/projects/${id}/executions`);
+    return this.http.get<IExecution[]>(`${environment.baseUrl}/api/v1/projects/${id}/executions`);
   }
 }

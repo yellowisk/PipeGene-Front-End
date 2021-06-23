@@ -33,10 +33,8 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.signService.login(this.loginForm.value).subscribe(
-      (response) => {
-        sessionStorage.setItem('username', 'Guilherme Sigoli');
-        sessionStorage.setItem('user_id', 'teste');
-        this.authService.initSession('teste');
+      (response: Response) => {
+        this.authService.initSession(response.headers.get('Authorization'));
         this.router.navigate(['/']);
       },
       (error: HttpErrorResponse) => {

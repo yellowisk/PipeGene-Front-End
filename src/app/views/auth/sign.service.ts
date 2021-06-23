@@ -1,4 +1,4 @@
-import { ILogin } from './../../interfaces/auth.interface';
+import { ILogin, ISignup, IUser } from './../../interfaces/auth.interface';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -15,9 +15,11 @@ export class SignService {
 
 
   login(login: ILogin): Observable<any> {
-    return this.http.post<any>(`http://localhost:8080/login`, {
-      username: 'annasmith',
-      password: 'password'
-    });
+    return this.http.post<any>(`${environment.baseUrl}/login`, login, {observe: "response"});
+  }
+
+
+  signup(signup: ISignup): Observable<IUser> {
+    return this.http.post<IUser>(`${environment.baseUrl}/register`, signup);
   }
 }

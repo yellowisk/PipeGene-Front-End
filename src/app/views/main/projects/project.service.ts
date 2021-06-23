@@ -17,24 +17,24 @@ export class ProjectService {
     files.forEach((file) => formData.append('files', file, file.name));
 
     return this.http.post<IProject>(
-      `${environment.baseUrl}/v1/projects/`,
+      `${environment.baseUrl}/api/v1/projects/`,
       formData
     );
   }
 
   listProjects(): Observable<IProject[]> {
-    return this.http.get<IProject[]>(`${environment.baseUrl}/v1/projects/`);
+    return this.http.get<IProject[]>(`${environment.baseUrl}/api/v1/projects/`);
   }
 
   deleteProject(id: string): void {}
 
   getOneProject(id: string): Observable<IProject> {
-    return this.http.get<IProject>(`${environment.baseUrl}/v1/projects/${id}`);
+    return this.http.get<IProject>(`${environment.baseUrl}/api/v1/projects/${id}`);
   }
 
   saveEdit(project: IProject): Observable<IProject> {
     return this.http.put<IProject>(
-      `${environment.baseUrl}/v1/projects/${project.id}`,
+      `${environment.baseUrl}/api/v1/projects/${project.id}`,
       {
         name: project.name,
         description: project.description

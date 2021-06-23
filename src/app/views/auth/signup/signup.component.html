@@ -7,39 +7,49 @@
                     <p class="title two">GENE</p>
                 </div>
             </div>
-            <div class="row mt-5">
-                <div class="col-12 d-flex flex-column mb-3">
-                    <div class="label-float mb-2">
-                        <input type="text" placeholder=" " formControlName="executionName" />
-                        <label>Email</label>
-                    </div>
-                    <div class="label-float mb-2">
-                        <input type="text" placeholder=" " formControlName="executionName" />
-                        <label>Nome</label>
-                    </div>
-                    <div class="label-float mb-1">
-                        <input type="text" placeholder=" " formControlName="executionName" />
-                        <label>Senha</label>
-                    </div>
-                    <hr>
+            <form [formGroup]="signupForm">
+                <div class="row mt-5">
+                    <div class="col-12 d-flex flex-column mb-3">
+                        <div class="error-message" *ngIf="invalid"> 
+                            <p>Ops! Username já em uso.</p>
+                        </div>
+                        <div class="label-float">
+                            <input [class.error]="getControlError('username')" type="text" placeholder=" " formControlName="username" />
+                            <label [class.error]="getControlError('username')">Username</label>
+                        </div>
+                        <app-input-validation class="mb-2" [control]="signupForm.get('username')"></app-input-validation>
 
-                    <div class="label-float">
-                        <input type="text" placeholder=" " formControlName="executionName" />
-                        <label>ORCID</label>
-                    </div>
-                    <span class="opcional">*Opcional</span>
-                    <div class="label-float">
-                        <input type="text" placeholder=" " formControlName="executionName" />
-                        <label>Github</label>
-                    </div>
-                    <span class="opcional">*Opcional</span>
+                        <div class="label-float">
+                            <input [class.error]="getControlError('name')"type="text" placeholder=" " formControlName="name" />
+                            <label [class.error]="getControlError('name')">Nome</label>
+                        </div>
+                        <app-input-validation class="mb-2" [control]="signupForm.get('name')"></app-input-validation>
+
+                        <div class="label-float">
+                            <input [class.error]="getControlError('password')" type="password" placeholder=" " formControlName="password" />
+                            <label [class.error]="getControlError('password')">Senha</label>
+                        </div>
+                        <hr>
+                        <app-input-validation class="mb-1" [control]="signupForm.get('password')"></app-input-validation>
 
 
-                    <button class="btn mt-5 mb-5">Cadastrar</button>
+                        <div class="label-float">
+                            <input type="text" placeholder=" " formControlName="executionName" />
+                            <label>ORCID</label>
+                        </div>
+                        <span class="opcional">*Opcional</span>
+                        <div class="label-float">
+                            <input type="text" placeholder=" " formControlName="executionName" />
+                            <label>Github</label>
+                        </div>
+                        <span class="opcional">*Opcional</span>
 
-                    <p class="signup">Já tem uma conta? <span [routerLink]="['/login']">Login</span> </p>
+                        <button class="btn mt-5 mb-5" (click)="signup()">Cadastrar</button>
+
+                        <p class="signup">Já tem uma conta? <span [routerLink]="['/login']">Login</span> </p>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
