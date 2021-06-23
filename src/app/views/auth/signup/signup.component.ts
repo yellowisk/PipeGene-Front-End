@@ -1,13 +1,13 @@
-import { HttpErrorResponse } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { SignService } from "./../sign.service";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Component, OnInit } from "@angular/core";
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { SignService } from './../sign.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: "app-signup",
-  templateUrl: "./signup.component.html",
-  styleUrls: ["./signup.component.scss"],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit {
 
   signup(): void {
     this.signService.signup(this.signupForm.value).subscribe(
-      () => this.router.navigate(["/login"]),
+      () => this.router.navigate(['/login']),
       (error: HttpErrorResponse) => {
         console.log(error);
         this.invalid = true;
