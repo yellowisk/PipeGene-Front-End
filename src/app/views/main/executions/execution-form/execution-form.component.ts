@@ -54,7 +54,7 @@ export class ExecutionFormComponent implements OnInit {
   }
 
   getPipelines(id: string): void {
-    this.pipelineService.listPipelines(id).subscribe((response) => {
+    this.pipelineService.listProjectPipelines(id).subscribe((response) => {
       this.pipelines = response;
     });
   }

@@ -17,7 +17,7 @@ export class PipelinesComponent implements OnInit {
   }
 
   getPipelines(): void {
-    this.pipelineService.listPipelines('').subscribe(response => {
+    this.pipelineService.listPipelines().subscribe(response => {
       this.pipelines = response;
     });
   }

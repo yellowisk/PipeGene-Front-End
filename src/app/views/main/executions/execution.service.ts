@@ -18,7 +18,7 @@ export class ExecutionService {
   }
 
   listExecutions(): Observable<IExecution[]> {
-    return this.http.get<IExecution[]>(`${environment.baseUrl}/api/v1/users/78cec5db-6396-4fd9-803f-1fd469d76330/executions`);
+    return this.http.get<IExecution[]>(`${environment.baseUrl}/api/v1/users/${sessionStorage.getItem('user_id')}/executions`);
   }
 
 

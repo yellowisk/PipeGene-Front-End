@@ -20,8 +20,11 @@ export class PipelineService {
     );
   }
 
-  listPipelines(projectId: string): Observable<IPipeline[]> {
-    projectId = 'f2d6a949-8bb5-4df5-8ca7-e5b8d2292488';
+  listPipelines(): Observable<IPipeline[]> {
+    return this.http.get<IPipeline[]>(`${environment.baseUrl}/api/v1/users/${sessionStorage.getItem('user_id')}/pipelines`);
+  }
+
+  listProjectPipelines(projectId: string): Observable<IPipeline[]> {
     return this.http.get<IPipeline[]>(`${environment.baseUrl}/api/v1/projects/${projectId}/pipelines`);
   }
 }
