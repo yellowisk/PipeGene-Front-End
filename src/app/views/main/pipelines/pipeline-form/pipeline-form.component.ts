@@ -79,8 +79,24 @@ export class PipelineFormComponent implements OnInit {
     this.steps.push(this.steps.length + 1);
     const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
     stepsArray.push(this.initStepRow(this.getFileType()));
+
+    console.log(this.steps);
+    console.log(this.selectedProviders);
+    console.log(stepsArray);
   }
 
+  removeStep(index: number): void {
+    const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
+    if (stepsArray.length <= 1) { return; }
+    this.steps.splice(this.steps.length - 1, 1);
+    this.selectedProviders.splice(this.providers.length - 1, 1);
+    stepsArray.removeAt(index);
+
+    console.log(this.steps);
+    console.log(this.selectedProviders);
+    console.log(stepsArray);
+
+  }
   getFileType(): string | null {
     if (this.pipelineForm.get('executionSteps').value.length > 0) {
       return this.pipelineForm.get('executionSteps').value[
@@ -145,10 +161,12 @@ export class PipelineFormComponent implements OnInit {
   }
 
   validateForm(): boolean {
-    if (this.pipelineForm.valid) {
+    const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
+    if (this.pipelineForm.valid && stepsArray.valid) {
       return true;
     }
     this.pipelineForm.markAllAsTouched();
+    stepsArray.markAllAsTouched();
     return false;
   }
 }

@@ -14,12 +14,15 @@
                         <div class="row">
                             <div class="col-12 d-flex flex-column mb-3">
                                 <div class="label-float">
-                                    <input [class.error]="getControlError('executionName')" type="text" placeholder=" " formControlName="executionName" />
+                                    <input [class.error]="getControlError('executionName')" type="text" placeholder=" "
+                                        formControlName="executionName" />
                                     <label [class.error]="getControlError('executionName')">Nome</label>
                                 </div>
-                                <app-input-validation [control]="pipelineForm.get('executionName')"></app-input-validation>
+                                <app-input-validation [control]="pipelineForm.get('executionName')">
+                                </app-input-validation>
                                 <div class="label-float">
-                                    <select [class.error]="getControlError('projectId')" placeholder=" " formControlName="projectId">
+                                    <select [class.error]="getControlError('projectId')" placeholder=" "
+                                        formControlName="projectId">
                                         <option value="1">Selecione o Projeto</option>
                                         <option [value]="project.id" *ngFor="let project of projects">
                                             {{project.name}}</option>
@@ -59,17 +62,19 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12 pt-2">
-                                        <button class="configure-btn" (click)="initServiceConfig(index)">Configurar Serviço</button>
+                                        <button class="configure-btn" (click)="initServiceConfig(index)">Configurar
+                                            Serviço</button>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center mt-3">
+                                <button class="plus" (click)="removeStep(index)"
+                                    *ngIf="index === (pipelineForm.get('executionSteps')['controls'].length -1) && index > 0">-</button>
                                 <div class="line"
-                                    [class.total]="(index !== pipelineForm.get('executionSteps')['controls'].length -1) || !serviceIsConfigured(index)">
+                                    [class.total]="index !== pipelineForm.get('executionSteps')['controls'].length -1 || index === 0">
                                 </div>
-                                <button class="plus" (click)="addStep()"
-                                    *ngIf="index === (pipelineForm.get('executionSteps')['controls'].length -1)
+                                <button class="plus" (click)="addStep()" *ngIf="index === (pipelineForm.get('executionSteps')['controls'].length -1)
                                      && serviceIsConfigured(index)">+</button>
                             </div>
                         </div>
@@ -87,8 +92,8 @@
                 </div>
             </form>
         </div>
-    </div>   
+    </div>
 
-    <app-config-provider-modal #configProviderModal (newOperation)="saveServiceConfigs($event)" >
+    <app-config-provider-modal #configProviderModal (newOperation)="saveServiceConfigs($event)">
     </app-config-provider-modal>
 </app-card>
