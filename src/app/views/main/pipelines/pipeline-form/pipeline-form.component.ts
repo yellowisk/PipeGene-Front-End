@@ -79,10 +79,6 @@ export class PipelineFormComponent implements OnInit {
     this.steps.push(this.steps.length + 1);
     const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
     stepsArray.push(this.initStepRow(this.getFileType()));
-
-    console.log(this.steps);
-    console.log(this.selectedProviders);
-    console.log(stepsArray);
   }
 
   removeStep(index: number): void {
@@ -91,11 +87,6 @@ export class PipelineFormComponent implements OnInit {
     this.steps.splice(this.steps.length - 1, 1);
     this.selectedProviders.splice(this.providers.length - 1, 1);
     stepsArray.removeAt(index);
-
-    console.log(this.steps);
-    console.log(this.selectedProviders);
-    console.log(stepsArray);
-
   }
   getFileType(): string | null {
     if (this.pipelineForm.get('executionSteps').value.length > 0) {
