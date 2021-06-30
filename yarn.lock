@@ -5820,6 +5820,13 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
+ng-connection-service@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/ng-connection-service/-/ng-connection-service-1.0.4.tgz#02854a6eabd9a8fe44f0ad63024289652039a179"
+  integrity sha512-WrZfK+hUzrJS77ItxXI08rUN6Av77W3+LsaJEPufyo2wRe7Tn8xG18FHHEbbgqKkJeDT/yGJBH2xOaT+1jb22g==
+  dependencies:
+    tslib "^1.9.0"
+
 ngx-bootstrap@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-6.2.0.tgz#678b274dabfda31411eb1234c981d1967750d890"

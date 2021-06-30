@@ -1,0 +1,12 @@
+<ng-template #modal>
+
+    <div class="modal-content">
+        <div class="top-icon">
+            <i class="fas fa-{{ modalInfo.icon }}"></i>
+        </div>
+        <div class="title-error">{{ modalInfo.title }}</div>
+        <div class="description-error" [innerHtml]="modalInfo.description"></div>
+        <button class="btn-submit" (click)="modalRef.hide()">OK</button>
+    </div>
+
+</ng-template>

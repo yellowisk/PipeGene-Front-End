@@ -1,3 +1,5 @@
+import { ErrorMap } from 'src/app/enums/error-code.enum';
+import { ErrorService } from 'src/app/services/error.service';
 import { PipelineService } from './../../pipelines/pipeline.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -26,6 +28,7 @@ export class ExecutionFormComponent implements OnInit {
     private readonly executionService: ExecutionService,
     private readonly pipelineService: PipelineService,
     private readonly formBuilder: FormBuilder,
+    private readonly errorService: ErrorService,
     private readonly router: Router
   ) {}
 
@@ -48,15 +51,25 @@ export class ExecutionFormComponent implements OnInit {
   }
 
   getProjects(): void {
-    this.projectService.listProjects().subscribe((response) => {
-      this.projects = response;
-    });
+    this.projectService.listProjects().subscribe(
+      (response) => {
+        this.projects = response;
+      },
+      (error: HttpErrorResponse) => {
+        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+      }
+    );
   }
 
   getPipelines(id: string): void {
-    this.pipelineService.listProjectPipelines(id).subscribe((response) => {
-      this.pipelines = response;
-    });
+    this.pipelineService.listProjectPipelines(id).subscribe(
+      (response) => {
+        this.pipelines = response;
+      },
+      (error: HttpErrorResponse) => {
+        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+      }
+    );
   }
 
   createExecution(): any {
@@ -77,7 +90,7 @@ export class ExecutionFormComponent implements OnInit {
           this.router.navigate(['/executions']);
         },
         (error: HttpErrorResponse) => {
-          console.log(error);
+          this.errorService.setError(ErrorMap.get('FAILED_TO_POST'));
         }
       );
   }

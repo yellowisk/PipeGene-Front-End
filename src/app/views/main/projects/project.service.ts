@@ -26,7 +26,9 @@ export class ProjectService {
     return this.http.get<IProject[]>(`${environment.baseUrl}/api/v1/projects/`);
   }
 
-  deleteProject(id: string): void {}
+  deleteProject(id: string): Observable<any> {
+    return this.http.delete(`${environment.baseUrl}/api/v1/projects/${id}`);
+  }
 
   getOneProject(id: string): Observable<IProject> {
     return this.http.get<IProject>(`${environment.baseUrl}/api/v1/projects/${id}`);

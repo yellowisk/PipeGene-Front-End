@@ -10,9 +10,6 @@
             <form [formGroup]="signupForm">
                 <div class="row mt-5">
                     <div class="col-12 d-flex flex-column mb-3">
-                        <div class="error-message" *ngIf="invalid"> 
-                            <p>Ops! Username já em uso.</p>
-                        </div>
                         <div class="label-float">
                             <input [class.error]="getControlError('username')" type="text" placeholder=" " formControlName="username" />
                             <label [class.error]="getControlError('username')">Username</label>

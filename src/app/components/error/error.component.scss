@@ -1,0 +1,42 @@
+.modal-content {
+    width: 515px;
+    height: 262px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    padding: 24px;
+
+    .top-icon {
+        width: 50px;
+        height: 50px;
+        font-family: FontAwesome5Pro;
+        font-size: 50px;
+        text-align: center;
+        color: #f64747;
+    }
+
+    .title-error {
+        font-size: 18px;
+        margin: 16px;
+        text-align: center;
+        color: #424242;
+    }
+
+    .description-error {
+        font-size: 14px;
+        text-align: center;
+        color: #888888;
+        margin-bottom: 16px;
+    }
+}
+
+.btn-submit {
+    padding: 5px 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #379abf;
+    color: white;
+}

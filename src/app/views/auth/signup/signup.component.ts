@@ -1,8 +1,10 @@
+import { ErrorMap } from './../../../enums/error-code.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { SignService } from './../sign.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,11 +13,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
-  invalid = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly signService: SignService,
+    private readonly errorService: ErrorService,
     private readonly router: Router
   ) {
     this.signupForm = this.formBuilder.group({
@@ -33,8 +35,7 @@ export class SignupComponent implements OnInit {
     this.signService.signup(this.signupForm.value).subscribe(
       () => this.router.navigate(['/login']),
       (error: HttpErrorResponse) => {
-        console.log(error);
-        this.invalid = true;
+        this.errorService.setError(ErrorMap.get('REGISTRATION_FAILED'));
       }
     );
   }

@@ -1,3 +1,4 @@
+import { ErrorComponent } from './components/error/error.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { InputValidationModule } from './components/input-validation/input-validation.module';
 import { HttpRequestInterceptor } from './interceptors/httpRequest.interceptor';
@@ -22,7 +23,8 @@ import { CookieModule } from 'ngx-cookie';
     AppComponent,
     LoginComponent,
     SignupComponent,
-    LoadingComponent
+    LoadingComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

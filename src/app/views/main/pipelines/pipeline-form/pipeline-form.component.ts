@@ -8,6 +8,8 @@ import { ConfigProviderModalComponent } from 'src/app/components/config-provider
 import { IProject } from 'src/app/interfaces/project.interface';
 import { IProvider } from 'src/app/interfaces/provider.interface';
 import { ProviderService } from '../../providers/provider.service';
+import { ErrorService } from 'src/app/services/error.service';
+import { ErrorMap } from 'src/app/enums/error-code.enum';
 
 @Component({
   selector: 'app-pipeline-form',
@@ -32,6 +34,7 @@ export class PipelineFormComponent implements OnInit {
     private readonly projectService: ProjectService,
     private readonly pipelineService: PipelineService,
     private readonly formBuilder: FormBuilder,
+    private readonly errorService: ErrorService,
     private readonly router: Router
   ) {}
 
@@ -47,7 +50,9 @@ export class PipelineFormComponent implements OnInit {
         (project) => project.id === value
       )[0];
       const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
-      if (stepsArray.length < 1) { this.addStep(); }
+      if (stepsArray.length < 1) {
+        this.addStep();
+      }
     });
 
     this.getProviders();
@@ -55,15 +60,25 @@ export class PipelineFormComponent implements OnInit {
   }
 
   getProviders(): void {
-    this.providerService.listProviders().subscribe((response) => {
-      this.providers = response;
-    });
+    this.providerService.listProviders().subscribe(
+      (response) => {
+        this.providers = response;
+      },
+      (error: HttpErrorResponse) => {
+        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+      }
+    );
   }
 
   getProjects(): void {
-    this.projectService.listProjects().subscribe((response) => {
-      this.projects = response;
-    });
+    this.projectService.listProjects().subscribe(
+      (response) => {
+        this.projects = response;
+      },
+      (error: HttpErrorResponse) => {
+        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+      }
+    );
   }
 
   initStepRow(inputType: string | null): FormGroup {
@@ -83,7 +98,9 @@ export class PipelineFormComponent implements OnInit {
 
   removeStep(index: number): void {
     const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
-    if (stepsArray.length <= 1) { return; }
+    if (stepsArray.length <= 1) {
+      return;
+    }
     this.steps.splice(this.steps.length - 1, 1);
     this.selectedProviders.splice(this.providers.length - 1, 1);
     stepsArray.removeAt(index);
@@ -98,14 +115,12 @@ export class PipelineFormComponent implements OnInit {
   }
 
   setProvider(index: number): void {
-    this.selectedProviders[index] =
-      this.providers.filter(
-        (p) =>
-          p.id ===
-          this.pipelineForm.get('executionSteps').value[this.steps.length - 1]
-            .providerId
-      )[0];
-
+    this.selectedProviders[index] = this.providers.filter(
+      (p) =>
+        p.id ===
+        this.pipelineForm.get('executionSteps').value[this.steps.length - 1]
+          .providerId
+    )[0];
   }
 
   initServiceConfig(index: number): void {
@@ -126,24 +141,28 @@ export class PipelineFormComponent implements OnInit {
 
   serviceIsConfigured(index: number): boolean {
     const controlArray = this.pipelineForm.get('executionSteps') as FormArray;
-    return (
-      controlArray.controls[index]?.get('params').value
-    );
+    return controlArray.controls[index]?.get('params').value;
   }
 
   createPipeline(): void {
-    if (!this.validateForm()) { return; }
+    if (!this.validateForm()) {
+      return;
+    }
     const pipeline = this.pipelineForm.value;
-    this.pipelineService.createPipeline(
-      {
-        description: pipeline.executionName,
-        steps: pipeline.executionSteps,
-      },
-      pipeline.projectId
-    ).subscribe(
-      () => this.router.navigate(['/pipelines']),
-      (error: HttpErrorResponse) => console.log(error)
-    );
+    this.pipelineService
+      .createPipeline(
+        {
+          description: pipeline.executionName,
+          steps: pipeline.executionSteps,
+        },
+        pipeline.projectId
+      )
+      .subscribe(
+        () => this.router.navigate(['/pipelines']),
+        (error: HttpErrorResponse) => {
+          this.errorService.setError(ErrorMap.get('FAILED_TO_POST'));
+        }
+      );
   }
 
   getControlError(control: string): boolean {

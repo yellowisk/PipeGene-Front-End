@@ -1,3 +1,5 @@
+import { ErrorMap } from '../../../enums/error-code.enum';
+import { ErrorService } from './../../../services/error.service';
 import { Router } from '@angular/router';
 import { SignService } from './../sign.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -12,12 +14,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  invalid = false;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly signService: SignService,
     private readonly authService: AuthService,
+    private readonly errorService: ErrorService,
     private readonly router: Router
   ) {
     this.loginForm = this.formBuilder.group({
@@ -38,8 +40,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (error: HttpErrorResponse) => {
-        console.log(error);
-        this.invalid = true;
+        this.errorService.setError(ErrorMap.get('INVALID_CREDENTIALS'));
       }
     );
   }

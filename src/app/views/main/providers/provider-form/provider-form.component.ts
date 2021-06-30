@@ -1,3 +1,4 @@
+import { ErrorService } from 'src/app/services/error.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OperationsModalFormComponent } from './../../../../components/operations-modal-form/operations-modal-form.component';
 import { Router } from '@angular/router';
@@ -5,6 +6,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProviderService } from '../provider.service';
 import { IOperation } from 'src/app/interfaces/provider.interface';
+import { ErrorMap } from 'src/app/enums/error-code.enum';
 
 @Component({
   selector: 'app-provider-form',
@@ -20,6 +22,7 @@ export class ProviderFormComponent implements OnInit {
   constructor(
     private readonly providerService: ProviderService,
     private readonly formBuilder: FormBuilder,
+    private readonly errorService: ErrorService,
     private readonly router: Router
   ) {
     this.providerForm = this.formBuilder.group({
@@ -54,7 +57,7 @@ export class ProviderFormComponent implements OnInit {
         this.router.navigate(['/services']);
       },
       (error: HttpErrorResponse) => {
-        console.log(error);
+        this.errorService.setError(ErrorMap.get('FAILED_TO_POST'));
       }
     );
   }

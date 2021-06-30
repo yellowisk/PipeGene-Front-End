@@ -10,9 +10,6 @@
             <form [formGroup]="loginForm">
                 <div class="row mt-5">
                     <div class="col-12 d-flex flex-column mb-3">
-                        <div class="error-message" *ngIf="invalid"> 
-                            <p>Username ou senha incorretos</p>
-                        </div>
                         <div class="label-float">
                             <input [class.error]="getControlError('username')" type="text" placeholder=" "
                                 formControlName="username" />

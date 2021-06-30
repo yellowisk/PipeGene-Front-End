@@ -3,7 +3,8 @@ import { ProjectService } from './../project.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ErrorService } from 'src/app/services/error.service';
+import { ErrorMap } from 'src/app/enums/error-code.enum';
 
 @Component({
   selector: 'app-project-form',
@@ -18,6 +19,7 @@ export class ProjectFormComponent implements OnInit {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly projectService: ProjectService,
+    private readonly errorService: ErrorService,
     private readonly router: Router,
     private route: ActivatedRoute
   ) {
@@ -50,7 +52,7 @@ export class ProjectFormComponent implements OnInit {
           this.router.navigate(['/projects']);
         },
         (error: HttpErrorResponse) => {
-          console.log(error);
+          this.errorService.setError(ErrorMap.get('FAILED_TO_POST'));
         }
       );
     } else {
@@ -61,7 +63,7 @@ export class ProjectFormComponent implements OnInit {
             this.router.navigate(['/projects']);
           },
           (error: HttpErrorResponse) => {
-            console.log(error);
+            this.errorService.setError(ErrorMap.get('FAILED_TO_POST'));
           }
         );
     }

@@ -1,3 +1,6 @@
+import { ErrorMap } from './../../../enums/error-code.enum';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from './../../../services/error.service';
 import { ExecutionService } from './../executions/execution.service';
 import { IExecution } from './../../../interfaces/execution.interface';
 import { Component, OnInit } from '@angular/core';
@@ -37,7 +40,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly executionService: ExecutionService
+    private readonly executionService: ExecutionService,
+    private readonly errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
@@ -47,9 +51,14 @@ export class DashboardComponent implements OnInit {
   }
 
   getExecutions(): any {
-    this.executionService.listExecutions().subscribe((response) => {
-      this.executions = response;
-    });
+    this.executionService.listExecutions().subscribe(
+      (response) => {
+        this.executions = response;
+      },
+      (error: HttpErrorResponse) => {
+        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+      }
+    );
   }
 
   getToday(): void {
