@@ -3,7 +3,7 @@ import { ExecutionService } from './../../views/main/executions/execution.servic
 import { Router } from '@angular/router';
 import { ProjectService } from './../../views/main/projects/project.service';
 import { IProject } from 'src/app/interfaces/project.interface';
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
@@ -14,6 +14,7 @@ import { ErrorMap } from 'src/app/enums/error-code.enum';
   styleUrls: ['./project-details-modal.component.scss'],
 })
 export class ProjectDetailsModalComponent implements OnInit {
+  @Output() refresh: EventEmitter<any> = new EventEmitter();
   @ViewChild('modal') modal: TemplateRef<any>;
   modalRef: BsModalRef;
   executions: any[] = [];
@@ -47,6 +48,7 @@ export class ProjectDetailsModalComponent implements OnInit {
     this.projectService.deleteProject(this.project.id).subscribe(
       (response) => {
         this.modalRef.hide();
+        this.refresh.emit();
       },
       (error: HttpErrorResponse) => {
         this.errorService.setError(ErrorMap.get('FAILED_TO_DELETE_PROJECT'));

@@ -18,5 +18,5 @@
       <app-empty-state *ngIf="projects.length === 0"></app-empty-state>
     </div>
   </div>
-  <app-project-details-modal #detailsModal></app-project-details-modal>
+  <app-project-details-modal #detailsModal (refresh)="getProjects()"></app-project-details-modal>
 </app-card>

@@ -26,7 +26,7 @@ export class ProjectFormComponent implements OnInit {
     this.projectForm = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required]],
-      datasets: [[]],
+      datasets: [[], [Validators.required]],
       description: [null],
     });
 
@@ -83,6 +83,7 @@ export class ProjectFormComponent implements OnInit {
     this.projectService.getOneProject(id).subscribe((response) => {
       this.projectForm.get('id').setValue(response.id);
       this.projectForm.get('name').setValue(response.name);
+      this.projectForm.get('datasets').setValue(response.datasets);
       this.projectForm.get('description').setValue(response.description);
 
       this.datasetsToUpload = response.datasets.map((file) => ({

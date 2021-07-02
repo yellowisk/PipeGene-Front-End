@@ -23,7 +23,7 @@ var ProjectFormComponent = /** @class */ (function () {
         this.projectForm = this.formBuilder.group({
             id: [null],
             name: [null, [forms_1.Validators.required]],
-            datasets: [[]],
+            datasets: [[], [forms_1.Validators.required]],
             description: [null]
         });
         this.route.queryParams.subscribe(function (params) {
@@ -46,7 +46,7 @@ var ProjectFormComponent = /** @class */ (function () {
             this.projectService.saveEdit(this.projectForm.value).subscribe(function () {
                 _this.router.navigate(['/projects']);
             }, function (error) {
-                _this.errorService.setError(error_code_enum_1.ErrorMap.get("FAILED_TO_POST"));
+                _this.errorService.setError(error_code_enum_1.ErrorMap.get('FAILED_TO_POST'));
             });
         }
         else {
@@ -55,7 +55,7 @@ var ProjectFormComponent = /** @class */ (function () {
                 .subscribe(function () {
                 _this.router.navigate(['/projects']);
             }, function (error) {
-                _this.errorService.setError(error_code_enum_1.ErrorMap.get("FAILED_TO_POST"));
+                _this.errorService.setError(error_code_enum_1.ErrorMap.get('FAILED_TO_POST'));
             });
         }
     };
@@ -73,6 +73,7 @@ var ProjectFormComponent = /** @class */ (function () {
         this.projectService.getOneProject(id).subscribe(function (response) {
             _this.projectForm.get('id').setValue(response.id);
             _this.projectForm.get('name').setValue(response.name);
+            _this.projectForm.get('datasets').setValue(response.datasets);
             _this.projectForm.get('description').setValue(response.description);
             _this.datasetsToUpload = response.datasets.map(function (file) { return ({
                 name: file.filename

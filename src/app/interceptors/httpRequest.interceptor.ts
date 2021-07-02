@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import { LoadingService } from '../services/loading.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 /**
  * This class is for intercepting http requests. When a request starts, we set the loadingSub property
@@ -21,7 +22,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
   constructor(
     private readonly loadingService: LoadingService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly router: Router
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -33,6 +35,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     return next.handle(req)
       .pipe(catchError((err) => {
         this.loadingService.setLoading(false, req.url);
+        if (err.status === 403) {
+          this.router.navigate(['/login']);
+        }
         return err;
       }))
       .pipe(map<HttpEvent<any>, any>((evt: HttpEvent<any>) => {
@@ -43,7 +48,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
       }));
   }
 
-  private addAuthorizationHeaderAndClone(request: HttpRequest<any>, token: string) {
+  private addAuthorizationHeaderAndClone(request: HttpRequest<any>, token: string): any {
     return request.clone({ headers: request.headers.append('Authorization', token) });
   }
 }

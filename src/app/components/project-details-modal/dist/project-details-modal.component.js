@@ -16,6 +16,7 @@ var ProjectDetailsModalComponent = /** @class */ (function () {
         this.executionService = executionService;
         this.errorService = errorService;
         this.router = router;
+        this.refresh = new core_1.EventEmitter();
         this.executions = [];
     }
     ProjectDetailsModalComponent.prototype.ngOnInit = function () { };
@@ -26,15 +27,16 @@ var ProjectDetailsModalComponent = /** @class */ (function () {
         this.executionService.listProjectExecutions(data.id).subscribe(function (response) {
             _this.executions = response;
         }, function (error) {
-            _this.errorService.setError(error_code_enum_1.ErrorMap.get("FAILED_TO_GET"));
+            _this.errorService.setError(error_code_enum_1.ErrorMap.get('FAILED_TO_GET'));
         });
     };
     ProjectDetailsModalComponent.prototype.deleteProject = function () {
         var _this = this;
         this.projectService.deleteProject(this.project.id).subscribe(function (response) {
             _this.modalRef.hide();
+            _this.refresh.emit();
         }, function (error) {
-            _this.errorService.setError(error_code_enum_1.ErrorMap.get("FAILED_TO_DELETE_PROJECT"));
+            _this.errorService.setError(error_code_enum_1.ErrorMap.get('FAILED_TO_DELETE_PROJECT'));
         });
     };
     ProjectDetailsModalComponent.prototype.setEditMode = function () {
@@ -44,13 +46,16 @@ var ProjectDetailsModalComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        core_1.ViewChild("modal")
+        core_1.Output()
+    ], ProjectDetailsModalComponent.prototype, "refresh");
+    __decorate([
+        core_1.ViewChild('modal')
     ], ProjectDetailsModalComponent.prototype, "modal");
     ProjectDetailsModalComponent = __decorate([
         core_1.Component({
-            selector: "app-project-details-modal",
-            templateUrl: "./project-details-modal.component.html",
-            styleUrls: ["./project-details-modal.component.scss"]
+            selector: 'app-project-details-modal',
+            templateUrl: './project-details-modal.component.html',
+            styleUrls: ['./project-details-modal.component.scss']
         })
     ], ProjectDetailsModalComponent);
     return ProjectDetailsModalComponent;
