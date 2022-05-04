@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
+## Solving dependencies issues
+
+install [Yarn](https://classic.yarnpkg.com/en/docs/install#windows-stable) to resolve dependencies automatically using npm
+
+## Resolving Dependencies with yarn
+
+Run `yarn install` to resolve dependencies
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
