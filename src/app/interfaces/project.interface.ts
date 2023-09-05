@@ -1,4 +1,7 @@
+import { IUser } from "./auth.interface";
+
 export interface ICreateProject {
+    users: any;
     name: string;
     description: string;
     files: File[];
@@ -9,4 +12,5 @@ export interface IProject {
     name: string;
     description: string;
     datasets: any[];
+    users: IUser[];
 }

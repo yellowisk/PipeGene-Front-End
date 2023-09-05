@@ -44,6 +44,28 @@
                   <i class="fas fa-times" *ngIf="!editMode" (click)="removeDataset(i)"></i>
                 </div>
               </div>
+              <div class="col-md-6 d-flex flex-column" [class]="editMode ? 'col-12' : 'col-md-6'">
+                <div class="label-float">
+                <input type="text" #searchInput (input)="getUsers(searchInput.value)" placeholder="Digite nome ou email" />
+                <label>Pesquisar Usuário</label>
+                </div>
+              </div>
+              <div class="col-md-6 d-flex flex-column" [class]="editMode ? 'col-12' : 'col-md-6'">
+                <label>Selecione Usuários</label>
+                <ul class="list-group search-results" *ngIf="users.length > 0">
+                  <li *ngFor="let user of users" class="list-group-item d-flex justify-content-between align-items-center" [class.active]="isSelected(user.username)">
+                    {{ user.name }}
+                    <button type="button" class="btn btn-sm" (click)="toggleUserSelection(user.username)">
+                      <ng-container *ngIf="isSelected(user.username); else addIcon">
+                        <i class="fas fa-times fa-sm text-danger"></i>
+                      </ng-container>
+                      <ng-template #addIcon>
+                        <i class="fas fa-plus-circle fa-sm text-primary"></i>
+                      </ng-template>
+                    </button>
+                  </li>
+                </ul>
+              </div>                                          
               <div class="col-md-6 d-flex align-items-end mt-3 mb-3">
                 <p class="back" [routerLink]="['/projects']" routerLinkActive="router-link-active">Voltar</p>
               </div>

@@ -1,10 +1,13 @@
+import { IUser } from './../../../../interfaces/auth.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ProjectService } from './../project.service';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, NgModel, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorService } from 'src/app/services/error.service';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
+
+
 
 @Component({
   selector: 'app-project-form',
@@ -14,7 +17,11 @@ import { ErrorMap } from 'src/app/enums/error-code.enum';
 export class ProjectFormComponent implements OnInit {
   projectForm: FormGroup;
   datasetsToUpload: any[] = [];
-  editMode: string = null;
+  editMode: string = null
+  users: IUser[] = [];
+  searchQuery: string = '';
+  selectedUsersUsername: string[] = [];
+
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -27,6 +34,7 @@ export class ProjectFormComponent implements OnInit {
       id: [null],
       name: [null, [Validators.required]],
       datasets: [[], [Validators.required]],
+      users: [[]],  
       description: [null],
     });
 
@@ -44,6 +52,23 @@ export class ProjectFormComponent implements OnInit {
     input.click();
   }
 
+  toggleUserSelection(username: string) {
+    const index = this.selectedUsersUsername.indexOf(username);
+    if (index === -1) {
+      this.selectedUsersUsername.push(username); // Adiciona o usuário à lista se não estiver selecionado.
+    } else {
+      this.selectedUsersUsername.splice(index, 1); // Remove o usuário da lista se estiver selecionado.
+    }
+  }
+  
+  isSelected(username: string): boolean {
+    return this.selectedUsersUsername.includes(username);
+  }
+
+  onInputChange(value: string): void {
+    this.searchQuery = value;
+  }
+
   saveProject(): void {
     if (!this.validateForm()) { return; }
     if (this.editMode) {
@@ -56,8 +81,9 @@ export class ProjectFormComponent implements OnInit {
         }
       );
     } else {
+      console.log(this.selectedUsersUsername);
       this.projectService
-        .addProject(this.projectForm.value, this.datasetsToUpload)
+        .addProject(this.projectForm.value, this.datasetsToUpload, ['teste'])
         .subscribe(
           () => {
             this.router.navigate(['/projects']);
@@ -77,6 +103,15 @@ export class ProjectFormComponent implements OnInit {
 
   removeDataset(index: number): void {
     this.datasetsToUpload.splice(index, 1);
+  }
+
+  getUsers(nameOrEmail: String): void{
+    this.projectService.getAllUserByNameOrEmail(nameOrEmail).subscribe(response => {
+      this.users = response;
+    });
+    if (nameOrEmail == ""){
+      this.users = [];
+    }
   }
 
   setEditMode(id: string): void {
@@ -104,4 +139,8 @@ export class ProjectFormComponent implements OnInit {
     this.projectForm.markAllAsTouched();
     return false;
   }
+
+  
 }
+
+

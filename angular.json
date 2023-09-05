@@ -124,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "pipe-gene-frontend"
+    }
+  },
+  "defaultProject": "pipe-gene-frontend",
+  "cli": {
+    "analytics": "148e508d-5cb6-4352-90ba-fb124ac282bd"
+  }
 }

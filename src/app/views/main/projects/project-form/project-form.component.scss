@@ -115,3 +115,11 @@ button {
   margin: 1px 0px;
   color: #7a7a7a;
 }
+
+.search-results {
+  li {
+    &.selected {
+      color: green;
+    }
+  }
+}
