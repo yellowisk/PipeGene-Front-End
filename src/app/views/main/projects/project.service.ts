@@ -45,6 +45,10 @@ export class ProjectService {
     return this.http.get<IProject>(`${environment.baseUrl}/api/v1/projects/${id}`);
   }
 
+  getOneProjectByPipeline(id: string): Observable<IProject> {
+    return this.http.get<IProject>(`${environment.baseUrl}/api/v1/projects/pipelines/${id}`);
+  }
+
   getAllUserByNameOrEmail(nameOrEmail: String): Observable<IUser[]>{
     return this.http.get<IUser[]>(`${environment.baseUrl}/UsersByUsernameOrName/${nameOrEmail}`);
   }

@@ -20,6 +20,12 @@ export class PipelineService {
     );
   }
 
+  getOnePipeline(
+    projectId: string, 
+    pipelineId: string): Observable<IPipeline> {
+    return this.http.get<IPipeline>(`${environment.baseUrl}/api/v1/projects/${projectId}/pipelines/${pipelineId}`);
+  }
+
   listPipelines(): Observable<IPipeline[]> {
     return this.http.get<IPipeline[]>(`${environment.baseUrl}/api/v1/users/${sessionStorage.getItem('user_id')}/pipelines`);
   }
@@ -27,4 +33,15 @@ export class PipelineService {
   listProjectPipelines(projectId: string): Observable<IPipeline[]> {
     return this.http.get<IPipeline[]>(`${environment.baseUrl}/api/v1/projects/${projectId}/pipelines`);
   }
+
+  editPipeline(
+    projectId: string,
+    pipelineId: string,
+    pipeline: IPipeline,
+    ): Observable<IPipeline> {
+      return this.http.patch<IPipeline>(
+        `${environment.baseUrl}/api/v1/projects/${projectId}/pipelines/${pipelineId}`,
+        pipeline);
+    }
+
 }

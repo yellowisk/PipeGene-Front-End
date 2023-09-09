@@ -13,4 +13,5 @@ export interface IProject {
     description: string;
     datasets: any[];
     users: IUser[];
+    steps: any[];
 }
