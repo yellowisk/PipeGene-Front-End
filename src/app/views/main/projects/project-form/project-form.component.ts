@@ -19,9 +19,8 @@ export class ProjectFormComponent implements OnInit {
   datasetsToUpload: any[] = [];
   editMode: string = null
   users: IUser[] = [];
+  selectedUsersList: IUser[] = [];
   searchQuery: string = '';
-  selectedUsersUsername: string[] = [];
-
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -34,7 +33,7 @@ export class ProjectFormComponent implements OnInit {
       id: [null],
       name: [null, [Validators.required]],
       datasets: [[], [Validators.required]],
-      users: [[]],  
+      users: [[this.selectedUsersList]],  
       description: [null],
     });
 
@@ -46,23 +45,30 @@ export class ProjectFormComponent implements OnInit {
     });
   }
 
+  get selectedUsers(): IUser[] {
+    // Filtra os usuários selecionados com base nos usernames
+    return this.selectedUsersList;
+  }
+
+  get unselectedUsers(): IUser[] {
+    // Filtra os usuários não selecionados
+    return this.users.filter(user => !this.selectedUsersList.some(selectedUser => selectedUser.username === user.username));
+  }
+
   ngOnInit(): void {}
 
   openFileInput(input: any): void {
     input.click();
   }
 
-  toggleUserSelection(username: string) {
-    const index = this.selectedUsersUsername.indexOf(username);
-    if (index === -1) {
-      this.selectedUsersUsername.push(username); // Adiciona o usuário à lista se não estiver selecionado.
+  toggleUserSelection(user: IUser) {
+    const username = user.username;
+    const index = this.selectedUsersList.findIndex(selectedUser => selectedUser.username === username);
+    if (index !== -1) {
+      this.selectedUsersList.splice(index, 1);
     } else {
-      this.selectedUsersUsername.splice(index, 1); // Remove o usuário da lista se estiver selecionado.
+      this.selectedUsersList.push(user);
     }
-  }
-  
-  isSelected(username: string): boolean {
-    return this.selectedUsersUsername.includes(username);
   }
 
   onInputChange(value: string): void {
@@ -81,9 +87,8 @@ export class ProjectFormComponent implements OnInit {
         }
       );
     } else {
-      console.log(this.selectedUsersUsername);
       this.projectService
-        .addProject(this.projectForm.value, this.datasetsToUpload, ['teste'])
+        .addProject(this.projectForm.value, this.datasetsToUpload)
         .subscribe(
           () => {
             this.router.navigate(['/projects']);

@@ -117,9 +117,25 @@ button {
 }
 
 .search-results {
-  li {
-    &.selected {
-      color: green;
+    .selected {
+      background-color: #0d76af;
+      .user-button {
+        height: 50px;
+        padding: 5px 10px;
+        border: none;
+        background-color: #0d76af;
+        border-radius: 3px;
+        color: white;
+        font-weight: bold;
+      }
     }
-  }
+    .user-button {
+      height: 50px;
+      padding: 5px 10px;
+      border: none;
+      background-color: #ffffff;
+      border-radius: 3px;
+      color: white;
+      font-weight: bold;
+    }
 }
