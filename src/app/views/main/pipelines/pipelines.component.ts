@@ -1,5 +1,7 @@
 import { ErrorService } from './../../../services/error.service';
 import { PipelineService } from './pipeline.service';
+import { IPipeline } from 'src/app/interfaces/pipeline.interface';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
@@ -11,9 +13,13 @@ import { ErrorMap } from 'src/app/enums/error-code.enum';
 })
 export class PipelinesComponent implements OnInit {
   pipelines: any[] = [];
+  pipeline: IPipeline;
+  
+
   constructor(
     private readonly pipelineService: PipelineService,
-    private readonly errorService: ErrorService
+    private readonly errorService: ErrorService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,4 +36,11 @@ export class PipelinesComponent implements OnInit {
       }
     );
   }
+
+  setEditMode(pipeline): void {
+    this.router.navigate([`/pipelines/edit/`], {
+      queryParams: { id: pipeline.id },
+    });
+  }
+
 }

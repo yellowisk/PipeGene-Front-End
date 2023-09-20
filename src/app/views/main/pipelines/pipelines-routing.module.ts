@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'new',
     component: PipelineFormComponent
+  },
+  {
+    path: 'edit',
+    component: PipelineFormComponent
   }
 ];
 
