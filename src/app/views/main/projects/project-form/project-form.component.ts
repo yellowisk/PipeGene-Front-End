@@ -21,6 +21,7 @@ export class ProjectFormComponent implements OnInit {
   users: IUser[] = [];
   selectedUsersList: IUser[] = [];
   searchQuery: string = '';
+  groupId: string;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -33,7 +34,7 @@ export class ProjectFormComponent implements OnInit {
       id: [null],
       name: [null, [Validators.required]],
       datasets: [[], [Validators.required]],
-      users: [[this.selectedUsersList]],  
+      users: [this.selectedUsersList],  
       description: [null],
     });
 
@@ -46,12 +47,10 @@ export class ProjectFormComponent implements OnInit {
   }
 
   get selectedUsers(): IUser[] {
-    // Filtra os usuários selecionados com base nos usernames
     return this.selectedUsersList;
   }
 
   get unselectedUsers(): IUser[] {
-    // Filtra os usuários não selecionados
     return this.users.filter(user => !this.selectedUsersList.some(selectedUser => selectedUser.username === user.username));
   }
 
@@ -78,6 +77,7 @@ export class ProjectFormComponent implements OnInit {
   saveProject(): void {
     if (!this.validateForm()) { return; }
     if (this.editMode) {
+      console.log(this.projectForm)
       this.projectService.saveEdit(this.projectForm.value).subscribe(
         () => {
           this.router.navigate(['/projects']);
@@ -119,17 +119,25 @@ export class ProjectFormComponent implements OnInit {
     }
   }
 
+  getSelectedUsers(id: string): void {
+    this.projectService.getAllPendingOrAcceptedUsersInProject(id).subscribe(response => {
+      this.selectedUsersList = response;
+      this.projectForm.get('users').setValue(response)
+    })
+  }
+
   setEditMode(id: string): void {
     this.projectService.getOneProject(id).subscribe((response) => {
       this.projectForm.get('id').setValue(response.id);
       this.projectForm.get('name').setValue(response.name);
       this.projectForm.get('datasets').setValue(response.datasets);
       this.projectForm.get('description').setValue(response.description);
-
+      this.getSelectedUsers(response.groupId);
+      this.groupId = response.groupId
       this.datasetsToUpload = response.datasets.map((file) => ({
         name: file.filename,
       }));
-    });
+    }); 
   }
 
   getControlError(control: string): boolean {

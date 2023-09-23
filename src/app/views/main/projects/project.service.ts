@@ -16,8 +16,8 @@ export class ProjectService {
     formData.append('name', project.name);
     formData.append('description', project.description);
     files.forEach((file) => formData.append('files', file, file.name));
-    console.log(project.users[0])
-    project.users[0].forEach((user) => formData.append('userList', user.username))
+    console.log(project.users)
+    project.users.forEach((user) => formData.append('userList', user.username))
 
     return this.http.post<IProject>(
       `${environment.baseUrl}/api/v1/projects/`,
@@ -53,13 +53,20 @@ export class ProjectService {
     return this.http.get<IUser[]>(`${environment.baseUrl}/UsersByUsernameOrName/${nameOrEmail}`);
   }
 
+  getAllPendingOrAcceptedUsersInProject(id: string): Observable<IUser[]> {
+    return this.http.get<IUser[]>(`${environment.baseUrl}/api/v1/projects/${id}/users`);
+  }
+
   saveEdit(project: IProject): Observable<IProject> {
+    console.log(project.users)
     return this.http.put<IProject>(
       `${environment.baseUrl}/api/v1/projects/${project.id}`,
       {
         name: project.name,
-        description: project.description
-      }
+        description: project.description,
+        usersId: project.users.map(user => user.id)
+      },
+      
     );
   }
 }
