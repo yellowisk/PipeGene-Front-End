@@ -22,7 +22,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let provider of providers">
+            <tr (click)="setEditMode(provider)" *ngFor="let provider of providers">
               <td>{{provider.name}}</td>
               <td>{{provider.description}}</td>
             </tr>

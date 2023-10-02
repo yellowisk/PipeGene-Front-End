@@ -22,6 +22,9 @@ export class OperationsModalFormComponent implements OnInit {
   operationForm: FormGroup;
   showParameterForm = false;
   parameters: IParameter[] = [];
+  editMode: boolean = false;
+  descriptionText: string = '';
+  typeText: string = '';
 
   constructor(
     private readonly modalService: BsModalService,
@@ -33,16 +36,43 @@ export class OperationsModalFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   addParameter(event: IParameter): void {
     this.parameters.push(event);
     this.showParameterForm = false;
   }
 
-  open(): void {
+  open(operationData: any): void {
+    if (operationData == null) {
+      this.descriptionText = 'Descrição'
+/*     } else if (operationData && !this.editMode) { */
+    } else if (operationData) {
+      this.setEditMode()
+      this.descriptionText = operationData.description;
+      this.typeText = operationData.type;
+
+      this.operationForm.setValue({
+        type: this.typeText || null,
+        description: this.descriptionText || null,
+      });
+      
+      // Set the parameters data (if any)
+      this.parameters = operationData.params || [];
+      
+    }
+  
     this.modalRef = this.modalService.show(this.modal);
   }
+
+/*   editOperation(): void {
+    if (!this.validateForm()) { return; }
+    this.descriptionText = this.operationForm.get('description').value;
+    this.typeText = this.operationForm.get('type').value;
+    this.operationForm.reset();
+    this.modalRef.hide();
+  } */
 
   return(): void {
     if (!this.validateForm()) { return; }
@@ -68,4 +98,9 @@ export class OperationsModalFormComponent implements OnInit {
     this.operationForm.markAllAsTouched();
     return false;
   }
+
+  setEditMode() : void {
+    this.editMode = true;
+  }
+
 }

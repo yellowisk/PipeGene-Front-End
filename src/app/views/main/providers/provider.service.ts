@@ -20,4 +20,19 @@ export class ProviderService {
       provider
     );
   }
+
+  getOneProvider(providerId: string): Observable<IProvider> {
+    return this.http.get<IProvider>(`${environment.baseUrl}/api/v1/providers/${providerId}`
+    );
+  }
+
+  editProvider(
+    providerId: string,
+    provider: IProvider
+  ): Observable<IProvider> {
+    return this.http.patch<IProvider>(
+      `${environment.baseUrl}/api/v1/providers/${providerId}`,
+      provider);
+  }
+
 }

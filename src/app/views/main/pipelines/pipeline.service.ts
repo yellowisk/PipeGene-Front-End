@@ -37,7 +37,7 @@ export class PipelineService {
   editPipeline(
     projectId: string,
     pipelineId: string,
-    pipeline: IPipeline,
+    pipeline: IPipeline
     ): Observable<IPipeline> {
       return this.http.patch<IPipeline>(
         `${environment.baseUrl}/api/v1/projects/${projectId}/pipelines/${pipelineId}`,

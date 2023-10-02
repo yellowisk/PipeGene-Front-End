@@ -23,7 +23,7 @@
                 <div class="label-float">
                     <input [class.error]="getControlError('description')" type="text" placeholder=" "
                         formControlName="description" />
-                    <label [class.error]="getControlError('description')">Descrição</label>
+                    <label [class.error]="getControlError('description')">{{descriptionText}}</label>
                 </div>
                 <app-input-validation [control]="operationForm.get('description')">
                 </app-input-validation>
@@ -54,6 +54,10 @@
         <div class="modal-footer d-flex justify-content-between align-items-center" *ngIf="!showParameterForm">
             <div></div>
             <button class="btn save-btn" (click)="return()">Adicionar</button>
+        </div>
+        <div class="modal-footer d-flex justify-content-between align-items-center" *ngIf="editMode">
+            <div></div>
+            <button class="btn save-btn" (click)="editOperation()">Editar</button>
         </div>
     </div>
 </ng-template>

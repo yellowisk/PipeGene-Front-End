@@ -7,9 +7,9 @@
                         <div class="icon-wave">
                             <i class="fas fa-cogs"></i>
                         </div>
-                        <h4 class="title">Submeter um novo serviço</h4>
-                        <p class="subtitle">Para submeter um novo serviço, informe um nome, descrição
-                            e as configurações necessárias para sua execução.
+                        <h4 class="title">{{editMode? 'Visualização de seu serviço' : 'Submeter um novo serviço'}}</h4>
+                        <p class="subtitle">{{editMode? 'Você pode alterar os dados deste serviço' 
+                            : 'Para submeter um novo serviço, informe um nome, descrição e as configurações necessárias para sua execução.'}}
                         </p>
                         <div class="row">
                             <div class="col-12 d-flex flex-column mb-3">
@@ -27,6 +27,17 @@
                                 </div>
                                 <app-input-validation [control]="providerForm.get('description')">
                                 </app-input-validation>
+
+                                <div class="label-float">
+                                    <select [class.error]="getControlError('public')" placeholder=" "
+                                        formControlName="public">
+                                        <option value="1">Selecione a privacidade do Serviço</option>
+                                        <option value="true">Público</option>
+                                        <option value="false">Privado</option>
+                                    </select>
+                                    <label [class.error]="getControlError('public')">Privacidade</label>
+                                </div>
+                                <app-input-validation [control]="providerForm.get('public')"></app-input-validation>
 
                                 <div class="label-float">
                                     <input type="text" placeholder=" " formControlName="url"
@@ -61,12 +72,14 @@
                                         <hr>
                                     </div>
                                     <div class="item" *ngFor="let operation of operations; let i=index">
-                                        <p>{{operation.type}}</p>
+                                        <p (click)="openOperationsModal(operation)">{{operation.type}}</p>
                                         <i class="fas fa-trash" (click)="operations.splice(i, 1)"></i>
                                     </div>
-                                    <button class="operation-btn" (click)="openOperationsModal()">Adicionar
-                                        Operação</button>
+                                    <button class="operation-btn" (click)="openOperationsModal(null)">
+                                        Adicionar Operação
+                                    </button>
                                 </div>
+
                             </div>
 
                             <div class="col-6 d-flex align-items-end mt-5 mb-3">
@@ -74,7 +87,7 @@
                                     Voltar</p>
                             </div>
                             <div class="col-6 d-flex flex-column mt-5 mb-3">
-                                <button (click)="submitProvider()">Submeter</button>
+                                <button (click)="submitProvider()">{{editMode? 'Editar' : 'Submeter'}}</button>
                             </div>
                         </div>
                     </div>
