@@ -1,5 +1,6 @@
 import { AuthService } from 'src/app/services/auth.service';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-bar',
@@ -8,11 +9,15 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class TopBarComponent implements OnInit {
   @Output() toggleMenu: EventEmitter<boolean> = new EventEmitter();
+  id: string;
 
-
-  constructor(private readonly authService: AuthService) { }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly router: Router
+    ) { }
 
   ngOnInit(): void {
+    this.id = sessionStorage.getItem('user_id');
   }
 
   toggle(): void {
@@ -21,6 +26,13 @@ export class TopBarComponent implements OnInit {
 
   signout(): void{
     this.authService.resetSession();
+  }
+
+  editUser(): void {
+    console.log(this.id)
+    this.router.navigate([`/edit`], {
+      queryParams: {id: this.id}
+    })
   }
 
 }

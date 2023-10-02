@@ -18,3 +18,10 @@ export interface IUser {
   orcid?: string;
   github?: string;
 }
+
+export interface IEdit {
+  username: string;
+  name: string;
+  orcid: string;
+  github: string;
+}
