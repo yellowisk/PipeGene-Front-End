@@ -2,7 +2,7 @@ import { environment } from './../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPipeline } from 'src/app/interfaces/pipeline.interface';
+import { IExportPipeline, IPipeline } from 'src/app/interfaces/pipeline.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +19,17 @@ export class PipelineService {
       pipeline
     );
   }
+
+  exportPipeline(
+    importingProjectId: string,
+    pipelineId: string,
+    projectId: IExportPipeline
+    ): Observable<IPipeline> {
+      return this.http.post<IPipeline>(
+        `${environment.baseUrl}/api/v1/projects/${importingProjectId}/pipelines/${pipelineId}/clone`,
+        projectId
+      )
+    }
 
   getOnePipeline(
     projectId: string, 

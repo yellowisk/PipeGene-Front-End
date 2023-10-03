@@ -11,6 +11,7 @@ import { ProviderService } from '../../providers/provider.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
 import { switchMap } from 'rxjs/operators';
+import { IExportPipeline } from 'src/app/interfaces/pipeline.interface';
 
 @Component({
   selector: 'app-pipeline-form',
@@ -31,6 +32,8 @@ export class PipelineFormComponent implements OnInit {
 
   serviceConfigIndex: number | null;
   editMode: string = null;
+  showExport: boolean = false;
+  exportProjectId: string = '';
 
   constructor(
     private readonly providerService: ProviderService,
@@ -47,6 +50,7 @@ export class PipelineFormComponent implements OnInit {
       executionName: [null, [Validators.required]],
       projectId: [null, [Validators.required]],
       executionSteps: this.formBuilder.array([]),
+      exportProjectId: ['']
     });
 
     this.pipelineForm.get('projectId').valueChanges.subscribe((value) => {
@@ -221,27 +225,58 @@ export class PipelineFormComponent implements OnInit {
     }
   }
 
-  getControlError(control: string): boolean {
-    const formControl = this.pipelineForm.get(control);
-    return formControl.errors && formControl.touched;
+  exportPipeline() {
+    let projectId = '';
+    let exportProjectId = this.exportProjectId; // Store exportProjectId here
+  
+    this.route.queryParams.subscribe((params) => {
+      if (params.id) {
+        this.projectService.getOneProjectByPipeline(params.id).pipe(
+          switchMap((projectResponse) => {
+            projectId = projectResponse.id;
+            this.pipelineForm.get('projectId').setValue(projectResponse.id);
+            console.log("projId of the pipe: " + projectId);
+  
+            return this.pipelineService.getOnePipeline(projectId, params.id);
+          })
+        ).subscribe(
+          (pipelineResponse) => {
+            const exportPayload: IExportPipeline = {
+              projectId: projectId, // Set the projectId property here
+            };
+            console.log("url: " + exportProjectId + "; importing: " + exportPayload.projectId, "pipeId: " + params.id)
+            this.pipelineService.exportPipeline(exportProjectId, params.id, exportPayload).subscribe((exportResponse) => {
+              console.log(JSON.stringify(exportResponse))
+            })
+            this.router.navigate(['/pipelines'])
+          },
+          (error: HttpErrorResponse) => {
+            this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+          }
+        );
+      }
+    });
+  }
+  
+
+  showExportBox() {
+    this.showExport = true;
+    this.exportProjectId = '';
   }
 
-  validateForm(): boolean {
-    const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
-    if (this.pipelineForm.valid && stepsArray.valid) {
-      return true;
-    }
-    this.pipelineForm.markAllAsTouched();
-    stepsArray.markAllAsTouched();
-    return false;
+  cancelExport() {
+    this.showExport = false;
+    this.exportProjectId = '';
   }
 
   setEditMode(id: string): void {
+    console.log("pipeId: " + id)
   
     this.projectService.getOneProjectByPipeline(id).pipe(
       switchMap((projectResponse) => {
         const projectId = projectResponse.id;
         this.pipelineForm.get('projectId').setValue(projectResponse.id);
+        console.log("projectId: " + projectId)
   
         return this.pipelineService.getOnePipeline(projectId, id);
       })
@@ -271,6 +306,21 @@ export class PipelineFormComponent implements OnInit {
         this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
       }
     );
+  }
+
+  getControlError(control: string): boolean {
+    const formControl = this.pipelineForm.get(control);
+    return formControl.errors && formControl.touched;
+  }
+
+  validateForm(): boolean {
+    const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
+    if (this.pipelineForm.valid && stepsArray.valid) {
+      return true;
+    }
+    this.pipelineForm.markAllAsTouched();
+    stepsArray.markAllAsTouched();
+    return false;
   }
 
 }

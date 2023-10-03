@@ -3,3 +3,7 @@ export interface IPipeline {
     description: string;
     steps: any[];
 }
+
+export interface IExportPipeline {
+    projectId: string;
+}

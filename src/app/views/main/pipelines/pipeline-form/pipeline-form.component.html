@@ -84,6 +84,25 @@
                                      && serviceIsConfigured(index)">+</button>
                             </div>
                         </div>
+                        
+                        <div class="row" *ngIf="showExport">
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="label-float">
+                                    <select placeholder=" " [(ngModel)]="exportProjectId" [ngModelOptions]="{ standalone: true }">
+                                        <option value="null">Selecione o Projeto que importará a Pipeline</option>
+                                        <option *ngFor="let project of projects" [value]="project.id">{{project.name}}</option>
+                                    </select>
+                                    <label>Exporte a pipeline para o projeto:</label>
+                                </div>
+                                
+                            <div class="col-2 d-flex flex-column mt-5 mb-3">
+                                <button class="export" (click)="exportPipeline()">Exportar</button>
+                            </div>
+                            <div class="col-2 d-flex flex-column mt-5 mb-3">
+                                <button class="cancel" (click)="cancelExport()">Cancelar</button>
+                            </div>
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-6 d-flex align-items-end mt-5 mb-3">
@@ -91,7 +110,7 @@
                                     Voltar</p>
                             </div>
                             <div *ngIf="editMode" class="col-3 d-flex flex-column mt-5 mb-3">
-                                <button class="import" (click)="exportPipeline()">Exportar Pipeline</button>
+                                <button class="import" (click)="showExportBox()">Exportar Pipeline</button>
                             </div>
                             <div class="d-flex flex-column mt-5 mb-3" [ngClass]="editMode? 'col-3' : 'col-6' ">
                                 <button (click)="createPipeline()">{{editMode ? 'Editar Pipeline' : 'Criar Pipeline'}}</button>
