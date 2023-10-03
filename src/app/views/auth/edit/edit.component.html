@@ -1,0 +1,49 @@
+<div class="edit-body">
+    <div class="col-md-4">
+        <div class="edit-card">
+            <div class="row">
+                <div class="col-12 title-header">
+                    <p class="title one">PIPE</p>
+                    <p class="title two">GENE</p>
+                </div>
+            </div>
+            <form [formGroup]="editForm">
+                <div class="row mt-5">
+                    <div class="col-12 d-flex flex-column mb-3">
+                        <div class="label-float">
+                            <input [class.error]="getControlError('username')" type="text" placeholder=" "
+                                formControlName="username" />
+                            <label [class.error]="getControlError('username')">Username</label>
+                        </div>
+                        <app-input-validation class="mb-3" [control]="editForm.get('username')"></app-input-validation>
+
+                        <div class="label-float">
+                            <input [class.error]="getControlError('name')" type="text" placeholder=" "
+                                formControlName="name" />
+                            <label [class.error]="getControlError('name')">Nome</label>
+                        </div>
+                        <app-input-validation class="mb-3" [control]="editForm.get('name')"></app-input-validation>
+                        <hr>
+                        <div class="label-float">
+                            <input [class.error]="getControlError('orcid')" type="orcid" placeholder=" "
+                                formControlName="orcid" />
+                            <label [class.error]="getControlError('orcid')">Orcid</label>
+                        </div>
+                        <app-input-validation class="mb-3" [control]="editForm.get('orcid')"></app-input-validation>
+
+                        <div class="label-float">
+                            <input [class.error]="getControlError('github')" type="github" placeholder=" "
+                                formControlName="github" />
+                            <label [class.error]="getControlError('github')">Github</label>
+                        </div>
+                        <app-input-validation class="mb-3" [control]="editForm.get('github')"></app-input-validation>
+
+                        <button class="btn mb-5" (click)="edit()">Editar</button>
+
+                        <p class="return"><span [routerLink]="['/main']">Voltar para a página principal</span> </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

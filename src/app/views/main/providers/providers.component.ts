@@ -1,5 +1,7 @@
 import { ErrorService } from './../../../services/error.service';
 import { ProviderService } from './provider.service';
+import { IProvider } from 'src/app/interfaces/provider.interface';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
@@ -11,10 +13,12 @@ import { ErrorMap } from 'src/app/enums/error-code.enum';
 })
 export class ProvidersComponent implements OnInit {
   providers: any[] = [];
+  provider: IProvider;
 
   constructor(
     private readonly providerService: ProviderService,
-    private readonly errorService: ErrorService
+    private readonly errorService: ErrorService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -31,4 +35,11 @@ export class ProvidersComponent implements OnInit {
       }
     );
   }
+
+  setEditMode(provider): void {
+    this.router.navigate(['/services/edit/'], {
+      queryParams: { id: provider.id },
+    });
+  }
+
 }

@@ -17,6 +17,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './guards/auth.guard';
 import { CookieModule } from 'ngx-cookie';
+import { EditComponent } from './views/auth/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CookieModule } from 'ngx-cookie';
     LoginComponent,
     SignupComponent,
     LoadingComponent,
-    ErrorComponent
+    ErrorComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,

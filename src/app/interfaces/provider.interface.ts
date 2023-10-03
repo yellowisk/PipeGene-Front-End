@@ -14,6 +14,7 @@ export interface IProvider {
     name: string;
     description: string;
     url: string;
+    public: boolean
     inputSupportedTypes: string[];
     outputSupportedTypes: string[];
     operations: IOperation[];

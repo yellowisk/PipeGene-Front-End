@@ -3,6 +3,7 @@ import { LoginComponent } from './views/auth/login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { EditComponent } from './views/auth/edit/edit.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'signup',
     component: SignupComponent
+  },
+  {
+    path: 'edit',
+    component: EditComponent
   },
   {
     path: '',

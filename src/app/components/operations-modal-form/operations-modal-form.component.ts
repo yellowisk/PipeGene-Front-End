@@ -9,6 +9,7 @@ import {
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { IParameter } from 'src/app/interfaces/provider.interface';
+import { ProviderParametersFormComponent } from '../provider-parameters-form/provider-parameters-form.component';
 
 @Component({
   selector: 'app-operations-modal-form',
@@ -21,7 +22,12 @@ export class OperationsModalFormComponent implements OnInit {
   modalRef: BsModalRef;
   operationForm: FormGroup;
   showParameterForm = false;
+  showEditParameterForm = false;
   parameters: IParameter[] = [];
+  editMode: boolean = false;
+  descriptionText: string = '';
+  typeText: string = '';
+  parametersForm: ProviderParametersFormComponent;
 
   constructor(
     private readonly modalService: BsModalService,
@@ -33,16 +39,50 @@ export class OperationsModalFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   addParameter(event: IParameter): void {
     this.parameters.push(event);
     this.showParameterForm = false;
   }
 
-  open(): void {
+  showItem(parameter: IParameter): void {
+    const initialState = {
+      parameterData: parameter,
+    };
+    this.showEditParameterForm = true;
+  }
+  
+  open(operationData: any): void {
+    if (operationData == null) {
+      this.descriptionText = 'Descrição'
+/*     } else if (operationData && !this.editMode) { */
+    } else if (operationData) {
+      this.setEditMode()
+      this.descriptionText = operationData.description;
+      this.typeText = operationData.type;
+
+      this.operationForm.setValue({
+        type: this.typeText || null,
+        description: this.descriptionText || null,
+      });
+      
+      // Set the parameters data (if any)
+      this.parameters = operationData.params || [];
+      
+    }
+  
     this.modalRef = this.modalService.show(this.modal);
   }
+
+/*   editOperation(): void {
+    if (!this.validateForm()) { return; }
+    this.descriptionText = this.operationForm.get('description').value;
+    this.typeText = this.operationForm.get('type').value;
+    this.operationForm.reset();
+    this.modalRef.hide();
+  } */
 
   return(): void {
     if (!this.validateForm()) { return; }
@@ -68,4 +108,9 @@ export class OperationsModalFormComponent implements OnInit {
     this.operationForm.markAllAsTouched();
     return false;
   }
+
+  setEditMode() : void {
+    this.editMode = true;
+  }
+
 }
