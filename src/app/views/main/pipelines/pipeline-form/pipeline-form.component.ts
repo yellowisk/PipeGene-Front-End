@@ -98,6 +98,7 @@ export class PipelineFormComponent implements OnInit {
 
   initStepRow(inputType: string | null): FormGroup {
     return this.formBuilder.group({
+      stepId: [null, [Validators.required]],
       providerId: [null, [Validators.required]],
       inputType: [inputType || ''],
       outputType: [null, [Validators.required]],
@@ -160,10 +161,11 @@ export class PipelineFormComponent implements OnInit {
 
   saveServiceConfigs(event: any): void {
     const controlArray = this.pipelineForm.get('executionSteps') as FormArray;
-    console.log("event: " + JSON.stringify(event));
-    controlArray.controls[this.serviceConfigIndex]
-      .get('params')
-      .setValue(event);
+    if (controlArray.controls[this.serviceConfigIndex]) {
+      controlArray.controls[this.serviceConfigIndex]
+        .get('params')
+        .setValue(event);
+    }
     this.serviceConfigIndex = null;
   
   }
@@ -182,7 +184,10 @@ export class PipelineFormComponent implements OnInit {
     if (this.editMode) {
       this.route.queryParams.subscribe((params) => {
         const id = params.id;
-        console.log(id);
+
+        pipeline.executionSteps = this.pipelineForm.get('executionSteps').value;
+        
+        console.log("--- " + JSON.stringify(pipeline.executionSteps))
 
         this.pipelineService.editPipeline(pipeline.projectId, id, {
           description: pipeline.executionName,
@@ -232,7 +237,6 @@ export class PipelineFormComponent implements OnInit {
   }
 
   setEditMode(id: string): void {
-    console.log("pipeline: " + id);
   
     this.projectService.getOneProjectByPipeline(id).pipe(
       switchMap((projectResponse) => {
@@ -243,7 +247,6 @@ export class PipelineFormComponent implements OnInit {
       })
     ).subscribe(
       (pipelineResponse) => {
-        console.log(pipelineResponse.id + " " + pipelineResponse.description + " " + JSON.stringify(pipelineResponse.steps));
         this.pipelineForm.get('executionName').setValue(pipelineResponse.description);
         
         const executionStepsArray = this.pipelineForm.get('executionSteps') as FormArray;
@@ -253,7 +256,9 @@ export class PipelineFormComponent implements OnInit {
         pipelineResponse.steps.forEach((step, index) => {
           const stepFormGroup = this.initStepRow(step.inputType);
           stepFormGroup.patchValue({ ...step, stepNumber: index + 1 });
-          this.selectedProviders.push(this.providers.find(provider => provider.id === step.providerId));
+          if (this.providers) {
+            this.selectedProviders.push(this.providers.find(provider => provider.id === step.providerId));
+          }
 
           executionStepsArray.push(stepFormGroup);
         });
@@ -261,7 +266,6 @@ export class PipelineFormComponent implements OnInit {
       pipelineResponse.steps.forEach((step) => {
         this.saveServiceConfigs(step.params);
       });
-      console.log(JSON.stringify(this.selectedProviders));
       },
       (error: HttpErrorResponse) => {
         this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
