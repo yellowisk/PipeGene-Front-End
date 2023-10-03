@@ -7,6 +7,7 @@ import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
+import { IUser } from 'src/app/interfaces/auth.interface';
 
 @Component({
   selector: 'app-project-details-modal',
@@ -18,6 +19,8 @@ export class ProjectDetailsModalComponent implements OnInit {
   @ViewChild('modal') modal: TemplateRef<any>;
   modalRef: BsModalRef;
   executions: any[] = [];
+  users: IUser[] = [];
+  isOwner: boolean;
 
   project: IProject;
 
@@ -34,6 +37,8 @@ export class ProjectDetailsModalComponent implements OnInit {
   setDetails(data: IProject): void {
     this.project = data;
     this.modalRef = this.modalService.show(this.modal);
+    this.getUsers();
+    this.checkProjectOwnership(this.project.id);
     this.executionService.listProjectExecutions(data.id).subscribe(
       (response) => {
         this.executions = response;
@@ -56,10 +61,37 @@ export class ProjectDetailsModalComponent implements OnInit {
     );
   }
 
+  getUsers(): void {
+    this.projectService.getUsersInProject(this.project.id).subscribe(
+      (response) => {
+        this.users = response;
+      },
+      (error: HttpErrorResponse) => {
+        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+      }
+    );
+  }
+
   setEditMode(): void {
     this.modalRef.hide();
     this.router.navigate([`/projects/edit/`], {
       queryParams: { id: this.project.id },
     });
+  }
+
+  checkProjectOwnership(projectId: string): void {
+    this.projectService.isOwner(projectId).subscribe((isOwner) => {
+      this.isOwner = isOwner;
+
+    });
+  }
+
+  leaveGroup(): void {
+    this.projectService.leaveGroup(this.project.id).subscribe(
+      () =>  {
+        this.modalRef.hide();
+        this.refresh.emit();
+      }
+    )
   }
 }

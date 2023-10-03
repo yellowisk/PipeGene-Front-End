@@ -1,13 +1,15 @@
 import { IUser } from './../../../interfaces/auth.interface';
 import { environment } from './../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { ICreateProject, IProject } from 'src/app/interfaces/project.interface';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class ProjectService {
   constructor(private http: HttpClient) {}
 
@@ -57,6 +59,10 @@ export class ProjectService {
     return this.http.get<IUser[]>(`${environment.baseUrl}/api/v1/projects/${id}/users`);
   }
 
+  getUsersInProject(id: string): Observable<IUser[]> {
+    return this.http.get<IUser[]>(`${environment.baseUrl}/api/v1/projects/${id}/accepted-users`);
+  }
+
   saveEdit(project: IProject): Observable<IProject> {
     console.log(project.users)
     return this.http.put<IProject>(
@@ -69,4 +75,23 @@ export class ProjectService {
       
     );
   }
+
+  isOwner(projectId: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${environment.baseUrl}/api/v1/projects/${projectId}/isOwner`
+    );
+  }
+
+  leaveGroup(projectId: string): Observable<any> {
+    const url = `${environment.baseUrl}/api/v1/groups/leaveProject/${projectId}`;
+    return this.http.patch(url, {}).pipe(
+      catchError((error) => {
+        console.error('Erro ao sair do grupo', error);
+        return throwError(error);
+      })
+    );
+  }
+  
+  
+
 }
