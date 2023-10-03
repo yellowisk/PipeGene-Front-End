@@ -24,9 +24,17 @@
         </tbody>
       </table>
     </div>
-    <div class="modal-footer d-flex justify-content-between align-items-center">
-      <i class="fas fa-trash delete" (click)="deleteProject()"></i>
-      <button class="edit-btn" (click)="setEditMode()">Editar</button>
+    <div class="list">
+      <p class="title">Membros</p>
+      <hr class="mt-0 mb-2">
+      <p *ngFor="let user of users">{{user.username}}</p>
     </div>
+    <div class="modal-footer d-flex justify-content-between align-items-center">
+      <i class="fas fa-trash delete" *ngIf="isOwner" (click)="deleteProject()"></i>
+      <button class="edit-btn" 
+        (click)="isOwner ? setEditMode() : leaveGroup()">
+        {{ isOwner ? 'Editar' : 'Sair do Grupo' }}
+      </button>
+    </div>    
   </div>
 </ng-template>

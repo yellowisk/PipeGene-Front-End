@@ -5,6 +5,7 @@ import { ProjectService } from './project.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
+import { IUser } from 'src/app/interfaces/auth.interface';
 
 @Component({
   selector: 'app-projects',
@@ -38,5 +39,6 @@ export class ProjectsComponent implements OnInit {
 
   showProjectDetails(project: IProject): void {
     this.detailsModal.setDetails(project);
+    
   }
 }

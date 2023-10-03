@@ -1,3 +1,4 @@
+import { GroupService } from './../projects/group.service';
 import { ErrorMap } from './../../../enums/error-code.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorService } from './../../../services/error.service';
@@ -5,6 +6,8 @@ import { ExecutionService } from './../executions/execution.service';
 import { IExecution } from './../../../interfaces/execution.interface';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, of, throwError } from 'rxjs';
+import { IGroupParticipation } from 'src/app/interfaces/group.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +18,7 @@ export class DashboardComponent implements OnInit {
   today: string;
   username: string;
   executions: IExecution[] = [];
+  notifications: IGroupParticipation[];
   options: any[] = [
     {
       name: 'Projetos',
@@ -41,6 +45,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly executionService: ExecutionService,
+    private readonly groupService: GroupService,
     private readonly errorService: ErrorService
   ) {}
 
@@ -61,7 +66,16 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getNotifications(): void {
+     this.groupService.getAllGroupInvites().subscribe(
+      (response) => {
+        this.notifications = response
+      }
+    );
+  }
+
   getToday(): void {
+    this.getNotifications();
     const daysOfWeek = [
       'Domingo',
       'Segunda-feira',
