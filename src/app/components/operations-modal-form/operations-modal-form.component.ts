@@ -9,6 +9,7 @@ import {
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { IParameter } from 'src/app/interfaces/provider.interface';
+import { ProviderParametersFormComponent } from '../provider-parameters-form/provider-parameters-form.component';
 
 @Component({
   selector: 'app-operations-modal-form',
@@ -21,10 +22,12 @@ export class OperationsModalFormComponent implements OnInit {
   modalRef: BsModalRef;
   operationForm: FormGroup;
   showParameterForm = false;
+  showEditParameterForm = false;
   parameters: IParameter[] = [];
   editMode: boolean = false;
   descriptionText: string = '';
   typeText: string = '';
+  parametersForm: ProviderParametersFormComponent;
 
   constructor(
     private readonly modalService: BsModalService,
@@ -44,6 +47,13 @@ export class OperationsModalFormComponent implements OnInit {
     this.showParameterForm = false;
   }
 
+  showItem(parameter: IParameter): void {
+    const initialState = {
+      parameterData: parameter,
+    };
+    this.showEditParameterForm = true;
+  }
+  
   open(operationData: any): void {
     if (operationData == null) {
       this.descriptionText = 'Descrição'

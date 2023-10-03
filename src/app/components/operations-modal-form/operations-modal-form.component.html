@@ -37,8 +37,12 @@
                 <hr>
             </div>
             <div class="item" *ngFor="let item of parameters; let i=index">
-                <p>{{item.key}}</p>
+                <p (click)="showItem(item)">{{item.key}}</p>
                 <i class="fas fa-trash" (click)="parameters.splice(i, 1)"></i>
+            </div>
+            <div class="mt-1 mb-1">
+                <app-provider-parameters-form *ngIf="showEditParameterForm" (hide)="showEditParameterForm = false">
+                </app-provider-parameters-form>
             </div>
         </div>
 
