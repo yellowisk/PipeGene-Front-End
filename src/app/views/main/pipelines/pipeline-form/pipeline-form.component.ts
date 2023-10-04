@@ -34,6 +34,7 @@ export class PipelineFormComponent implements OnInit {
   editMode: string = null;
   showExport: boolean = false;
   importProjectId: string = '';
+  projectName: string = '';
 
   constructor(
     private readonly providerService: ProviderService,
@@ -282,6 +283,7 @@ export class PipelineFormComponent implements OnInit {
       switchMap((projectResponse) => {
         const projectId = projectResponse.id;
         this.pipelineForm.get('projectId').setValue(projectResponse.id);
+        this.projectName = projectResponse.name;
         console.log("projectId: " + projectId)
   
         return this.pipelineService.getOnePipeline(projectId, id);

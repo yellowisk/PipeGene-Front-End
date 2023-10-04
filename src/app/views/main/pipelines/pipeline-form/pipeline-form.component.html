@@ -32,6 +32,10 @@
                                     <label [class.error]="getControlError('projectId')">Projeto</label>
                                 </div>
                                 <app-input-validation [control]="pipelineForm.get('projectId')"></app-input-validation>
+                                <div *ngIf="editMode" class="label-float">
+                                    <input class="project-show" value="{{projectName}}" disabled>
+                                    <label>Projeto</label>
+                                </div>
                             </div>
                         </div>
                         <div class="steps mt-2 mb-1"
