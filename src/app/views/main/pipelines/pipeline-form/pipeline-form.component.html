@@ -88,9 +88,9 @@
                         <div class="row" *ngIf="showExport">
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <div class="label-float">
-                                    <select placeholder=" " [(ngModel)]="exportProjectId" [ngModelOptions]="{ standalone: true }">
-                                        <option value="null">Selecione o Projeto que importará a Pipeline</option>
-                                        <option *ngFor="let project of projects" [value]="project.id">{{project.name}}</option>
+                                    <select placeholder=" " [(ngModel)]="importProjectId" [ngModelOptions]="{ standalone: true }">
+                                        <option value="1">Selecione o Projeto que importará a Pipeline</option>
+                                        <option [value]="project.id" *ngFor="let project of projects">{{project.name}}</option>
                                     </select>
                                     <label>Exporte a pipeline para o projeto:</label>
                                 </div>

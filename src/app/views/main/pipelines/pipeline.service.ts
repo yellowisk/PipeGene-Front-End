@@ -21,13 +21,13 @@ export class PipelineService {
   }
 
   exportPipeline(
-    importingProjectId: string,
+    exportingProjectId: string,
     pipelineId: string,
-    projectId: IExportPipeline
+    importingProjectId: IExportPipeline
     ): Observable<IPipeline> {
       return this.http.post<IPipeline>(
-        `${environment.baseUrl}/api/v1/projects/${importingProjectId}/pipelines/${pipelineId}/clone`,
-        projectId
+        `${environment.baseUrl}/api/v1/projects/${exportingProjectId}/pipelines/${pipelineId}/clone`,
+        importingProjectId
       )
     }
 

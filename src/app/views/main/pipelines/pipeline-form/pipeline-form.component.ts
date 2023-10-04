@@ -33,7 +33,7 @@ export class PipelineFormComponent implements OnInit {
   serviceConfigIndex: number | null;
   editMode: string = null;
   showExport: boolean = false;
-  exportProjectId: string = '';
+  importProjectId: string = '';
 
   constructor(
     private readonly providerService: ProviderService,
@@ -49,8 +49,7 @@ export class PipelineFormComponent implements OnInit {
     this.pipelineForm = this.formBuilder.group({
       executionName: [null, [Validators.required]],
       projectId: [null, [Validators.required]],
-      executionSteps: this.formBuilder.array([]),
-      exportProjectId: ['']
+      executionSteps: this.formBuilder.array([])
     });
 
     this.pipelineForm.get('projectId').valueChanges.subscribe((value) => {
@@ -227,7 +226,8 @@ export class PipelineFormComponent implements OnInit {
 
   exportPipeline() {
     let projectId = '';
-    let exportProjectId = this.exportProjectId; // Store exportProjectId here
+    let importProjectId = this.importProjectId;
+    console.log("----"+ importProjectId)
   
     this.route.queryParams.subscribe((params) => {
       if (params.id) {
@@ -235,21 +235,24 @@ export class PipelineFormComponent implements OnInit {
           switchMap((projectResponse) => {
             projectId = projectResponse.id;
             this.pipelineForm.get('projectId').setValue(projectResponse.id);
-            console.log("projId of the pipe: " + projectId);
   
             return this.pipelineService.getOnePipeline(projectId, params.id);
           })
         ).subscribe(
           (pipelineResponse) => {
-            const exportPayload: IExportPipeline = {
-              projectId: projectId, // Set the projectId property here
+            const importPayload: IExportPipeline = {
+              projectId: importProjectId, // Set the projectId property here
             };
-            console.log("url: " + exportProjectId + "; importing: " + exportPayload.projectId, "pipeId: " + params.id)
-            this.pipelineService.exportPipeline(exportProjectId, params.id, exportPayload).subscribe((exportResponse) => {
+
+            console.log("projId of the pipe: " + projectId);
+            console.log("proj of the pipe formatted: " + importPayload.projectId)
+            console.log("proj of the select: " + importProjectId);
+
+            this.pipelineService.exportPipeline(projectId, params.id, importPayload).subscribe((exportResponse) => {
               console.log(JSON.stringify(exportResponse))
             })
             this.router.navigate(['/pipelines'])
-          },
+            },
           (error: HttpErrorResponse) => {
             this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
           }
@@ -261,12 +264,15 @@ export class PipelineFormComponent implements OnInit {
 
   showExportBox() {
     this.showExport = true;
-    this.exportProjectId = '';
+    this.importProjectId = '';
+    for (const project of this.projects) {
+      console.log(project.id + " " + project.name)
+    }
   }
 
   cancelExport() {
     this.showExport = false;
-    this.exportProjectId = '';
+    this.importProjectId = '';
   }
 
   setEditMode(id: string): void {
