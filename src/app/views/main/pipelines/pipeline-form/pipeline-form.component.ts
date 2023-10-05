@@ -11,6 +11,7 @@ import { ProviderService } from '../../providers/provider.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
 import { switchMap } from 'rxjs/operators';
+import { IExportPipeline } from 'src/app/interfaces/pipeline.interface';
 
 @Component({
   selector: 'app-pipeline-form',
@@ -31,6 +32,9 @@ export class PipelineFormComponent implements OnInit {
 
   serviceConfigIndex: number | null;
   editMode: string = null;
+  showExport: boolean = false;
+  importProjectId: string = '';
+  projectName: string = '';
 
   constructor(
     private readonly providerService: ProviderService,
@@ -46,7 +50,7 @@ export class PipelineFormComponent implements OnInit {
     this.pipelineForm = this.formBuilder.group({
       executionName: [null, [Validators.required]],
       projectId: [null, [Validators.required]],
-      executionSteps: this.formBuilder.array([]),
+      executionSteps: this.formBuilder.array([])
     });
 
     this.pipelineForm.get('projectId').valueChanges.subscribe((value) => {
@@ -98,6 +102,7 @@ export class PipelineFormComponent implements OnInit {
 
   initStepRow(inputType: string | null): FormGroup {
     return this.formBuilder.group({
+      stepId: [null, [Validators.required]],
       providerId: [null, [Validators.required]],
       inputType: [inputType || ''],
       outputType: [null, [Validators.required]],
@@ -160,10 +165,11 @@ export class PipelineFormComponent implements OnInit {
 
   saveServiceConfigs(event: any): void {
     const controlArray = this.pipelineForm.get('executionSteps') as FormArray;
-    console.log("event: " + JSON.stringify(event));
-    controlArray.controls[this.serviceConfigIndex]
-      .get('params')
-      .setValue(event);
+    if (controlArray.controls[this.serviceConfigIndex]) {
+      controlArray.controls[this.serviceConfigIndex]
+        .get('params')
+        .setValue(event);
+    }
     this.serviceConfigIndex = null;
   
   }
@@ -182,13 +188,17 @@ export class PipelineFormComponent implements OnInit {
     if (this.editMode) {
       this.route.queryParams.subscribe((params) => {
         const id = params.id;
-        console.log(id);
+
+        pipeline.executionSteps = this.pipelineForm.get('executionSteps').value;
+        
+        console.log("--- " + JSON.stringify(pipeline.executionSteps))
 
         this.pipelineService.editPipeline(pipeline.projectId, id, {
           description: pipeline.executionName,
           steps: pipeline.executionSteps
         }).subscribe(
-          () => {
+          (responseBody) => {
+            console.log(JSON.stringify(responseBody));
             this.router.navigate(['/pipelines']);
           },
           (error: HttpErrorResponse) => {
@@ -216,6 +226,90 @@ export class PipelineFormComponent implements OnInit {
     }
   }
 
+  exportPipeline() {
+    let projectId = ''; //projectId of the pipeline
+    let importProjectId = this.importProjectId; //selected project
+  
+    this.route.queryParams.subscribe((params) => {
+      if (params.id) {
+        this.projectService.getOneProjectByPipeline(params.id).pipe(
+          switchMap((projectResponse) => {
+            projectId = projectResponse.id;
+            this.pipelineForm.get('projectId').setValue(projectResponse.id);
+  
+            return this.pipelineService.getOnePipeline(projectId, params.id);
+          })
+        ).subscribe(
+          (pipelineResponse) => {
+            const importPayload: IExportPipeline = { projectId: importProjectId };
+
+            this.pipelineService.exportPipeline(projectId, params.id, importPayload).subscribe((exportResponse) => {
+              console.log(JSON.stringify(exportResponse))
+            })
+            this.router.navigate(['/pipelines'])
+            },
+          (error: HttpErrorResponse) => {
+            this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+          }
+        );
+      }
+    });
+  }
+  
+
+  showExportBox() {
+    this.showExport = true;
+    this.importProjectId = '';
+    for (const project of this.projects) {
+      console.log(project.id + " " + project.name)
+    }
+  }
+
+  cancelExport() {
+    this.showExport = false;
+    this.importProjectId = '';
+  }
+
+  setEditMode(id: string): void {
+    console.log("pipeId: " + id)
+  
+    this.projectService.getOneProjectByPipeline(id).pipe(
+      switchMap((projectResponse) => {
+        const projectId = projectResponse.id;
+        this.pipelineForm.get('projectId').setValue(projectResponse.id);
+        this.projectName = projectResponse.name;
+        console.log("projectId: " + projectId)
+  
+        return this.pipelineService.getOnePipeline(projectId, id);
+      })
+    ).subscribe(
+      (pipelineResponse) => {
+        this.pipelineForm.get('executionName').setValue(pipelineResponse.description);
+        
+        const executionStepsArray = this.pipelineForm.get('executionSteps') as FormArray;
+        executionStepsArray.clear();
+
+        // Adding steps from pipelineResponse to FormArray
+        pipelineResponse.steps.forEach((step, index) => {
+          const stepFormGroup = this.initStepRow(step.inputType);
+          stepFormGroup.patchValue({ ...step, stepNumber: index + 1 });
+          if (this.providers) {
+            this.selectedProviders.push(this.providers.find(provider => provider.id === step.providerId));
+          }
+
+          executionStepsArray.push(stepFormGroup);
+        });
+
+      pipelineResponse.steps.forEach((step) => {
+        this.saveServiceConfigs(step.params);
+      });
+      },
+      (error: HttpErrorResponse) => {
+        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+      }
+    );
+  }
+
   getControlError(control: string): boolean {
     const formControl = this.pipelineForm.get(control);
     return formControl.errors && formControl.touched;
@@ -229,44 +323,6 @@ export class PipelineFormComponent implements OnInit {
     this.pipelineForm.markAllAsTouched();
     stepsArray.markAllAsTouched();
     return false;
-  }
-
-  setEditMode(id: string): void {
-    console.log("pipeline: " + id);
-  
-    this.projectService.getOneProjectByPipeline(id).pipe(
-      switchMap((projectResponse) => {
-        const projectId = projectResponse.id;
-        this.pipelineForm.get('projectId').setValue(projectResponse.id);
-  
-        return this.pipelineService.getOnePipeline(projectId, id);
-      })
-    ).subscribe(
-      (pipelineResponse) => {
-        console.log(pipelineResponse.id + " " + pipelineResponse.description + " " + JSON.stringify(pipelineResponse.steps));
-        this.pipelineForm.get('executionName').setValue(pipelineResponse.description);
-        
-        const executionStepsArray = this.pipelineForm.get('executionSteps') as FormArray;
-        executionStepsArray.clear();
-
-        // Adding steps from pipelineResponse to FormArray
-        pipelineResponse.steps.forEach((step, index) => {
-          const stepFormGroup = this.initStepRow(step.inputType);
-          stepFormGroup.patchValue({ ...step, stepNumber: index + 1 });
-          this.selectedProviders.push(this.providers.find(provider => provider.id === step.providerId));
-
-          executionStepsArray.push(stepFormGroup);
-        });
-
-      pipelineResponse.steps.forEach((step) => {
-        this.saveServiceConfigs(step.params);
-      });
-      console.log(JSON.stringify(this.selectedProviders));
-      },
-      (error: HttpErrorResponse) => {
-        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
-      }
-    );
   }
 
 }
