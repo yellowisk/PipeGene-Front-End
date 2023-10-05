@@ -6,8 +6,7 @@ import { ExecutionService } from './../executions/execution.service';
 import { IExecution } from './../../../interfaces/execution.interface';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, throwError } from 'rxjs';
-import { IGroupParticipation } from 'src/app/interfaces/group.interface';
+import { IGroupParticipation, IGroupParticipationView } from 'src/app/interfaces/group.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +17,7 @@ export class DashboardComponent implements OnInit {
   today: string;
   username: string;
   executions: IExecution[] = [];
-  notifications: IGroupParticipation[];
+  allNotifications: IGroupParticipationView[] = [];
   options: any[] = [
     {
       name: 'Projetos',
@@ -46,13 +45,14 @@ export class DashboardComponent implements OnInit {
     private readonly router: Router,
     private readonly executionService: ExecutionService,
     private readonly groupService: GroupService,
-    private readonly errorService: ErrorService
+    private readonly errorService: ErrorService,
   ) {}
 
   ngOnInit(): void {
     this.username = sessionStorage.getItem('username');
     this.getExecutions();
     this.getToday();
+    this.getNotifications();
   }
 
   getExecutions(): any {
@@ -67,15 +67,34 @@ export class DashboardComponent implements OnInit {
   }
 
   getNotifications(): void {
-     this.groupService.getAllGroupInvites().subscribe(
+    this.groupService.getAllGroupInvites().subscribe(
       (response) => {
-        this.notifications = response
-      }
+        this.allNotifications = response
+    }
     );
+  }  
+
+  acceptSolicitation(id: string): void {
+    this.groupService.acceptGroupParticipation(id).subscribe
+      (response => {
+        console.log('Participation accepted successfully');
+        location.reload();
+      }, error => {
+        console.error('Error accepting participation:', error);
+      });
+  } 
+
+  denySolicitation(id: string): void {
+    this.groupService.denyGroupParticipation(id).subscribe
+    (response => {
+      console.log('Participation deny successfully');
+      location.reload();
+    }, error => {
+      console.error('Error accepting participation:', error);
+    });
   }
 
   getToday(): void {
-    this.getNotifications();
     const daysOfWeek = [
       'Domingo',
       'Segunda-feira',

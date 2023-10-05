@@ -56,3 +56,32 @@ i {
     font-size: 14px;
   }
 }
+
+.notification-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.notification-text {
+  flex: 1;
+  margin-right: 10px; /* Espaçamento entre o texto e os botões */
+  font-size: 14px; /* Tamanho do texto */
+}
+
+.notification-buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap; /* Impede que os botões quebrem para a próxima linha */
+}
+
+.notification-buttons button {
+  font-size: 12px; /* Tamanho dos botões */
+  margin-left: 5px; /* Espaço entre os botões */
+}
