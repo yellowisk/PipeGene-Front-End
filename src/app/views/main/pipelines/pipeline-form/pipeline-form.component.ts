@@ -197,7 +197,8 @@ export class PipelineFormComponent implements OnInit {
           description: pipeline.executionName,
           steps: pipeline.executionSteps
         }).subscribe(
-          () => {
+          (responseBody) => {
+            console.log(JSON.stringify(responseBody));
             this.router.navigate(['/pipelines']);
           },
           (error: HttpErrorResponse) => {
@@ -226,9 +227,8 @@ export class PipelineFormComponent implements OnInit {
   }
 
   exportPipeline() {
-    let projectId = '';
-    let importProjectId = this.importProjectId;
-    console.log("----"+ importProjectId)
+    let projectId = ''; //projectId of the pipeline
+    let importProjectId = this.importProjectId; //selected project
   
     this.route.queryParams.subscribe((params) => {
       if (params.id) {
@@ -241,13 +241,7 @@ export class PipelineFormComponent implements OnInit {
           })
         ).subscribe(
           (pipelineResponse) => {
-            const importPayload: IExportPipeline = {
-              projectId: importProjectId, // Set the projectId property here
-            };
-
-            console.log("projId of the pipe: " + projectId);
-            console.log("proj of the pipe formatted: " + importPayload.projectId)
-            console.log("proj of the select: " + importProjectId);
+            const importPayload: IExportPipeline = { projectId: importProjectId };
 
             this.pipelineService.exportPipeline(projectId, params.id, importPayload).subscribe((exportResponse) => {
               console.log(JSON.stringify(exportResponse))
