@@ -62,7 +62,7 @@ export class PipelineFormComponent implements OnInit {
         this.addStep();
       }
     });
-
+    
     this.getProviders();
     this.loadProjectsAndEdit();
   }
@@ -102,7 +102,7 @@ export class PipelineFormComponent implements OnInit {
 
   initStepRow(inputType: string | null): FormGroup {
     return this.formBuilder.group({
-      stepId: [null, [Validators.required]],
+      stepId: [null],
       providerId: [null, [Validators.required]],
       inputType: [inputType || ''],
       outputType: [null, [Validators.required]],
@@ -114,6 +114,7 @@ export class PipelineFormComponent implements OnInit {
   addStep(): void {
     this.steps.push(this.steps.length + 1);
     const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
+    console.log("stepArrays: " + JSON.stringify(stepsArray.value))
     const stepNumber = stepsArray.length + 1;
     this.steps.push(stepNumber);
     stepsArray.push(this.initStepRow(this.getFileType()));
@@ -142,6 +143,27 @@ export class PipelineFormComponent implements OnInit {
     const executionStepsArray = this.pipelineForm.get('executionSteps') as FormArray;
     const stepFormGroup = executionStepsArray.at(index) as FormGroup;
     const providerId = stepFormGroup.get('providerId')?.value;
+
+    if (index == 0) {
+/*       this.providerService.getOneProvider(providerId).subscribe((providerResponse) => { */
+        const filename = this.selectedProject.datasets[0].filename;
+        console.log(filename)
+        stepFormGroup.get(`inputType`).setValue(this.getFileExtension(filename))
+        stepFormGroup.get('outputType').setValue('')
+        console.log(executionStepsArray.value)
+/*       }) */
+    } else {
+      for (let i = index; i < executionStepsArray.length; i++) {
+        const currentStepFormGroup = executionStepsArray.at(i) as FormGroup;
+        const previousStepFormGroup = executionStepsArray.at(i - 1) as FormGroup;
+        const outputType = previousStepFormGroup.get('outputType')?.value;
+        currentStepFormGroup.get(`inputType`).setValue(outputType)
+        currentStepFormGroup.get('outputType').setValue('')
+        console.log(executionStepsArray.value)
+        console.log(JSON.stringify(executionStepsArray.value))
+      }
+    }
+
     if(providerId) {
       this.selectedProviders[index] = this.providers.filter(
         (p) =>
@@ -155,11 +177,30 @@ export class PipelineFormComponent implements OnInit {
       } */
   }
 
+  getFileExtension(filename: string): string | null {
+    const extensionMatch = filename.match(/\.(.+)$/);
+    if (extensionMatch) {
+      return extensionMatch[1].toLowerCase();
+    }
+    return null;
+  }
+
+  setOutputType(index: number) : void {
+    const executionStepsArray = this.pipelineForm.get('executionSteps') as FormArray;
+    const nextStepFormGroup = executionStepsArray.at(index + 1) as FormGroup;
+    if (nextStepFormGroup != null) {
+      const stepFormGroup = executionStepsArray.at(index) as FormGroup;
+      const outputType = stepFormGroup.get('outputType')?.value
+      nextStepFormGroup.get('inputType').setValue(outputType)
+    } else {
+      console.log("There ain't a next step.")
+    }
+  }
+
   initServiceConfig(index: number): void {
     this.serviceConfigIndex = index;
     this.configProviderModal.setOperations(
-      this.providers.filter((p) => p.id === this.selectedProviders[index].id)[0]
-        .operations
+    this.providers.filter((p) => p.id === this.selectedProviders[index].id)[0].operations
     );
   }
 
@@ -171,7 +212,7 @@ export class PipelineFormComponent implements OnInit {
         .setValue(event);
     }
     this.serviceConfigIndex = null;
-  
+    console.log(controlArray.value)
   }
 
   serviceIsConfigured(index: number): boolean {
@@ -180,18 +221,20 @@ export class PipelineFormComponent implements OnInit {
   }
 
   createPipeline(): void {
+    const pipeline = this.pipelineForm.value;
+    
     if (!this.validateForm()) {
+      console.log("request body: " + JSON.stringify(pipeline))
       return;
     }
 
-    const pipeline = this.pipelineForm.value;
     if (this.editMode) {
       this.route.queryParams.subscribe((params) => {
         const id = params.id;
 
         pipeline.executionSteps = this.pipelineForm.get('executionSteps').value;
         
-        console.log("--- " + JSON.stringify(pipeline.executionSteps))
+        console.log("request body: " + JSON.stringify(pipeline))
 
         this.pipelineService.editPipeline(pipeline.projectId, id, {
           description: pipeline.executionName,
@@ -206,16 +249,15 @@ export class PipelineFormComponent implements OnInit {
           }
         )
       });
-      
-      
     } else {
+      console.log("request body " + JSON.stringify(pipeline))
       this.pipelineService
       .createPipeline(
+        pipeline.projectId,
         {
           description: pipeline.executionName,
           steps: pipeline.executionSteps,
-        },
-        pipeline.projectId
+        }
       )
       .subscribe(
         () => this.router.navigate(['/pipelines']),
@@ -278,7 +320,6 @@ export class PipelineFormComponent implements OnInit {
         const projectId = projectResponse.id;
         this.pipelineForm.get('projectId').setValue(projectResponse.id);
         this.projectName = projectResponse.name;
-        console.log("projectId: " + projectId)
   
         return this.pipelineService.getOnePipeline(projectId, id);
       })
@@ -303,6 +344,8 @@ export class PipelineFormComponent implements OnInit {
       pipelineResponse.steps.forEach((step) => {
         this.saveServiceConfigs(step.params);
       });
+
+      console.log(JSON.stringify(pipelineResponse));
       },
       (error: HttpErrorResponse) => {
         this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
@@ -317,12 +360,32 @@ export class PipelineFormComponent implements OnInit {
 
   validateForm(): boolean {
     const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
+  
     if (this.pipelineForm.valid && stepsArray.valid) {
+      console.log("validateForm: Form is valid.");
       return true;
+    } else {
+      console.log("validateForm: Form is invalid.");
+  
+      // Print validation errors for form controls
+      Object.keys(this.pipelineForm.controls).forEach((controlName) => {
+        const control = this.pipelineForm.get(controlName);
+        if (control.invalid) {
+          console.log(`Control '${controlName}' has errors: ${JSON.stringify(control.errors)}`);
+        }
+      });
+  
+      // Print validation errors for stepsArray controls
+      stepsArray.controls.forEach((stepControl, index) => {
+        if (stepControl.invalid) {
+          console.log(`Step ${index + 1} has errors: ${JSON.stringify(stepControl.errors)}`);
+        }
+      });
+
+      this.pipelineForm.markAllAsTouched();
+      stepsArray.markAllAsTouched();
+      return false;
     }
-    this.pipelineForm.markAllAsTouched();
-    stepsArray.markAllAsTouched();
-    return false;
   }
 
 }
