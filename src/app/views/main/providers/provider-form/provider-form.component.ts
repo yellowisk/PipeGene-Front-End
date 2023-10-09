@@ -30,6 +30,7 @@ export class ProviderFormComponent implements OnInit {
     this.providerForm = this.formBuilder.group({
       name: [null, [Validators.required]],
       url: [null, [Validators.required]],
+      urlSource: [null],
       description: [null, [Validators.required]],
       inputSupportedTypes: [null, [Validators.required]],
       outputSupportedTypes: [null, [Validators.required]],
@@ -63,6 +64,7 @@ export class ProviderFormComponent implements OnInit {
           name: provider.value.name,
           description: provider.value.description,
           url: provider.value.url,
+          urlSource: provider.value.urlSource,
           inputSupportedTypes: typeof provider.get('inputSupportedTypes').value === 'string'
           ? provider.get('inputSupportedTypes').value.split(',').map(item => item.trim())
           : provider.get('inputSupportedTypes').value,
@@ -88,6 +90,7 @@ export class ProviderFormComponent implements OnInit {
         name: provider.get('name').value,
         description: provider.get('description').value,
         url: provider.get('url').value,
+        urlSource: provider.get('urlSource').value,
         inputSupportedTypes: provider.get('inputSupportedTypes')
           .value.split(','),
         outputSupportedTypes: provider.get('outputSupportedTypes')
@@ -141,10 +144,10 @@ export class ProviderFormComponent implements OnInit {
 
     .subscribe(
       (providerResponse) => {
-        console.log(providerResponse.id = " " + JSON.stringify(providerResponse.operations));
         this.providerForm.get('name').setValue(providerResponse.name);
         this.providerForm.get('description').setValue(providerResponse.description);
         this.providerForm.get('url').setValue(providerResponse.url);
+        this.providerForm.get('urlSource').setValue(providerResponse.urlSource);
         this.providerForm.get('inputSupportedTypes').setValue(providerResponse.inputSupportedTypes);
         this.providerForm.get('outputSupportedTypes').setValue(providerResponse.outputSupportedTypes);
         this.providerForm.get('public').setValue(providerResponse.public);
@@ -154,8 +157,6 @@ export class ProviderFormComponent implements OnInit {
         // Add operations individually
         for (const operation of providerResponse.operations) {
           this.operations.push(operation);
-          console.log(JSON.stringify(operation));
-          console.log(providerResponse.operations.length)
         }
         console.log(JSON.stringify(providerResponse))
       }

@@ -16,14 +16,14 @@
                                 <div class="label-float">
                                     <input type="text" placeholder=" " formControlName="name"
                                         [class.error]="getControlError('name')" />
-                                    <label [class.error]="getControlError('name')">Nome</label>
+                                    <label [class.error]="getControlError('name')">Name</label>
                                 </div>
                                 <app-input-validation [control]="providerForm.get('name')"></app-input-validation>
 
                                 <div class="label-float">
                                     <input type="text" placeholder=" " formControlName="description"
                                         [class.error]="getControlError('description')" />
-                                    <label [class.error]="getControlError('description')">Descrição</label>
+                                    <label [class.error]="getControlError('description')">Description</label>
                                 </div>
                                 <app-input-validation [control]="providerForm.get('description')">
                                 </app-input-validation>
@@ -31,11 +31,11 @@
                                 <div class="label-float">
                                     <select [class.error]="getControlError('public')" placeholder=" "
                                         formControlName="public">
-                                        <option value="1">Selecione a privacidade do Serviço</option>
-                                        <option value="true">Público</option>
-                                        <option value="false">Privado</option>
+                                        <option value="1">Select the Service Privacy</option>
+                                        <option value="true">Public</option>
+                                        <option value="false">Private</option>
                                     </select>
-                                    <label [class.error]="getControlError('public')">Privacidade</label>
+                                    <label [class.error]="getControlError('public')">Privacy</label>
                                 </div>
                                 <app-input-validation [control]="providerForm.get('public')"></app-input-validation>
 
@@ -47,14 +47,20 @@
                                 <app-input-validation [control]="providerForm.get('url')"></app-input-validation>
 
                                 <div class="label-float">
+                                    <input type="text" placeholder=" " formControlName="urlSource" />
+                                    <label>Source-code Repository</label>
+                                </div>
+                                <span class="opcional">*Optional</span>
+
+                                <div class="label-float">
                                     <input [class.error]="getControlError('inputSupportedTypes')" type="text"
                                         placeholder=" " formControlName="inputSupportedTypes" />
                                     <label [class.error]="getControlError('inputSupportedTypes')">Inputs</label>
                                 </div>
                                 <app-input-validation [control]="providerForm.get('inputSupportedTypes')">
                                 </app-input-validation>
-                                <p class="bottom-label" *ngIf="!getControlError('inputSupportedTypes')">Insira aqui os
-                                    tipos de arquivo suportados pelo seu serviço separados por virgula</p>
+                                <p class="bottom-label" *ngIf="!getControlError('inputSupportedTypes')">Enter the file types supported by your service here, 
+                                    separated by commas</p>
 
                                 <div class="label-float">
                                     <input [class.error]="getControlError('outputSupportedTypes')" type="text"
@@ -63,12 +69,12 @@
                                 </div>
                                 <app-input-validation [control]="providerForm.get('outputSupportedTypes')">
                                 </app-input-validation>
-                                <p class="bottom-label" *ngIf="!getControlError('outputSupportedTypes')">Insira aqui os
-                                    formatos exportados pelo seu serviço separados por virgula</p>
+                                <p class="bottom-label" *ngIf="!getControlError('outputSupportedTypes')">Enter here the formats exported by your service, 
+                                    separated by commas</p>
 
                                 <div class="operations-list">
                                     <div *ngIf="operations.length > 0">
-                                        <p class="title">Operações</p>
+                                        <p class="title">Operations</p>
                                         <hr>
                                     </div>
                                     <div class="item" *ngFor="let operation of operations; let i=index">
@@ -76,7 +82,7 @@
                                         <i class="fas fa-trash" (click)="operations.splice(i, 1)"></i>
                                     </div>
                                     <button class="operation-btn" (click)="openOperationsModal(null)">
-                                        Adicionar Operação
+                                        Add operation
                                     </button>
                                 </div>
 
@@ -84,10 +90,10 @@
 
                             <div class="col-6 d-flex align-items-end mt-5 mb-3 back-container">
                                 <p class="back" [routerLink]="['/services']" routerLinkActive="router-link-active">
-                                    Voltar</p>
+                                    Back</p>
                             </div>
                             <div class="col-6 d-flex flex-column mt-5 mb-3">
-                                <button (click)="submitProvider()">{{editMode? 'Editar' : 'Submeter'}}</button>
+                                <button (click)="submitProvider()">{{editMode? 'Edit' : 'Submit'}}</button>
                             </div>
                         </div>
                     </div>
