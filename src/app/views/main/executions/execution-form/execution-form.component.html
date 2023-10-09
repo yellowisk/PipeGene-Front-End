@@ -7,31 +7,30 @@
             <div class="icon-wave">
               <i class="fas fa-wave-square"></i>
             </div>
-            <h4 class="title">Nova Execução</h4>
-            <p class="subtitle">Para criar uma execução, selecione um dataset e o pipeline desejado
-            </p>
+            <h4 class="title">New Execution</h4>
+            <p class="subtitle">To create an execution, select a dataset and the desired pipeline</p>
             <div class="row">
               <div class="col-12 d-flex flex-column mb-3">
 
                 <div class="label-float">
                   <input [class.error]="getControlError('description')" type="text" placeholder=" " formControlName="description" />
-                  <label [class.error]="getControlError('description')">Descrição</label>
+                  <label [class.error]="getControlError('description')">Description</label>
                 </div>
                 <app-input-validation [control]="executionForm.get('description')"></app-input-validation>
 
                 <div class="label-float">
                   <select [class.error]="getControlError('projectId')" placeholder=" " formControlName="projectId">
-                    <option value="1">Selecione o projeto</option>
+                    <option value="1">Select a project</option>
                     <option [value]="project.id" *ngFor="let project of projects">{{project.name}}</option>
                   </select>
-                  <label [class.error]="getControlError('projectId')">Projeto</label>
+                  <label [class.error]="getControlError('projectId')">Project</label>
                 </div>
                 <app-input-validation [control]="executionForm.get('projectId')"></app-input-validation>
 
 
                 <div class="label-float">
                   <select [class.error]="getControlError('datasetId')" placeholder=" " formControlName="datasetId">
-                    <option value="1">Selecione o dataset</option>
+                    <option value="1">Select the dataset</option>
                     <option [value]="dataset.id" *ngFor="let dataset of selectedProject?.datasets">{{dataset.filename}}
                     </option>
                   </select>
@@ -42,7 +41,7 @@
 
                 <div class="label-float">
                   <select [class.error]="getControlError('pipelineId')" placeholder=" " formControlName="pipelineId">
-                    <option value="1">Selecione o pipeline</option>
+                    <option value="1">Select the pipeline</option>
                     <option [value]="pipeline.id" *ngFor="let pipeline of pipelines">{{pipeline.description}}
                     </option>
                   </select>
@@ -86,7 +85,7 @@
                 <p class="back" [routerLink]="['/executions']" routerLinkActive="router-link-active">Voltar</p>
               </div>
               <div class="col-6 d-flex flex-column mt-5 mb-3">
-                <button (click)="createExecution()">Iniciar Execução</button>
+                <button (click)="createExecution()">Begin Execution</button>
               </div>
             </div>
           </div>

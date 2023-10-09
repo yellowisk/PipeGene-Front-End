@@ -56,7 +56,7 @@ export class OperationsModalFormComponent implements OnInit {
   
   open(operationData: any): void {
     if (operationData == null) {
-      this.descriptionText = 'Descrição'
+      this.descriptionText = 'Description'
 /*     } else if (operationData && !this.editMode) { */
     } else if (operationData) {
       this.setEditMode()

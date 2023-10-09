@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   allNotifications: IGroupParticipationView[] = [];
   options: any[] = [
     {
-      name: 'Projetos',
+      name: 'Projects',
       icon: 'far fa-folder-open',
       url: '/projects',
     },
@@ -30,12 +30,12 @@ export class DashboardComponent implements OnInit {
       url: '/pipelines',
     },
     {
-      name: 'Execuções',
+      name: 'Executions',
       icon: 'fas fa-tasks',
       url: '/executions',
     },
     {
-      name: 'Serviços',
+      name: 'Services',
       icon: 'fas fa-cogs',
       url: '/services',
     },
@@ -96,13 +96,13 @@ export class DashboardComponent implements OnInit {
 
   getToday(): void {
     const daysOfWeek = [
-      'Domingo',
-      'Segunda-feira',
-      'Terça-feira',
-      'Quarta-feira',
-      'Quinta-feira',
-      'Sexta-feira',
-      'Sábado',
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
     ];
     const date = new Date();
     this.today = `${daysOfWeek[date.getDay()]}`;

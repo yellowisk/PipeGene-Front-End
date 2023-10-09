@@ -13,7 +13,7 @@
       <p *ngFor="let item of project.datasets">{{item.filename}}</p>
     </div>
     <div class="list" *ngIf="executions.length > 0">
-      <p class="title">Execuções do Projeto</p>
+      <p class="title">Project Executions</p>
       <hr class="mt-0 mb-2">
       <table class="table table-bordered table-hover">
         <tbody>
@@ -25,7 +25,7 @@
       </table>
     </div>
     <div class="list">
-      <p class="title">Membros</p>
+      <p class="title">Members</p>
       <hr class="mt-0 mb-2">
       <p *ngFor="let user of users">{{user.username}}</p>
     </div>
@@ -33,7 +33,7 @@
       <i class="fas fa-trash delete" *ngIf="isOwner" (click)="deleteProject()"></i>
       <button class="edit-btn" 
         (click)="isOwner ? setEditMode() : leaveGroup()">
-        {{ isOwner ? 'Editar' : 'Sair do Grupo' }}
+        {{ isOwner ? 'Edit' : 'Leave Group' }}
       </button>
     </div>    
   </div>

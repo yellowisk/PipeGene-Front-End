@@ -20,7 +20,7 @@
                         <div class="label-float">
                             <input [class.error]="getControlError('name')" type="text" placeholder=" "
                                 formControlName="name" />
-                            <label [class.error]="getControlError('name')">Nome</label>
+                            <label [class.error]="getControlError('name')">Name</label>
                         </div>
                         <app-input-validation class="mb-3" [control]="editForm.get('name')"></app-input-validation>
                         <hr>
@@ -38,9 +38,9 @@
                         </div>
                         <app-input-validation class="mb-3" [control]="editForm.get('github')"></app-input-validation>
 
-                        <button class="btn mb-5" (click)="edit()">Editar</button>
+                        <button class="btn mb-5" (click)="edit()">Save Changes</button>
 
-                        <p class="return"><span [routerLink]="['/main']">Voltar para a página principal</span> </p>
+                        <p class="return"><span [routerLink]="['/main']">Go back to the Homepage</span> </p>
                     </div>
                 </div>
             </form>

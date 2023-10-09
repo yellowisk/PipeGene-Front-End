@@ -7,9 +7,9 @@
                         <div class="icon-wave">
                             <i class="fas fa-cogs"></i>
                         </div>
-                        <h4 class="title">{{editMode? 'Visualização de seu serviço' : 'Submeter um novo serviço'}}</h4>
-                        <p class="subtitle">{{editMode? 'Você pode alterar os dados deste serviço' 
-                            : 'Para submeter um novo serviço, informe um nome, descrição e as configurações necessárias para sua execução.'}}
+                        <h4 class="title">{{editMode? 'Visualization of Your Service' : 'Submit a New Service'}}</h4>
+                        <p class="subtitle">{{editMode? 'You can edit the data of this service.' 
+                            : 'To submit a new service, provide its name, description and the necessary configurations for its execution..'}}
                         </p>
                         <div class="row">
                             <div class="col-12 d-flex flex-column mb-3">
@@ -93,7 +93,7 @@
                                     Back</p>
                             </div>
                             <div class="col-6 d-flex flex-column mt-5 mb-3">
-                                <button (click)="submitProvider()">{{editMode? 'Edit' : 'Submit'}}</button>
+                                <button (click)="submitProvider()">{{editMode? 'Edit Provider' : 'Submit'}}</button>
                             </div>
                         </div>
                     </div>

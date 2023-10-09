@@ -8,9 +8,10 @@
                             <i class="fas fa-stream"></i>
                         </div>
                         <div>
-                            <h4 class="title">{{editMode? 'Visualização de seu Pipeline' : 'Novo Pipeline'}}</h4> 
-                            <p class="subtitle">{{editMode? 'Você pode exportar esta pipeline para outro projeto ou alterar seus dados.' 
-                                : 'Para criar uma sequência de execução, basta selecionar os serviços e outputs desejados.'}}
+                            <h4 class="title">{{editMode? 'Visualization of Your Pipeline' : 'New Pipeline'}}</h4> 
+                            <p class="subtitle">
+                            {{editMode? 'You can export this pipeline to another project or edit its data.' 
+                            : 'To create an execution sequence, just select the desired services and outputs.'}}
                             </p>
                         </div>
                         <div class="row">
@@ -18,23 +19,23 @@
                                 <div class="label-float">
                                     <input [class.error]="getControlError('executionName')" type="text" placeholder=" "
                                         formControlName="executionName" />
-                                    <label [class.error]="getControlError('executionName')">Nome</label>
+                                    <label [class.error]="getControlError('executionName')">Name</label>
                                 </div>
                                 <app-input-validation [control]="pipelineForm.get('executionName')">
                                 </app-input-validation>
                                 <div *ngIf="!editMode" class="label-float">
                                     <select [class.error]="getControlError('projectId')" placeholder=" "
                                         formControlName="projectId">
-                                        <option value="1">Selecione o Projeto</option>
+                                        <option value="1">Select the Project</option>
                                         <option [value]="project.id" *ngFor="let project of projects">
                                             {{project.name}}</option>
                                     </select>
-                                    <label [class.error]="getControlError('projectId')">Projeto</label>
+                                    <label [class.error]="getControlError('projectId')">Project</label>
                                 </div>
                                 <app-input-validation [control]="pipelineForm.get('projectId')"></app-input-validation>
                                 <div *ngIf="editMode" class="label-float">
                                     <input class="project-show" value="{{projectName}}" disabled>
-                                    <label>Projeto</label>
+                                    <label>Project</label>
                                 </div>
                             </div>
                         </div>
@@ -48,11 +49,11 @@
                                         <div class="label-float">
                                             <select placeholder=" " formControlName="providerId"
                                                 (change)="setProvider(index)">
-                                                <option value="1">Selecione o serviço</option>
+                                                <option value="1">Select the service</option>
                                                 <option [value]="provider.id" *ngFor="let provider of providers">
                                                     {{provider.name}}</option>
                                             </select>
-                                            <label>Serviço</label>
+                                            <label>Service</label>
                                         </div>
                                     </div>
 
@@ -61,7 +62,7 @@
                                     <div class="col-md-6 col-12">
                                         <div class="label-float">
                                             <select placeholder=" " formControlName="outputType" (change)="setOutputType(index)">
-                                                <option value="1">Selecione o formato do output</option>
+                                                <option value="1">Select the output format</option>
                                                 <option [value]="output"
                                                     *ngFor="let output of selectedProviders[index]?.outputSupportedTypes">
                                                     {{output}}</option>
@@ -70,8 +71,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12 pt-2">
-                                        <button class="configure-btn" (click)="initServiceConfig(index)">Configurar
-                                            Serviço</button>
+                                        <button class="configure-btn" (click)="initServiceConfig(index)">Configure
+                                            Service</button>
                                     </div>
                                 </div>
                             </div>
@@ -88,34 +89,33 @@
                         </div>
                         
                         <div class="row" *ngIf="showExport">
-                            <div class="d-flex justify-content-between mt-3">
+                            <div class="d-flex justify-content-between align-items-center back-container">
                                 <div class="label-float">
                                     <select placeholder=" " [(ngModel)]="importProjectId" [ngModelOptions]="{ standalone: true }">
-                                        <option value="1">Selecione o Projeto que importará a Pipeline</option>
+                                        <option value="1">Select the project that will import the Pipeline</option>
                                         <option [value]="project.id" *ngFor="let project of projects">{{project.name}}</option>
                                     </select>
-                                    <label>Exporte a pipeline para o projeto:</label>
+                                    <label>Export the pipeline to the project:</label>
                                 </div>
                                 
-                            <div class="col-2 d-flex flex-column mt-5 mb-3">
-                                <button (click)="exportPipeline()">Exportar</button>
-                            </div>
-                            <div class="col-2 d-flex flex-column mt-5 mb-3">
-                                <button class="back" (click)="cancelExport()">Cancelar</button>
-                            </div>
+                                <div class="col-2 d-flex flex-column mt-5 mb-3">
+                                    <button (click)="exportPipeline()">Export</button>
+                                </div>
+                                <div class="col-2 d-flex flex-column mt-5 mb-3">
+                                    <button class="back" (click)="cancelExport()">Cancel</button>
+                                </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="d-flex align-items-end mt-5 mb-3 back-container" [ngClass]="editMode? 'col-4' : 'col-6' ">
-                                <p class="back" [routerLink]="['/pipelines']" routerLinkActive="router-link-active">
-                                    Voltar</p>
+                                <p class="back" [routerLink]="['/pipelines']" routerLinkActive="router-link-active">Back</p>
                             </div>
                             <div *ngIf="editMode" class="col-4 d-flex flex-column mt-5 mb-3">
-                                <button (click)="showExportBox()">Exportar Pipeline</button>
+                                <button (click)="showExportBox()">Export Pipeline</button>
                             </div>
                             <div class="d-flex flex-column mt-5 mb-3" [ngClass]="editMode? 'col-4' : 'col-6' ">
-                                <button (click)="createPipeline()">{{editMode ? 'Editar Pipeline' : 'Criar Pipeline'}}</button>
+                                <button (click)="createPipeline()">{{editMode ? 'Edit Pipeline' : 'Create Pipeline'}}</button>
                             </div>
                         </div>
                     </div>

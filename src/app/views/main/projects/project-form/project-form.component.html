@@ -7,20 +7,17 @@
             <div class="icon">
               <i class="far fa-folder-open"></i>
             </div>
-            <div *ngIf="!editMode">
-              <h4 class="title">Novo Projeto</h4>
-              <p class="subtitle">Crie seu projeto adicionando nome e descrição e selecionando os datasets para futura
-                execução
+            <div>
+              <h4 class="title">{{editMode? 'Edit Project' : 'New Project'}}</h4>
+              <p class="subtitle">{{editMode? 'You can edit the data of this project.' 
+                : 'Create your project by adding its name and its description and selecting the datasets for future executions.'}}
               </p>
-            </div>
-            <div *ngIf="editMode">
-              <h4 class="title">Editar Projeto</h4>
             </div>
             <div class="row">
               <div class="d-flex flex-column" [class]="editMode? 'col-12' : 'col-md-6'">
                 <div class="label-float">
                   <input type="text" placeholder=" " formControlName="name" [class.error]="getControlError('name')" />
-                  <label [class.error]="getControlError('name')">Nome</label>
+                  <label [class.error]="getControlError('name')">Name</label>
                 </div>
                 <app-input-validation [control]="projectForm.get('name')"></app-input-validation>
               </div>
@@ -33,11 +30,11 @@
               <div class="col-12 d-flex flex-column mb-3">
                 <div class="label-float">
                   <input type="text" placeholder=" " formControlName="description" />
-                  <label>Descrição</label>
+                  <label>Description</label>
                 </div>
               </div>
               <div *ngIf="datasetsToUpload.length > 0" class="mt-3 mb-5">
-                <p class="dataset-title">Datasets Selecionados</p>
+                <p class="dataset-title">Selected Datasets</p>
                 <div class="line mb-3"></div>
                 <div class="datasets-list mb-2" *ngFor="let dataset of datasetsToUpload; let i=index">
                   <p>{{dataset.name}}</p>
@@ -47,11 +44,11 @@
               <div class="col-12 d-flex flex-column mb-3">
                 <div class="label-float" style="flex: 1;">
                   <input type="text" #searchInput (input)="getUsers(searchInput.value)" placeholder="Digite nome ou email" />
-                  <label>Pesquisar Usuário</label>
+                  <label>Search User</label>
                 </div>
               </div>
               <div class="col-12 d-flex flex-column mb-3">
-                <label>Selecione Usuários</label>
+                <label>Selected Users</label>
                 <ul class="list-group search-results" *ngIf="users.length > 0 || selectedUsersList.length > 0" style="flex: 1;">
 
                   <!-- Usuários selecionados -->
@@ -73,10 +70,10 @@
               </div>
                                                         
               <div class="col-md-6 d-flex align-items-end mt-3 mb-3 back-container">
-                <p class="back" [routerLink]="['/projects']" routerLinkActive="router-link-active">Voltar</p>
+                <p class="back" [routerLink]="['/projects']" routerLinkActive="router-link-active">Back</p>
               </div>
               <div class="col-md-6 d-flex flex-column mt-3 mb-3">
-                <button (click)="saveProject()">{{editMode? 'Salvar' : 'Criar Projeto'}}</button>
+                <button (click)="saveProject()">{{editMode? 'Edit Project' : 'Create Project'}}</button>
               </div>
             </div>
           </div>
