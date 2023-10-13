@@ -22,6 +22,8 @@ export class ConfigProviderModalComponent implements OnInit {
   openForm = false;
 
   selectedOperation: any | null = null;
+  dbParam: string = null;
+  editMode: boolean = false
 
   filledParams: any;
 
@@ -45,6 +47,11 @@ export class ConfigProviderModalComponent implements OnInit {
     this.selectedOperation = null;
     this.openForm = false;
     this.return();
+  }
+
+  setStateAndStoreParams(params: string) {
+    this.dbParam = params
+    this.editMode = true
   }
 
   return(): void {

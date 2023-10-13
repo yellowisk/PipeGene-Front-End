@@ -145,13 +145,11 @@ export class PipelineFormComponent implements OnInit {
     const providerId = stepFormGroup.get('providerId')?.value;
 
     if (index == 0) {
-/*       this.providerService.getOneProvider(providerId).subscribe((providerResponse) => { */
         const filename = this.selectedProject.datasets[0].filename;
         console.log(filename)
         stepFormGroup.get(`inputType`).setValue(this.getFileExtension(filename))
         stepFormGroup.get('outputType').setValue('')
         console.log(executionStepsArray.value)
-/*       }) */
     } else {
       for (let i = index; i < executionStepsArray.length; i++) {
         const currentStepFormGroup = executionStepsArray.at(i) as FormGroup;
@@ -200,8 +198,13 @@ export class PipelineFormComponent implements OnInit {
   initServiceConfig(index: number): void {
     this.serviceConfigIndex = index;
     this.configProviderModal.setOperations(
-    this.providers.filter((p) => p.id === this.selectedProviders[index].id)[0].operations
-    );
+      this.providers.filter((p) => p.id === this.selectedProviders[index].id)[0].operations
+      );
+    if (this.editMode) {
+      const controlArray = this.pipelineForm.get('executionSteps') as FormArray;
+      const stepFormGroup = controlArray.at(index) as FormGroup;
+      this.configProviderModal.setStateAndStoreParams(stepFormGroup.get(`params`).value)
+    }
   }
 
   saveServiceConfigs(event: any): void {
@@ -337,6 +340,8 @@ export class PipelineFormComponent implements OnInit {
           if (this.providers) {
             this.selectedProviders.push(this.providers.find(provider => provider.id === step.providerId));
           }
+          stepFormGroup.get('params').setValue(step.params)
+          console.log(step.params)
 
           executionStepsArray.push(stepFormGroup);
         });
