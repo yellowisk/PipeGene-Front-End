@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { IParameter } from 'src/app/interfaces/provider.interface';
 
 @Component({
   selector: 'app-provider-parameters-form',
@@ -8,7 +9,11 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 })
 export class ProviderParametersFormComponent implements OnInit {
   @Output() newParameter: EventEmitter<any> = new EventEmitter();
-  @Output() hide: EventEmitter<boolean> = new EventEmitter();
+  @Output() hide: EventEmitter<number> = new EventEmitter();
+
+  @Input() inputOperationData: IParameter = null;
+  @Input() parameterIndex: number;
+
   parametersForm: FormGroup;
   fieldTypes = ['text'];
 
@@ -21,14 +26,25 @@ export class ProviderParametersFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.inputOperationData != null) {
+      const parameter = this.inputOperationData;
+      this.parametersForm.get('type').setValue(parameter.type);
+      this.parametersForm.get('name').setValue(parameter.name);
+      this.parametersForm.get('key').setValue(parameter.key);
+      this.parametersForm.get('example').setValue(parameter.example);
+    }
+  }
 
   closeForm(): void {
-    this.hide.emit(true);
+    // Emit the index to hide the specific form
+    this.hide.emit(this.parameterIndex);
   }
 
   return(): void {
-    if (!this.validateForm()) { return; }
+    if (!this.validateForm()) {
+      return;
+    }
     this.newParameter.emit(this.parametersForm.value);
     this.parametersForm.reset();
   }

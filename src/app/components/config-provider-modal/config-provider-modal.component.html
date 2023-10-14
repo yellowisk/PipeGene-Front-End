@@ -20,7 +20,6 @@
             </div>
         </div>
 
-        
         <div *ngIf="editMode">
             <app-dynamic-form *ngIf="openForm" [params]="selectedOperation.params"
             [description]="selectedOperation.description" [paramKey]="dbParam" (saveInput)="saveOperationParams($event)" (closeForm)="closeForm()"></app-dynamic-form>

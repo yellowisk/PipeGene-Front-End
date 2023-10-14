@@ -22,12 +22,15 @@ export class OperationsModalFormComponent implements OnInit {
   modalRef: BsModalRef;
   operationForm: FormGroup;
   showParameterForm = false;
+
   showEditParameterForm = false;
   parameters: IParameter[] = [];
   editMode: boolean = false;
   descriptionText: string = '';
   typeText: string = '';
   parametersForm: ProviderParametersFormComponent;
+
+  parameterFormVisibility: boolean[] = [];
 
   constructor(
     private readonly modalService: BsModalService,
@@ -47,11 +50,13 @@ export class OperationsModalFormComponent implements OnInit {
     this.showParameterForm = false;
   }
 
-  showItem(parameter: IParameter): void {
-    const initialState = {
-      parameterData: parameter,
-    };
+  showItem(index: number): void {
+    this.parameterFormVisibility[index] = true;
     this.showEditParameterForm = true;
+  }
+
+  hideItem(index: number): void {
+    this.parameterFormVisibility[index] = false;
   }
   
   open(operationData: any): void {
@@ -68,9 +73,7 @@ export class OperationsModalFormComponent implements OnInit {
         description: this.descriptionText || null,
       });
       
-      // Set the parameters data (if any)
       this.parameters = operationData.params || [];
-      
     }
   
     this.modalRef = this.modalService.show(this.modal);

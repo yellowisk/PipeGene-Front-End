@@ -108,7 +108,6 @@ export class ProviderFormComponent implements OnInit {
         }
       );
     }
-    
   }
 
   openOperationsModal(operationData: any): void {
@@ -157,6 +156,7 @@ export class ProviderFormComponent implements OnInit {
         // Add operations individually
         for (const operation of providerResponse.operations) {
           this.operations.push(operation);
+          console.log(JSON.stringify(operation))
         }
         console.log(JSON.stringify(providerResponse))
       }
