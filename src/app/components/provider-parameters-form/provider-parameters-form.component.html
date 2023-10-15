@@ -38,5 +38,6 @@
 
 <div class="d-flex justify-content-between align-items-center mt-2">
     <button class="cancel" (click)="closeForm()">Cancel</button>
-    <button class="add" (click)="return()"><i class="fas fa-check"></i></button>
+    <button class="add" *ngIf="!formInEditMode" (click)="return()"><i class="fas fa-check"></i></button>
+    <button class="add" *ngIf="formInEditMode" (click)="saveChanges()"><i class="fas fa-pen"></i></button>
 </div>

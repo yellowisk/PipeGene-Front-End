@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { IParameter } from 'src/app/interfaces/provider.interface';
@@ -45,9 +38,24 @@ export class OperationsModalFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addParameter(event: IParameter): void {
-    this.parameters.push(event);
+  addParameter(event: any): void {
+      this.parameters.push(event);
+      console.log("nothing to edit.")
+    
     this.showParameterForm = false;
+  }
+
+  updateParameter(event: {parameter: IParameter, index: number}): void {
+
+    const {parameter, index} = event
+
+    this.parameters[index].example = parameter.example
+    this.parameters[index].key = parameter.key
+    this.parameters[index].name = parameter.name
+    this.parameters[index].type = parameter.type
+
+    console.log('Received parameter:' + JSON.stringify(parameter));
+    console.log('Received index: ' + index);
   }
 
   showItem(index: number): void {
@@ -79,20 +87,12 @@ export class OperationsModalFormComponent implements OnInit {
     this.modalRef = this.modalService.show(this.modal);
   }
 
-/*   editOperation(): void {
-    if (!this.validateForm()) { return; }
-    this.descriptionText = this.operationForm.get('description').value;
-    this.typeText = this.operationForm.get('type').value;
-    this.operationForm.reset();
-    this.modalRef.hide();
-  } */
-
   return(): void {
     if (!this.validateForm()) { return; }
     const operation = {
       type: this.operationForm.get('type').value,
       description: this.operationForm.get('description').value,
-      params: this.parameters,
+      params: this.parameters
     };
     this.newOperation.emit(operation);
     this.operationForm.reset();

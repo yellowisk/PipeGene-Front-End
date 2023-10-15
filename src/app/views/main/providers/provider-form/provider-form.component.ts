@@ -113,10 +113,12 @@ export class ProviderFormComponent implements OnInit {
   openOperationsModal(operationData: any): void {
     if (this.editMode) {
       this.operationModal.open(operationData);
-      
+      console.log("edit mode is: " + this.editMode)
     } else {
       this.operationModal.open(null);
+      console.log("edit mode is: " + this.editMode)
     }
+    console.log(this.providerForm.value)
   }
 
   addOperation(event: any): void {
@@ -150,7 +152,7 @@ export class ProviderFormComponent implements OnInit {
         this.providerForm.get('inputSupportedTypes').setValue(providerResponse.inputSupportedTypes);
         this.providerForm.get('outputSupportedTypes').setValue(providerResponse.outputSupportedTypes);
         this.providerForm.get('public').setValue(providerResponse.public);
-        
+         
         this.operations = [];
 
         // Add operations individually

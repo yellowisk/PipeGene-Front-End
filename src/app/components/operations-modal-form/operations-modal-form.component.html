@@ -40,9 +40,9 @@
             </div>
             <div class="mt-1 mb-1" *ngFor="let visible of parameterFormVisibility; let i = index">
                 <app-provider-parameters-form [inputOperationData]="parameters[i]" [parameterIndex]="i" *ngIf="visible" 
-                (hide)="hideItem(i)">
+                (hide)="hideItem(i)" (updatedParameter)="updateParameter($event)">
                 </app-provider-parameters-form>
-              </div>
+            </div>
         </div>
 
         <div class="mt-3 mb-5">

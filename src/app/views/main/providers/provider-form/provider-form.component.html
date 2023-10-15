@@ -78,7 +78,8 @@
                                         <hr>
                                     </div>
                                     <div class="item" *ngFor="let operation of operations; let i=index">
-                                        <p (click)="openOperationsModal(operation)">{{operation.type}}</p>
+                                        <p *ngIf="editMode" (click)="openOperationsModal(operation)">{{operation.type}}</p>
+                                        <p *ngIf="editMode == null" (click)="openOperationsModal(null)">{{operation.type}</p>
                                         <i class="fas fa-trash" (click)="operations.splice(i, 1)"></i>
                                     </div>
                                     <button class="operation-btn" (click)="openOperationsModal(null)">
