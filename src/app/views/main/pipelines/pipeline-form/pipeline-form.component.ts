@@ -114,7 +114,6 @@ export class PipelineFormComponent implements OnInit {
   addStep(): void {
     this.steps.push(this.steps.length + 1);
     const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
-    console.log("stepArrays: " + JSON.stringify(stepsArray.value))
     const stepNumber = stepsArray.length + 1;
     this.steps.push(stepNumber);
     stepsArray.push(this.initStepRow(this.getFileType()));
@@ -336,7 +335,7 @@ export class PipelineFormComponent implements OnInit {
         // Adding steps from pipelineResponse to FormArray
         pipelineResponse.steps.forEach((step, index) => {
           const stepFormGroup = this.initStepRow(step.inputType);
-          stepFormGroup.patchValue({ ...step, stepNumber: index + 1 });
+          stepFormGroup.patchValue({ ...step, stepNumber: step.stepNumber });
           if (this.providers) {
             this.selectedProviders.push(this.providers.find(provider => provider.id === step.providerId));
           }
@@ -349,6 +348,16 @@ export class PipelineFormComponent implements OnInit {
       pipelineResponse.steps.forEach((step) => {
         this.saveServiceConfigs(step.params);
       });
+
+/*       this.steps = pipelineResponse.steps.slice().sort((a, b) => a.stepNumber - b.stepNumber); */
+
+      executionStepsArray.controls.sort((a, b) => {
+        const stepNumberA = a.get('stepNumber').value;
+        const stepNumberB = b.get('stepNumber').value;
+        return stepNumberA - stepNumberB;
+      });
+
+      console.log("sorting: " + JSON.stringify(executionStepsArray.value))
 
       console.log(JSON.stringify(pipelineResponse));
       },

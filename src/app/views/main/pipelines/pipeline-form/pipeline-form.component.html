@@ -75,6 +75,12 @@
                                             Service</button>
                                     </div>
 
+                                    <div *ngIf="editMode" class="col-12">
+                                        <div class="label-float">
+                                            <input type="number" formControlName="stepNumber">
+                                        </div>
+                                    </div>
+
                                     <div><input type="text" formControlName="params" hidden>
                                     </div>
 
