@@ -112,3 +112,9 @@ button {
   margin-top: 5px;
   height: 55px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

@@ -101,13 +101,19 @@ export class PipelineFormComponent implements OnInit {
   }
 
   initStepRow(inputType: string | null): FormGroup {
+    let stepNumberValidator = [Validators.required];
+
+    if (!this.editMode) {
+      stepNumberValidator = [];
+    }
+
     return this.formBuilder.group({
       stepId: [null],
       providerId: [null, [Validators.required]],
       inputType: [inputType || ''],
       outputType: [null, [Validators.required]],
       params: [null],
-      stepNumber: [null]
+      stepNumber: [null, stepNumberValidator]
     });
   }
 
@@ -349,7 +355,7 @@ export class PipelineFormComponent implements OnInit {
         this.saveServiceConfigs(step.params);
       });
 
-/*       this.steps = pipelineResponse.steps.slice().sort((a, b) => a.stepNumber - b.stepNumber); */
+      /* this.steps = pipelineResponse.steps.slice().sort((a, b) => a.stepNumber - b.stepNumber); */
 
       executionStepsArray.controls.sort((a, b) => {
         const stepNumberA = a.get('stepNumber').value;

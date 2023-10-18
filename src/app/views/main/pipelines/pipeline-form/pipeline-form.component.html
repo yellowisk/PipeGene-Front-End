@@ -77,8 +77,12 @@
 
                                     <div *ngIf="editMode" class="col-12">
                                         <div class="label-float">
-                                            <input type="number" formControlName="stepNumber">
+                                            <input [class.error]="pipelineForm.get('executionSteps').at(index).get('stepNumber').hasError('required')"
+                                            placeholder=" " min="0" step="1" type="number" formControlName="stepNumber">
+                                            <label [class.error]="pipelineForm.get('executionSteps').at(index).get('stepNumber').hasError('required') ">Step Number</label>
                                         </div>
+                                        <app-input-validation [control]="pipelineForm.get('executionSteps').at(index).get('stepNumber') ">
+                                        </app-input-validation>
                                     </div>
 
                                     <div><input type="text" formControlName="params" hidden>
