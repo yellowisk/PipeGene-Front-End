@@ -113,6 +113,7 @@ export class ProviderFormComponent implements OnInit {
   openOperationsModal(operationData: any): void {
     if (this.editMode) {
       this.operationModal.open(operationData);
+      console.log(operationData)
       console.log("edit mode is: " + this.editMode)
     } else {
       this.operationModal.open(null);

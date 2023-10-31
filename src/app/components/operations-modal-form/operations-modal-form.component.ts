@@ -59,6 +59,16 @@ export class OperationsModalFormComponent implements OnInit {
   }
 
   showItem(index: number): void {
+    if (this.parameterFormVisibility[index] === true) {
+      return;
+    }
+
+    for (let j = 0; j < this.parameters.length; j++) {
+      if (j !== index) {
+        this.parameterFormVisibility[j] = false;
+      }
+    }
+  
     this.parameterFormVisibility[index] = true;
     this.showEditParameterForm = true;
   }
@@ -70,8 +80,16 @@ export class OperationsModalFormComponent implements OnInit {
   open(operationData: any): void {
     if (operationData == null) {
       this.descriptionText = 'Description'
+
+      this.operationForm.setValue({
+        type: null,
+        description: null,
+      });
+      this.parameters = [];
+      console.log("no data, look: " + this.parameters);
 /*     } else if (operationData && !this.editMode) { */
     } else if (operationData) {
+      console.log("im pulling data, look: " + operationData)
       this.setEditMode()
       this.descriptionText = operationData.description;
       this.typeText = operationData.type;
@@ -85,6 +103,7 @@ export class OperationsModalFormComponent implements OnInit {
     }
   
     this.modalRef = this.modalService.show(this.modal);
+
   }
 
   return(): void {
