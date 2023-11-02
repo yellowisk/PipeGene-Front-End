@@ -12,17 +12,19 @@ import { ProviderParametersFormComponent } from '../provider-parameters-form/pro
 export class OperationsModalFormComponent implements OnInit {
   @ViewChild('modal') modal: TemplateRef<any>;
   @Output() newOperation: EventEmitter<any> = new EventEmitter();
+  @Output() updatedOperation: EventEmitter<any> = new EventEmitter();
   modalRef: BsModalRef;
   operationForm: FormGroup;
   showParameterForm = false;
 
-  showEditParameterForm = false;
+  editOperationMode = false;
   parameters: IParameter[] = [];
   editMode: boolean = false;
   descriptionText: string = '';
   typeText: string = '';
+  parameterIndex: number;
+  
   parametersForm: ProviderParametersFormComponent;
-
   parameterFormVisibility: boolean[] = [];
 
   constructor(
@@ -39,10 +41,9 @@ export class OperationsModalFormComponent implements OnInit {
   }
 
   addParameter(event: any): void {
-      this.parameters.push(event);
-      console.log("nothing to edit.")
-    
+    this.parameters.push(event);
     this.showParameterForm = false;
+    console.log("nothing to edit.");
   }
 
   updateParameter(event: {parameter: IParameter, index: number}): void {
@@ -54,7 +55,7 @@ export class OperationsModalFormComponent implements OnInit {
     this.parameters[index].name = parameter.name
     this.parameters[index].type = parameter.type
 
-    console.log('Received parameter:' + JSON.stringify(parameter));
+    console.log('Received parameter: ' + JSON.stringify(parameter));
     console.log('Received index: ' + index);
   }
 
@@ -63,22 +64,23 @@ export class OperationsModalFormComponent implements OnInit {
       return;
     }
 
-    for (let j = 0; j < this.parameters.length; j++) {
-      if (j !== index) {
-        this.parameterFormVisibility[j] = false;
+    for (let paramIndex = 0; paramIndex < this.parameters.length; paramIndex++) {
+      if (paramIndex !== index) {
+        this.hideItem(paramIndex);
       }
     }
-  
+
     this.parameterFormVisibility[index] = true;
-    this.showEditParameterForm = true;
   }
 
   hideItem(index: number): void {
     this.parameterFormVisibility[index] = false;
   }
   
-  open(operationData: any): void {
+  open(operationData: any, index: number): void {
     if (operationData == null) {
+      this.editOperationMode = false;
+
       this.descriptionText = 'Description'
 
       this.operationForm.setValue({
@@ -86,34 +88,43 @@ export class OperationsModalFormComponent implements OnInit {
         description: null,
       });
       this.parameters = [];
-      console.log("no data, look: " + this.parameters);
-/*     } else if (operationData && !this.editMode) { */
     } else if (operationData) {
-      console.log("im pulling data, look: " + operationData)
+      this.editOperationMode = true;
       this.setEditMode()
+
       this.descriptionText = operationData.description;
       this.typeText = operationData.type;
+      this.parameterIndex = index;
 
       this.operationForm.setValue({
         type: this.typeText || null,
         description: this.descriptionText || null,
       });
-      
       this.parameters = operationData.params || [];
     }
   
     this.modalRef = this.modalService.show(this.modal);
-
   }
 
   return(): void {
     if (!this.validateForm()) { return; }
-    const operation = {
-      type: this.operationForm.get('type').value,
-      description: this.operationForm.get('description').value,
-      params: this.parameters
-    };
-    this.newOperation.emit(operation);
+
+    if (this.editOperationMode) {
+      const operation = {
+        index: this.parameterIndex,
+        type: this.operationForm.get('type').value,
+        description: this.operationForm.get('description').value,
+        params: this.parameters
+      }
+      this.updatedOperation.emit(operation);
+    } else {
+      const operation = {
+        type: this.operationForm.get('type').value,
+        description: this.operationForm.get('description').value,
+        params: this.parameters
+      }
+      this.newOperation.emit(operation);
+    }
     this.operationForm.reset();
     this.modalRef.hide();
   }

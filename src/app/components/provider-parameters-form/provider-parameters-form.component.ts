@@ -8,8 +8,8 @@ import { IParameter } from 'src/app/interfaces/provider.interface';
   styleUrls: ['./provider-parameters-form.component.scss'],
 })
 export class ProviderParametersFormComponent implements OnInit {
-  @Output() newParameter: EventEmitter<any> = new EventEmitter();
   @Output() hide: EventEmitter<number> = new EventEmitter();
+  @Output() newParameter: EventEmitter<any> = new EventEmitter();
   @Output() updatedParameter: EventEmitter<any> = new EventEmitter();
 
   @Input() inputOperationData: IParameter | null = null;

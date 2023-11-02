@@ -110,13 +110,12 @@ export class ProviderFormComponent implements OnInit {
     }
   }
 
-  openOperationsModal(operationData: any): void {
+  openOperationsModal(operationData: any, index: number): void {
     if (this.editMode) {
-      this.operationModal.open(operationData);
-      console.log(operationData)
+      this.operationModal.open(operationData, index);
       console.log("edit mode is: " + this.editMode)
     } else {
-      this.operationModal.open(null);
+      this.operationModal.open(null, null);
       console.log("edit mode is: " + this.editMode)
     }
     console.log(this.providerForm.value)
@@ -165,4 +164,11 @@ export class ProviderFormComponent implements OnInit {
       }
     )
   }
+
+  editOperation(event: any): void {
+    this.operations[event.index].type = event.type;
+    this.operations[event.index].description = event.description;
+    this.operations[event.index].params = event.params;
+  }
+
 }
