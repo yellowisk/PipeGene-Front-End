@@ -27,18 +27,18 @@
                         <div class="label-float">
                             <input [class.error]="getControlError('orcid')" type="orcid" placeholder=" "
                                 formControlName="orcid" />
-                            <label [class.error]="getControlError('orcid')">Orcid</label>
+                            <label>Orcid</label>
                         </div>
-                        <app-input-validation class="mb-3" [control]="editForm.get('orcid')"></app-input-validation>
+                        <span class="optional">*Optional</span>
 
                         <div class="label-float">
                             <input [class.error]="getControlError('github')" type="github" placeholder=" "
                                 formControlName="github" />
-                            <label [class.error]="getControlError('github')">Github</label>
+                            <label>Github</label>
                         </div>
-                        <app-input-validation class="mb-3" [control]="editForm.get('github')"></app-input-validation>
+                        <span class="optional">*Optional</span>
 
-                        <button class="btn mb-4" (click)="edit()">Save Changes</button>
+                        <button class="btn mt-5 mb-4" (click)="edit()">Save Changes</button>
 
                         <p class="return"><span [routerLink]="['/main']">Go back to the Homepage</span> </p>
                     </div>

@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
-import { AuthService } from 'src/app/services/auth.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { SignService } from '../sign.service';
 
@@ -25,8 +24,8 @@ export class EditComponent implements OnInit {
     this.editForm = this.formBuilder.group({
       username: [null, [Validators.required]],
       name: [null, [Validators.required]],
-      orcid: [null, [Validators.required]],
-      github: [null, [Validators.required]]
+      orcid: [null],
+      github: [null]
     });
    }
 
