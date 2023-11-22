@@ -12,13 +12,24 @@ export class DynamicFormComponent implements OnInit {
 
   @Input() params: any;
   @Input() description: string;
+  @Input() paramKey: any = null;
   ready = false;
   paramsForm: FormGroup;
+  editMode: boolean = false;
 
   constructor() {}
 
   ngOnInit(): void {
     this.generateForm();
+    if (this.paramKey) {
+      this.editMode = true;
+      this.paramKey.columns = this.formatJSONKeys(this.paramKey.columns);
+      this.paramsForm.get(this.params[0].key).setValue(this.paramKey.columns)
+    }
+  }
+
+  formatJSONKeys(keys: string): string {
+        return keys.split(', ').join(', ');
   }
 
   getControlError(control: string): boolean {
@@ -42,9 +53,15 @@ export class DynamicFormComponent implements OnInit {
   save(): void {
     if (!this.validateForm()) { return; }
     this.saveInput.emit(this.paramsForm.value);
+    if (this.editMode) {
+      this.editMode = false;
+    }
   }
 
   close(): void {
+    if (this.editMode) {
+      this.editMode = false;
+    }
     this.closeForm.emit(true);
   }
 

@@ -1,13 +1,12 @@
 <ng-template #modal>
     <div class="modal-header">
-        <h4 class="modal-title pull-left">Configurar Serviço</h4>
+        <h4 class="modal-title pull-left">Configure Service</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <p class="description" *ngIf="!openForm">Selecione uma das operações realizadas pelo serviço abaixo e preencha
-            os parâmetros necessários.</p>
+        <p class="description" *ngIf="!openForm">Select one of the operations performed by the service below and fill in the necessary parameters.</p>
 
 
         <div class="row" *ngIf="!openForm">
@@ -15,14 +14,20 @@
                 <div class="operation">
                     <p>{{operation.type}}</p>
                     <button (click)="configForm(operation)">
-                        Selecionar
+                        Select
                     </button>
                 </div>
             </div>
         </div>
 
-        <app-dynamic-form *ngIf="openForm" [params]="selectedOperation.params"
+        <div *ngIf="editMode">
+            <app-dynamic-form *ngIf="openForm" [params]="selectedOperation.params"
+            [description]="selectedOperation.description" [paramKey]="dbParam" (saveInput)="saveOperationParams($event)" (closeForm)="closeForm()"></app-dynamic-form>
+        </div>
+        <div *ngIf="!editMode">
+            <app-dynamic-form *ngIf="openForm" [params]="selectedOperation.params"
             [description]="selectedOperation.description" (saveInput)="saveOperationParams($event)" (closeForm)="closeForm()"></app-dynamic-form>
+        </div>
 
     </div>
 </ng-template>

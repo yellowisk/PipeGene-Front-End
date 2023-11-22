@@ -20,13 +20,13 @@
                         <div class="label-float">
                             <input [class.error]="getControlError('password')" type="password" placeholder=" "
                                 formControlName="password" />
-                            <label [class.error]="getControlError('password')">Senha</label>
+                            <label [class.error]="getControlError('password')">Password</label>
                         </div>
                         <app-input-validation class="mb-3" [control]="loginForm.get('password')"></app-input-validation>
 
-                        <button class="btn mb-5" (click)="login()">Login</button>
+                        <button class="btn mb-5" (click)="login()">Log In</button>
 
-                        <p class="signup">Não tem uma conta? <span [routerLink]="['/signup']">Cadastre-se</span> </p>
+                        <p class="signup">Don't you have an account? <span [routerLink]="['/signup']">Sign Up</span> </p>
                     </div>
                 </div>
             </form>

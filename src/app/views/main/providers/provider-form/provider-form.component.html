@@ -7,23 +7,23 @@
                         <div class="icon-wave">
                             <i class="fas fa-cogs"></i>
                         </div>
-                        <h4 class="title">{{editMode? 'Visualização de seu serviço' : 'Submeter um novo serviço'}}</h4>
-                        <p class="subtitle">{{editMode? 'Você pode alterar os dados deste serviço' 
-                            : 'Para submeter um novo serviço, informe um nome, descrição e as configurações necessárias para sua execução.'}}
+                        <h4 class="title">{{editMode? 'Visualization of Your Service' : 'Submit a New Service'}}</h4>
+                        <p class="subtitle">{{editMode? 'You can edit the data of this service.' 
+                            : 'To submit a new service, provide its name, description and the necessary configurations for its execution..'}}
                         </p>
                         <div class="row">
                             <div class="col-12 d-flex flex-column mb-3">
                                 <div class="label-float">
                                     <input type="text" placeholder=" " formControlName="name"
                                         [class.error]="getControlError('name')" />
-                                    <label [class.error]="getControlError('name')">Nome</label>
+                                    <label [class.error]="getControlError('name')">Name</label>
                                 </div>
                                 <app-input-validation [control]="providerForm.get('name')"></app-input-validation>
 
                                 <div class="label-float">
                                     <input type="text" placeholder=" " formControlName="description"
                                         [class.error]="getControlError('description')" />
-                                    <label [class.error]="getControlError('description')">Descrição</label>
+                                    <label [class.error]="getControlError('description')">Description</label>
                                 </div>
                                 <app-input-validation [control]="providerForm.get('description')">
                                 </app-input-validation>
@@ -31,11 +31,11 @@
                                 <div class="label-float">
                                     <select [class.error]="getControlError('public')" placeholder=" "
                                         formControlName="public">
-                                        <option value="1">Selecione a privacidade do Serviço</option>
-                                        <option value="true">Público</option>
-                                        <option value="false">Privado</option>
+                                        <option value="1">Select the Service Privacy</option>
+                                        <option value="true">Public</option>
+                                        <option value="false">Private</option>
                                     </select>
-                                    <label [class.error]="getControlError('public')">Privacidade</label>
+                                    <label [class.error]="getControlError('public')">Privacy</label>
                                 </div>
                                 <app-input-validation [control]="providerForm.get('public')"></app-input-validation>
 
@@ -47,14 +47,20 @@
                                 <app-input-validation [control]="providerForm.get('url')"></app-input-validation>
 
                                 <div class="label-float">
+                                    <input type="text" placeholder=" " formControlName="urlSource" />
+                                    <label>Source-code Repository</label>
+                                </div>
+                                <span class="opcional">*Optional</span>
+
+                                <div class="label-float">
                                     <input [class.error]="getControlError('inputSupportedTypes')" type="text"
                                         placeholder=" " formControlName="inputSupportedTypes" />
                                     <label [class.error]="getControlError('inputSupportedTypes')">Inputs</label>
                                 </div>
                                 <app-input-validation [control]="providerForm.get('inputSupportedTypes')">
                                 </app-input-validation>
-                                <p class="bottom-label" *ngIf="!getControlError('inputSupportedTypes')">Insira aqui os
-                                    tipos de arquivo suportados pelo seu serviço separados por virgula</p>
+                                <p class="bottom-label" *ngIf="!getControlError('inputSupportedTypes')">Enter the file types supported by your service here, 
+                                    separated by commas</p>
 
                                 <div class="label-float">
                                     <input [class.error]="getControlError('outputSupportedTypes')" type="text"
@@ -63,38 +69,38 @@
                                 </div>
                                 <app-input-validation [control]="providerForm.get('outputSupportedTypes')">
                                 </app-input-validation>
-                                <p class="bottom-label" *ngIf="!getControlError('outputSupportedTypes')">Insira aqui os
-                                    formatos exportados pelo seu serviço separados por virgula</p>
+                                <p class="bottom-label" *ngIf="!getControlError('outputSupportedTypes')">Enter here the formats exported by your service, 
+                                    separated by commas</p>
 
                                 <div class="operations-list">
                                     <div *ngIf="operations.length > 0">
-                                        <p class="title">Operações</p>
+                                        <p class="title">Operations</p>
                                         <hr>
                                     </div>
                                     <div class="item" *ngFor="let operation of operations; let i=index">
-                                        <p (click)="openOperationsModal(operation)">{{operation.type}}</p>
+                                        <p *ngIf="editMode" (click)="openOperationsModal(operation, i)">{{operation.type}}</p>
+                                        <p *ngIf="editMode == null" (click)="openOperationsModal(null, null)">{{operation.type}}</p>
                                         <i class="fas fa-trash" (click)="operations.splice(i, 1)"></i>
                                     </div>
-                                    <button class="operation-btn" (click)="openOperationsModal(null)">
-                                        Adicionar Operação
+                                    <button class="operation-btn" (click)="openOperationsModal(null, null)">
+                                        Add operation
                                     </button>
                                 </div>
 
                             </div>
 
-                            <div class="col-6 d-flex align-items-end mt-5 mb-3">
+                            <div class="col-6 d-flex align-items-end mt-5 mb-3 back-container">
                                 <p class="back" [routerLink]="['/services']" routerLinkActive="router-link-active">
-                                    Voltar</p>
+                                    Back</p>
                             </div>
                             <div class="col-6 d-flex flex-column mt-5 mb-3">
-                                <button (click)="submitProvider()">{{editMode? 'Editar' : 'Submeter'}}</button>
+                                <button (click)="submitProvider()">{{editMode? 'Edit Provider' : 'Submit'}}</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
-
-            <app-operations-modal-form #operationModal (newOperation)="addOperation($event)">
+            <app-operations-modal-form #operationModal (newOperation)="addOperation($event)" (updatedOperation)="editOperation($event)">
             </app-operations-modal-form>
         </div>
     </div>

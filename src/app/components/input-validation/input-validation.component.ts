@@ -12,9 +12,9 @@ export class InputValidationComponent implements AfterContentChecked {
   @Input() form: FormGroup = null;
 
   errorsMap: Map<string, string> = new Map([
-    ['required', 'Campo obrigatório'],
-    ['email', 'Email inválido'],
-    ['notSame', 'Senhas não conferem'],
+    ['required', 'Required field'],
+    ['email', 'Invalid e-mail'],
+    ['notSame', 'Passwords do not match'],
   ]);
 
   constructor() {}

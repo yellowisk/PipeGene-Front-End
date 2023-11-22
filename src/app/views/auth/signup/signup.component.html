@@ -18,13 +18,13 @@
 
                         <div class="label-float">
                             <input [class.error]="getControlError('name')"type="text" placeholder=" " formControlName="name" />
-                            <label [class.error]="getControlError('name')">Nome</label>
+                            <label [class.error]="getControlError('name')">Name</label>
                         </div>
                         <app-input-validation class="mb-2" [control]="signupForm.get('name')"></app-input-validation>
 
                         <div class="label-float">
                             <input [class.error]="getControlError('password')" type="password" placeholder=" " formControlName="password" />
-                            <label [class.error]="getControlError('password')">Senha</label>
+                            <label [class.error]="getControlError('password')">Password</label>
                         </div>
                         <hr>
                         <app-input-validation class="mb-1" [control]="signupForm.get('password')"></app-input-validation>
@@ -34,16 +34,16 @@
                             <input type="text" placeholder=" " formControlName="orcid" />
                             <label>ORCID</label>
                         </div>
-                        <span class="opcional">*Opcional</span>
+                        <span class="optional">*Optional</span>
                         <div class="label-float">
                             <input type="text" placeholder=" " formControlName="github" />
                             <label>Github</label>
                         </div>
-                        <span class="opcional">*Opcional</span>
+                        <span class="optional">*Optional</span>
 
-                        <button class="btn mt-5 mb-5" (click)="signup()">Cadastrar</button>
+                        <button class="btn mt-5 mb-5" (click)="signup()">Sign Up</button>
 
-                        <p class="signup">Já tem uma conta? <span [routerLink]="['/login']">Login</span> </p>
+                        <p class="signup">Already have an account? <span [routerLink]="['/login']">Log In</span> </p>
                     </div>
                 </div>
             </form>

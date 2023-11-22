@@ -19,7 +19,6 @@ input {
   box-shadow: 1px 1px 1px gainsboro;
 }
 
-
 button {
   height: 50px;
   padding: 5px 10px;
@@ -35,6 +34,10 @@ button {
   color: gray;
   font-weight: bold;
   cursor: pointer;
+}
+
+.back-container {
+  line-height: 50px;
 }
 
 .datasets {

@@ -1,6 +1,6 @@
 <div class='card-body'>
   <div class="c-card">
-    <h5>Bem-vindo, {{username}}!</h5>
+    <h5>Welcome, {{username}}!</h5>
     <p>{{today}}</p>
   </div>
   <div class="row d-flex justify-content-center mb-3">    
@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="c-card" *ngIf="executions.length > 0">
-    <h5 class="mb-4">Suas Execuções</h5>
+    <h5 class="mb-4">Your Executions</h5>
     <div class="d-flex flex-column w-100 justify-content-center">
       <div class="col-12">
         <app-execution-details *ngIf="executions.length > 0" [executions]="executions" (refresh)="getExecutions()">
@@ -27,18 +27,18 @@
   
   <div class="notification-card">
     <div class="notification-container">
-      <h5>Notificações de Solicitações</h5>
-      <div *ngFor="let notification of allNotifications" class="notification">
+      <h5>Request Notifications</h5>
+      <div class="notification" *ngFor="let notification of allNotifications">
         <div class="notification-text">
-          Você foi convidado para participar do projeto {{notification.projectName}} por {{notification.submitterUsername}}
+          You've been invited to join the project {{notification.projectName}} por {{notification.submitterUsername}}
         </div>
         <div class="notification-buttons">
-          <button (click)="acceptSolicitation(notification.id)" class="btn btn-success btn-sm custom-button-accept">
-             Aceitar
+          <button (click)="acceptSolicitation(notification.id)" class="btn btn-success btn-sm">
+            <i class="fas fa-check"></i> Accept
           </button>
-          <button (click)="denySolicitation(notification.id)" class="btn btn-danger btn-sm custom-button-deny">
-             Negar
-          </button>
+          <button (click)="denySolicitation(notification.id)" class="btn btn-danger btn-sm">
+            <i class="fas fa-times"></i> Deny
+          </button> 
         </div>
       </div>
     </div>

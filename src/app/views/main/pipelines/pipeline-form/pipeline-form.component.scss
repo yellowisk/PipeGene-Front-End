@@ -41,16 +41,6 @@ button {
   font-weight: bold;
 }
 
-.import {
-  background-color: #ddd613;
-  color: #242424;
-}
-
-.export {
-  background-color: #16dd13;
-  color: #242424;
-}
-
 .cancel {
   background-color: #dd1331;
   color: #f5f1f1;
@@ -61,6 +51,15 @@ button {
   color: gray;
   font-weight: bold;
   cursor: pointer;
+  height: auto;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.back-container {
+  line-height: 50px;
 }
 
 .line {
@@ -112,4 +111,10 @@ button {
   color: white;
   margin-top: 5px;
   height: 55px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

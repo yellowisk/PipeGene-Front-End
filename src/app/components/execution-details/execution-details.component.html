@@ -31,13 +31,13 @@
                     </div>
                     <div class="details-footer">
                         <a *ngIf="execution.executionResult" [href]="execution.executionResult" target="_blank">
-                            Baixar Resultado
+                            Download Result
                             <i class="fas fa-arrow-circle-down"></i>
                         </a>
 
                         <div class="error-msg" *ngIf="execution.errorMessage">
                             <img src="../../../assets/img/warning.png">
-                            <p>Sua execução falhou.</p>
+                            <p>Your execution has failed.</p>
                         </div>
                     </div>
                 </div>

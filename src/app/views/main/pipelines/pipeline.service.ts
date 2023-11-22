@@ -11,8 +11,8 @@ export class PipelineService {
   constructor(private http: HttpClient) {}
 
   createPipeline(
-    pipeline: IPipeline,
-    projectId: string
+    projectId: string,
+    pipeline: IPipeline
   ): Observable<IPipeline> {
     return this.http.post<IPipeline>(
       `${environment.baseUrl}/api/v1/projects/${projectId}/pipelines`,
