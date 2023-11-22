@@ -6,6 +6,7 @@ import { ExecutionService } from './../executions/execution.service';
 import { IExecution } from './../../../interfaces/execution.interface';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { IGroupParticipation, IGroupParticipationView } from 'src/app/interfaces/group.interface';
 
 @Component({

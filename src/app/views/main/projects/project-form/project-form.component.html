@@ -42,18 +42,16 @@
                 </div>
               </div>
               <div class="col-12 d-flex flex-column mb-3">
-                <p class="dataset-title">Usuários Selecionados</p>
-                <div class="line mb-3"></div>
                 <div class="label-float" style="flex: 1;">
                   <input type="text" #searchInput (input)="getUsers(searchInput.value)" placeholder="Digite nome ou email" />
                   <label>Search User</label>
                 </div>
               </div>
               <div class="col-12 d-flex flex-column mb-3">
-                <label>Selected Users</label>
+                
                 <ul class="list-group search-results" *ngIf="users.length > 0 || selectedUsersList.length > 0" style="flex: 1;">
-
-                  <!-- Usuários selecionados -->
+                  <p class="dataset-title">Selected Users</p>
+                  <div class="line mb-3"></div>
                   <li *ngFor="let user of selectedUsers" class="list-group-item d-flex justify-content-between align-items-center selected user-element">
                     {{ user.username }}
                     <button type="button" class="btn btn-sm user-button" (click)="toggleUserSelection(user)">
@@ -61,7 +59,6 @@
                     </button>
                   </li>
 
-                  <!-- Usuários não selecionados -->
                   <li *ngFor="let user of unselectedUsers" class="list-group-item d-flex justify-content-between align-items-center user-element">
                     {{ user.username }}
                     <button type="button" class="btn btn-sm user-button" (click)="toggleUserSelection(user)">
