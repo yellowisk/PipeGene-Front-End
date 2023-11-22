@@ -25,23 +25,24 @@
     </div>
   </div>
   
-  <div class="c-card">
+  <div class="notification-card">
     <div class="notification-container">
       <h5>Notificações de Solicitações</h5>
-      <div class="notification" *ngFor="let notification of allNotifications">
+      <div *ngFor="let notification of allNotifications" class="notification">
         <div class="notification-text">
           Você foi convidado para participar do projeto {{notification.projectName}} por {{notification.submitterUsername}}
         </div>
         <div class="notification-buttons">
-          <button (click)="acceptSolicitation(notification.id)" class="btn btn-success btn-sm">
-            <i class="fas fa-check"></i> Aceitar
+          <button (click)="acceptSolicitation(notification.id)" class="btn btn-success btn-sm custom-button-accept">
+             Aceitar
           </button>
-          <button (click)="denySolicitation(notification.id)" class="btn btn-danger btn-sm">
-            <i class="fas fa-times"></i> Negar
-          </button> 
+          <button (click)="denySolicitation(notification.id)" class="btn btn-danger btn-sm custom-button-deny">
+             Negar
+          </button>
         </div>
       </div>
     </div>
   </div>
+  
   
 </div>
