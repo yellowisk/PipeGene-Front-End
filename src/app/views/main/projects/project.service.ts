@@ -18,7 +18,6 @@ export class ProjectService {
     formData.append('name', project.name);
     formData.append('description', project.description);
     files.forEach((file) => formData.append('files', file, file.name));
-    console.log(project.users)
     project.users.forEach((user) => formData.append('userList', user.username))
 
     return this.http.post<IProject>(

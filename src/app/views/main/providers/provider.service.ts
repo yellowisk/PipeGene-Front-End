@@ -1,8 +1,9 @@
+import { IProvider } from './../../../interfaces/provider.interface';
 import { environment } from './../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IProvider } from 'src/app/interfaces/provider.interface';
+import { IProject } from 'src/app/interfaces/project.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,12 @@ export class ProviderService {
     return this.http.patch<IProvider>(
       `${environment.baseUrl}/api/v1/providers/${providerId}`,
       provider);
+  }
+
+  getProjectsByProvider(providerId: string): Observable<string[]> {
+    return this.http.get<string[]>(
+      `${environment.baseUrl}/api/v1/providers/projects/${providerId}`
+    );
   }
 
 }

@@ -1,3 +1,4 @@
+import { ProjectService } from './../../projects/project.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OperationsModalFormComponent } from './../../../../components/operations-modal-form/operations-modal-form.component';
@@ -7,6 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProviderService } from '../provider.service';
 import { IOperation } from 'src/app/interfaces/provider.interface';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
+import { CommonModule } from '@angular/common';
+import { IProject } from 'src/app/interfaces/project.interface';
 
 @Component({
   selector: 'app-provider-form',
@@ -16,12 +19,16 @@ import { ErrorMap } from 'src/app/enums/error-code.enum';
 export class ProviderFormComponent implements OnInit {
   @ViewChild('operationModal')
   readonly operationModal: OperationsModalFormComponent;
+  isPrivateSelected: boolean = false;
+  projects: IProject[] = [];
+  selectedProjectIds: string[] = [];
   providerForm: FormGroup;
   operations: IOperation[] = [];
   editMode: string = null;
 
   constructor(
     private readonly providerService: ProviderService,
+    private readonly projectService: ProjectService,
     private readonly formBuilder: FormBuilder,
     private readonly errorService: ErrorService,
     private readonly router: Router,
@@ -34,7 +41,8 @@ export class ProviderFormComponent implements OnInit {
       description: [null, [Validators.required]],
       inputSupportedTypes: [null, [Validators.required]],
       outputSupportedTypes: [null, [Validators.required]],
-      public: [null, [Validators.required]]
+      isPublic: [null, [Validators.required]],
+      selectedProjectIds: [this.selectedProjectIds]
     });
   }
 
@@ -45,12 +53,48 @@ export class ProviderFormComponent implements OnInit {
         this.setEditMode(params.id);
       }
     });
+    this.projectService.listProjects().subscribe(
+      (projectsResponse) => {
+        this.projects = projectsResponse;
+        console.log(this.projects)
+      }
+    );
+  }
+
+  get unselectedProjects(): IProject[] {
+    return this.projects.filter(project => !this.selectedProjectIds.includes(project.id));
+  }
+  
+  onSelectProject(event: any): void {
+    const selectedProjectId: string = event.target.value;
+    const selectedProject = this.unselectedProjects.find(project => project.id === selectedProjectId);
+  
+    if (selectedProject) {
+      this.toggleProjectSelection(selectedProject.id);
+      event.target.value = "";
+    }
+  }
+  
+  toggleProjectSelection(projectId: string) {
+    const index = this.selectedProjectIds.indexOf(projectId);
+    if (index !== -1) {
+      this.selectedProjectIds.splice(index, 1);
+    } else {
+      this.selectedProjectIds.push(projectId);
+    }
+  
+    console.log(this.selectedProjectIds);
+  }
+
+  getProjectNameById(projectId: string): string {
+    const project = this.projects.find(project => project.id === projectId);
+    return project ? project.name : '';
   }
 
   submitProvider(): void {
     if (!this.validateForm()) { return; }
     const provider = this.providerForm;
-    console.log(provider.get('public').value + " " + provider.get('inputSupportedTypes')
+    console.log(provider.get('isPublic').value + " " + provider.get('inputSupportedTypes')
     .value)
     console.log(JSON.stringify(provider.value.operations) + " +--)" + JSON.stringify(this.operations))
 
@@ -73,7 +117,8 @@ export class ProviderFormComponent implements OnInit {
           ? provider.get('outputSupportedTypes').value.split(',').map(item => item.trim())
           : provider.get('outputSupportedTypes').value,
           operations: this.operations,
-          public: provider.get('public').value
+          isPublic: provider.get('isPublic').value,
+          selectedProjectIds: provider.get('selectedProjectIds').value
         }
 
         this.providerService.editProvider(id, editedProvider).subscribe(
@@ -96,9 +141,10 @@ export class ProviderFormComponent implements OnInit {
         outputSupportedTypes: provider.get('outputSupportedTypes')
           .value.split(','),
         operations: this.operations,
-        public: provider.get('public').value
+        isPublic: provider.get('isPublic').value,
+        selectedProjectIds: provider.get('selectedProjectIds').value
       };
-      this.providerService.submitProviders(newProvider).subscribe(
+      this.providerService.submitProviders(newProvider,).subscribe(
         () => {
           this.router.navigate(['/services']);
         },
@@ -108,6 +154,15 @@ export class ProviderFormComponent implements OnInit {
         }
       );
     }
+  }
+
+  getSelectedProjectByProviderId(id: string): void {
+    this.providerService.getProjectsByProvider(id).subscribe( response => {
+        this.selectedProjectIds = response;
+        this.providerForm.get('selectedProjectIds').setValue(response)
+      }
+    )
+
   }
 
   openOperationsModal(operationData: any, index: number): void {
@@ -141,6 +196,7 @@ export class ProviderFormComponent implements OnInit {
   setEditMode(id: string): void {
     console.log(id);
 
+    this.getSelectedProjectByProviderId(id);
     this.providerService.getOneProvider(id)
 
     .subscribe(
@@ -151,7 +207,7 @@ export class ProviderFormComponent implements OnInit {
         this.providerForm.get('urlSource').setValue(providerResponse.urlSource);
         this.providerForm.get('inputSupportedTypes').setValue(providerResponse.inputSupportedTypes);
         this.providerForm.get('outputSupportedTypes').setValue(providerResponse.outputSupportedTypes);
-        this.providerForm.get('public').setValue(providerResponse.public);
+        this.providerForm.get('isPublic').setValue(providerResponse.isPublic);
          
         this.operations = [];
 
@@ -170,5 +226,4 @@ export class ProviderFormComponent implements OnInit {
     this.operations[event.index].description = event.description;
     this.operations[event.index].params = event.params;
   }
-
 }

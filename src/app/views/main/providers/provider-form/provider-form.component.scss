@@ -129,3 +129,23 @@ button {
         }
     }
 }
+
+.search-results {
+    .selected {
+      background-color: #0d76af;
+      .project-button {
+        height: 50px;
+        padding: 5px 10px;
+        border: none;
+        background-color: #0d76af;
+        border-radius: 3px;
+        font-weight: bold;
+      }
+      color: white;
+    }
+}
+
+.dataset-title {
+    margin: 1px 0px;
+    color: #7a7a7a;
+  }

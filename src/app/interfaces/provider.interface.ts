@@ -1,3 +1,5 @@
+import { IProject } from "./project.interface";
+
 export interface IParameter {
     name: string;
     type: string;
@@ -15,8 +17,9 @@ export interface IProvider {
     description: string;
     url: string;
     urlSource: string;
-    public: boolean;
+    isPublic: boolean;
     inputSupportedTypes: string[];
     outputSupportedTypes: string[];
     operations: IOperation[];
+    selectedProjectIds: string[];
 }
