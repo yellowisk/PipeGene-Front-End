@@ -25,7 +25,7 @@
                                 </app-input-validation>
                                 <div *ngIf="!editMode" class="label-float">
                                     <select [class.error]="getControlError('projectId')" placeholder=" "
-                                        formControlName="projectId">
+                                        formControlName="projectId"  (change)="onSelectProject($event)">
                                         <option value="1">Select the Project</option>
                                         <option [value]="project.id" *ngFor="let project of projects">
                                             {{project.name}}</option>

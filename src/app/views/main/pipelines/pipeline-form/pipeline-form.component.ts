@@ -12,6 +12,7 @@ import { ErrorService } from 'src/app/services/error.service';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
 import { switchMap } from 'rxjs/operators';
 import { IExportPipeline } from 'src/app/interfaces/pipeline.interface';
+import '@angular/compiler';
 
 @Component({
   selector: 'app-pipeline-form',
@@ -62,13 +63,27 @@ export class PipelineFormComponent implements OnInit {
         this.addStep();
       }
     });
-    
-    this.getProviders();
     this.loadProjectsAndEdit();
+  }
+
+  onSelectProject(event: any): void {
+    this.selectedProject.id = event.target.value;
+    this.getProvidersWithPermission();
   }
 
   getProviders(): void {
     this.providerService.listProviders().subscribe(
+      (response) => {
+        this.providers = response;
+      },
+      (error: HttpErrorResponse) => {
+        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+      }
+    );
+  }
+
+  getProvidersWithPermission(): void {
+    this.providerService.listAllProvidersWithPermission(this.selectedProject.id).subscribe(
       (response) => {
         this.providers = response;
       },

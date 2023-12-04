@@ -15,6 +15,10 @@ export class ProviderService {
     return this.http.get<IProvider[]>(`${environment.baseUrl}/api/v1/providers/`);
   }
 
+  listAllProvidersWithPermission(projectId: string): Observable<IProvider[]> {
+    return this.http.get<IProvider[]>(`${environment.baseUrl}/api/v1/providers/all/${projectId}`);
+  }
+
   submitProviders(provider: IProvider): Observable<IProvider> {
     return this.http.post<IProvider>(
       `${environment.baseUrl}/api/v1/providers/`,
