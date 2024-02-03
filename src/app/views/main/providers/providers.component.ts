@@ -2,9 +2,11 @@ import { ErrorService } from './../../../services/error.service';
 import { ProviderService } from './provider.service';
 import { IProvider } from 'src/app/interfaces/provider.interface';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMap } from 'src/app/enums/error-code.enum';
+import { ProviderDetailsModalComponent } from 'src/app/components/provider-details-modal/provider-details-modal.component';
 
 @Component({
   selector: 'app-providers',
@@ -14,6 +16,9 @@ import { ErrorMap } from 'src/app/enums/error-code.enum';
 export class ProvidersComponent implements OnInit {
   providers: any[] = [];
   provider: IProvider;
+
+  @ViewChild('detailsModal')
+  readonly detailsModal: ProviderDetailsModalComponent;
 
   constructor(
     private readonly providerService: ProviderService,
@@ -40,6 +45,23 @@ export class ProvidersComponent implements OnInit {
     this.router.navigate(['/services/edit/'], {
       queryParams: { id: provider.id },
     });
+  }
+
+  isOwner(providerId: string): boolean {
+    this.providerService.isOwner(providerId).subscribe(
+      (response) => {
+        return response;
+      },
+      (error: HttpErrorResponse) => {
+        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+      }
+    );
+    return false;
+  }
+
+  showProviderDetails(provider: IProvider): void {
+    console.log(provider)
+    this.detailsModal.setDetails(provider);
   }
 
 }

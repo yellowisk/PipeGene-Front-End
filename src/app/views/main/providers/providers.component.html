@@ -22,14 +22,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr (click)="setEditMode(provider)" *ngFor="let provider of providers">
+            <tr (click)="showProviderDetails(provider)" *ngFor="let provider of providers">
               <td>{{provider.name}}</td>
               <td>{{provider.description}}</td>
             </tr>
+            
           </tbody>
         </table>
       </div>
-
+      <app-provider-details-modal #detailsModal (refresh)="getProviders()"></app-provider-details-modal>
       <app-empty-state *ngIf="providers.length === 0"></app-empty-state>
     </div>
   </div>
