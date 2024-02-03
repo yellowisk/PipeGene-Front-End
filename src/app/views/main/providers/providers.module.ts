@@ -10,9 +10,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProvidersRoutingModule } from './providers-routing.module';
 import { ProviderFormComponent } from './provider-form/provider-form.component';
+import { ProviderDetailsModalComponent } from 'src/app/components/provider-details-modal/provider-details-modal.component';
 
 @NgModule({
-  declarations: [ProvidersComponent, ProviderFormComponent],
+  declarations: [ProvidersComponent, 
+    ProviderFormComponent,
+    ProviderDetailsModalComponent],
   imports: [
     ReactiveFormsModule,
     FormsModule,
