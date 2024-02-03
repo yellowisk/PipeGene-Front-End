@@ -46,4 +46,10 @@ export class ProviderService {
     );
   }
 
+  isOwner(providerId: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${environment.baseUrl}/api/v1/providers/owner/${providerId}`
+    );
+  }
+
 }
