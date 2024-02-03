@@ -1,0 +1,60 @@
+@import '/src/assets/styles/variables.scss';
+
+.description {
+    font-family: $font-dm-sans;
+    color: #7f7f7f;
+}
+
+.list {
+    margin-bottom: 30px;
+
+    div {
+        width: 95%;
+        height: 2px;
+        background-color: rgb(122, 122, 122);
+        margin-bottom: 10px;
+    }
+
+    .title {
+        color: #737373;
+        margin: 0;
+        font-family: $font-dm-sans !important;
+    }
+
+    p {
+        color: #3c3c3c;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 90%;
+        font-family: $font-dm-sans !important;
+
+    }
+}
+
+.close.pull-right {
+    background-color: #ffffff;
+    border: none;
+}
+
+
+.edit-btn {
+    background-color: #f0a92b;
+    color: white;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 5px;
+    font-family: $font-dm-sans !important;
+}
+
+
+.delete {
+    color: #f03232;
+    margin: 0;
+    cursor: pointer
+}
+
+.modal-title{
+    font-family: $font-dm-sans !important;
+}
