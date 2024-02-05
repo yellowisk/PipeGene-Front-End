@@ -32,16 +32,15 @@ export class ProviderDetailsModalComponent implements OnInit {
     this.checkProjectOwnership(this.provider.id);
   }
 
-  setEditMode(provider): void {
+  setEditMode(): void {
     this.modalRef.hide();
     this.router.navigate(['/services/edit/'], {
-      queryParams: { id: provider.id },
+      queryParams: { id: this.provider.id },
     });
   }
 
   checkProjectOwnership(providerId: string): void {
     this.providerService.isOwner(providerId).subscribe((isOwner) => {
-      console.log(isOwner)
       this.isOwner = isOwner;
     });
   }

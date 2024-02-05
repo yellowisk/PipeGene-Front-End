@@ -60,7 +60,6 @@ export class ProvidersComponent implements OnInit {
   }
 
   showProviderDetails(provider: IProvider): void {
-    console.log(provider)
     this.detailsModal.setDetails(provider);
   }
 
