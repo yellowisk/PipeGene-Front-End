@@ -8,17 +8,36 @@
 
       <div class="modal-body">
         <p class="description">{{provider.description}}</p>
-        <p class="description">{{provider.url}}</p>
-        <p class="description">{{provider.urlSource}</p>
-        <p class="description">{{provider.public}}</p>
-        <p class="description">{{provider.inputSupportedTypes}}</p>
-        <p class="description">{{provider.outputSupportedTypes}}</p>
+
+        <div class="list">
+          <p class="title">Provider URL</p>
+          <hr class="mt-0 mb-2">
+          <a href="{{provider.url}}">{{provider.url}}</a>
+        </div>
+
+        <div class="list">
+          <p class="title">Provider Source</p>
+          <hr class="mt-0 mb-2">
+          <a href="{{provider.urlSource}}">{{provider.urlSource}}</a>
+        </div>
+
+        <div class="list">
+          <p class="title">Input Supported Types</p>
+          <hr class="mt-0 mb-2">
+          <p *ngFor="let type of provider.inputSupportedTypes">{{type}}</p>
+        </div>
+
+        <div class="list">
+          <p class="title">Output Supported Types</p>
+          <hr class="mt-0 mb-2">
+          <p *ngFor="let type of provider.outputSupportedTypes">{{type}}</p>
+        </div>
+        
 
         <div class="modal-footer d-flex justify-content-between align-items-center">
-            <i class="fas fa-trash delete" *ngIf="isOwner" ></i>
-            <button class="edit-btn" 
-              (click)="isOwner ? setEditMode() : ''">
-              {{ isOwner ? 'Edit' : 'Leave Group' }}
+            <button *ngIf="isOwner" class="edit-btn" 
+              (click)="setEditMode()">
+              Edit
             </button>
           </div>    
       </div>
