@@ -52,4 +52,16 @@ export class ProviderService {
     );
   }
 
+  async isProviderInProject(providerId: string, projectId: string): Promise<boolean> {
+    try {
+      const response = await this.http.get<boolean>(
+        `${environment.baseUrl}/api/v1/providers/project/${providerId}/${projectId}`
+      ).toPromise();
+      return response;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
 }

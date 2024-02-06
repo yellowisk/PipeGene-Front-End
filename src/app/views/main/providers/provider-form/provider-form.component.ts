@@ -25,6 +25,7 @@ export class ProviderFormComponent implements OnInit {
   providerForm: FormGroup;
   operations: IOperation[] = [];
   editMode: string = null;
+  providerId: string = null;
 
   constructor(
     private readonly providerService: ProviderService,
@@ -49,6 +50,7 @@ export class ProviderFormComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       if (params.id) {
+        this.providerId = params.id;
         this.editMode = params.id;
         this.setEditMode(params.id);
       }
@@ -75,7 +77,14 @@ export class ProviderFormComponent implements OnInit {
     }
   }
   
-  toggleProjectSelection(projectId: string) {
+  async toggleProjectSelection(projectId: string) {
+    const isProviderInProject = await this.providerService.isProviderInProject(this.providerId, projectId);
+    if (isProviderInProject) {
+      console.log("Provider is in project");
+    } else {
+      console.log("Provider is not in project");
+    }
+  
     const index = this.selectedProjectIds.indexOf(projectId);
     if (index !== -1) {
       this.selectedProjectIds.splice(index, 1);
@@ -162,7 +171,6 @@ export class ProviderFormComponent implements OnInit {
         this.providerForm.get('selectedProjectIds').setValue(response)
       }
     )
-
   }
 
   openOperationsModal(operationData: any, index: number): void {
