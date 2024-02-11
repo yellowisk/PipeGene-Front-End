@@ -1,6 +1,6 @@
 {
   "name": "pipe-gene-frontend",
-  "version": "0.0.0",
+  "version": "1.22.19",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
