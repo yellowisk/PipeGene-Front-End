@@ -27,9 +27,7 @@ export class PipelineFormComponent implements OnInit {
 
   pipelineForm: FormGroup;
   selectedProject: IProject;
-  selectedProjects: IProject[] = [];
   selectedProviders: IProvider[] = [];
-  steps: any[] = [];
 
   serviceConfigIndex: number | null;
   editMode: string = null;
@@ -63,34 +61,8 @@ export class PipelineFormComponent implements OnInit {
         this.addStep();
       }
     });
+
     this.loadProjectsAndEdit();
-  }
-
-  onSelectProject(event: any): void {
-    this.selectedProject.id = event.target.value;
-    this.getProvidersWithPermission();
-  }
-
-  getProviders(): void {
-    this.providerService.listProviders().subscribe(
-      (response) => {
-        this.providers = response;
-      },
-      (error: HttpErrorResponse) => {
-        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
-      }
-    );
-  }
-
-  getProvidersWithPermission(): void {
-    this.providerService.listAllProvidersWithPermission(this.selectedProject.id).subscribe(
-      (response) => {
-        this.providers = response;
-      },
-      (error: HttpErrorResponse) => {
-        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
-      }
-    );
   }
 
   getProjects(): void {
@@ -115,8 +87,35 @@ export class PipelineFormComponent implements OnInit {
     });
   }
 
+  onSelectProject(event: any): void {
+    this.selectedProject.id = event.target.value;
+    this.getProvidersWithPermission();
+  }
+
+  getProvidersWithPermission(): void {
+    this.providerService.listAllProvidersWithPermission(this.selectedProject.id).subscribe(
+      (response) => {
+        console.log("selected project: " + this.selectedProject.id);
+        this.providers = response;
+      },
+      (error: HttpErrorResponse) => {
+        this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+      }
+    )
+  };
+
+  getFileType(): string | null {
+    if (this.pipelineForm.get('executionSteps').value.length > 0) {
+      return this.pipelineForm.get('executionSteps').value[
+        this.pipelineForm.get('executionSteps').value.length - 1
+      ].outputType;
+    }
+    return null;
+  }
+
   initStepRow(inputType: string | null): FormGroup {
     let stepNumberValidator = [Validators.required];
+    const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
 
     if (!this.editMode) {
       stepNumberValidator = [];
@@ -128,15 +127,13 @@ export class PipelineFormComponent implements OnInit {
       inputType: [inputType || ''],
       outputType: [null, [Validators.required]],
       params: [null],
-      stepNumber: [null, stepNumberValidator]
+      stepNumber: [this.editMode ? stepsArray.length + 1 : null, stepNumberValidator]
     });
   }
 
   addStep(): void {
-    this.steps.push(this.steps.length + 1);
     const stepsArray = this.pipelineForm.controls.executionSteps as FormArray;
     const stepNumber = stepsArray.length + 1;
-    this.steps.push(stepNumber);
     stepsArray.push(this.initStepRow(this.getFileType()));
   }
 
@@ -145,18 +142,9 @@ export class PipelineFormComponent implements OnInit {
     if (stepsArray.length <= 1) {
       return;
     }
-    this.steps.splice(this.steps.length - 1, 1);
     this.selectedProviders.splice(this.providers.length - 1, 1);
     stepsArray.removeAt(index);
-  }
-
-  getFileType(): string | null {
-    if (this.pipelineForm.get('executionSteps').value.length > 0) {
-      return this.pipelineForm.get('executionSteps').value[
-        this.pipelineForm.get('executionSteps').value.length - 1
-      ].outputType;
-    }
-    return null;
+    console.log("stepsArray: " + JSON.stringify(stepsArray.length));
   }
 
   setProvider(index: number): void {
@@ -177,7 +165,6 @@ export class PipelineFormComponent implements OnInit {
         const outputType = previousStepFormGroup.get('outputType')?.value;
         currentStepFormGroup.get(`inputType`).setValue(outputType)
         currentStepFormGroup.get('outputType').setValue('')
-        console.log(executionStepsArray.value)
         console.log(JSON.stringify(executionStepsArray.value))
       }
     }
@@ -261,6 +248,7 @@ export class PipelineFormComponent implements OnInit {
 
         this.pipelineService.editPipeline(pipeline.projectId, id, {
           description: pipeline.executionName,
+          status: 'ENABLED',
           steps: pipeline.executionSteps
         }).subscribe(
           (responseBody) => {
@@ -336,11 +324,12 @@ export class PipelineFormComponent implements OnInit {
   }
 
   setEditMode(id: string): void {
-    console.log("pipeId: " + id)
+
   
     this.projectService.getOneProjectByPipeline(id).pipe(
       switchMap((projectResponse) => {
         const projectId = projectResponse.id;
+        this.selectedProject = projectResponse;
         this.pipelineForm.get('projectId').setValue(projectResponse.id);
         this.projectName = projectResponse.name;
   
@@ -357,12 +346,21 @@ export class PipelineFormComponent implements OnInit {
         pipelineResponse.steps.forEach((step, index) => {
           const stepFormGroup = this.initStepRow(step.inputType);
           stepFormGroup.patchValue({ ...step, stepNumber: step.stepNumber });
-          if (this.providers) {
-            this.selectedProviders.push(this.providers.find(provider => provider.id === step.providerId));
-          }
-          stepFormGroup.get('params').setValue(step.params)
-          console.log(step.params)
 
+          this.providerService.listAllProvidersWithPermission(this.selectedProject.id).subscribe(
+            (response) => {
+              this.providers = response;
+              this.selectedProviders.push(this.providers.find(provider => 
+                provider.id === step.providerId
+              ));
+            },
+            (error: HttpErrorResponse) => {
+              this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
+            }
+          )
+
+          
+          stepFormGroup.get('params').setValue(step.params)
           executionStepsArray.push(stepFormGroup);
         });
 
@@ -378,14 +376,13 @@ export class PipelineFormComponent implements OnInit {
         return stepNumberA - stepNumberB;
       });
 
-      console.log("sorting: " + JSON.stringify(executionStepsArray.value))
-
       console.log(JSON.stringify(pipelineResponse));
       },
       (error: HttpErrorResponse) => {
         this.errorService.setError(ErrorMap.get('FAILED_TO_GET'));
       }
     );
+
   }
 
   getControlError(control: string): boolean {
