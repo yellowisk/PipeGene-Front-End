@@ -278,10 +278,10 @@ export class PipelineFormComponent implements OnInit {
       );
     }
   }
-
+  
   exportPipeline() {
     let projectId = ''; //projectId of the pipeline
-    let importProjectId = this.importProjectId; //selected project
+    let importProjectId = this.importProjectId; //selected project`s id
   
     this.route.queryParams.subscribe((params) => {
       if (params.id) {
@@ -294,9 +294,9 @@ export class PipelineFormComponent implements OnInit {
           })
         ).subscribe(
           (pipelineResponse) => {
-            const importPayload: IExportPipeline = { projectId: importProjectId };
+            const importRequest: IExportPipeline = { projectId: importProjectId };
 
-            this.pipelineService.exportPipeline(projectId, params.id, importPayload).subscribe((exportResponse) => {
+            this.pipelineService.exportPipeline(projectId, pipelineResponse.id, importRequest).subscribe((exportResponse) => {
               console.log(JSON.stringify(exportResponse))
             })
             this.router.navigate(['/pipelines'])
@@ -324,7 +324,6 @@ export class PipelineFormComponent implements OnInit {
   }
 
   setEditMode(id: string): void {
-
   
     this.projectService.getOneProjectByPipeline(id).pipe(
       switchMap((projectResponse) => {
