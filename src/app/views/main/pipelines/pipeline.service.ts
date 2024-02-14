@@ -55,4 +55,11 @@ export class PipelineService {
       pipeline);
   }
 
+  disablePipeline(
+    projectId: string,
+    pipelineId: string): Observable<IPipeline> {
+    return this.http.patch<IPipeline>(`${environment.baseUrl}/api/v1/projects/${projectId}/pipelines/${pipelineId}/disable`,
+    {});
+  }
+
 }
