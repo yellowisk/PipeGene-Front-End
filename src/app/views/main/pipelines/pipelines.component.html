@@ -14,7 +14,7 @@
       <div class="list-group w-100" *ngIf="pipelines.length > 0">
         <div class="d-flex justify-content-between list-group-item list-group-item-action" *ngFor="let pipeline of pipelines">
           <p class="p-name" (click)="setEditMode(pipeline)">{{pipeline.description}}</p>
-          <i class="fas fa-trash delete fa-sm" *ngIf="isAllowed(pipeline)" (click)="disablePipeline(pipeline)"></i>
+          <i class="fas fa-trash delete fa-sm" *ngIf="isAllowed(pipeline)" (click)="disablePipeline(pipeline)" title="Disable pipeline"></i>
         </div>
       </div>
 

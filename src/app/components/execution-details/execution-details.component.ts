@@ -1,4 +1,5 @@
 import { IExecution } from './../../interfaces/execution.interface';
+import { IPipeline } from 'src/app/interfaces/pipeline.interface';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -66,5 +67,11 @@ export class ExecutionDetailsComponent implements OnInit {
   refreshExecutions(): void {
     this.refresh.emit();
   }
+
+  isPipelineEnabled(execution: IExecution): boolean {
+    const pipeline = execution.pipeline as IPipeline;
+    return pipeline.status === 'ENABLED';
+  }
+
 
 }

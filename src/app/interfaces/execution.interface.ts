@@ -9,7 +9,8 @@ export interface IExecution {
   pipeline: {
     id: string;
     description: string;
-
+    status: string;
+    
     steps: [
       {
         id: string;

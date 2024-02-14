@@ -9,6 +9,7 @@
                     <p class="e-title">{{execution.description}}</p>
                     <p class="dataset">{{execution.dataset.filename}}</p>
                 </div>
+                <i class="fas fa-ban" style="color: #fa7070;" *ngIf="!isPipelineEnabled(execution)" title="Pipeline is disabled"></i>
                 <i class="fas fa-chevron-down" (click)="showDetails(execution.id)"></i>
             </div>
         </div>
