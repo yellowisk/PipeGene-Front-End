@@ -21,7 +21,7 @@ export class AuthService {
 
   initSession(token: string): void {
     const tokenInfo = this.getDecodedAccessToken(token);
-    sessionStorage.setItem('username', tokenInfo.name);
+    sessionStorage.setItem('username', tokenInfo.username);
     sessionStorage.setItem('user_id', tokenInfo.userId);
     this.cookieService.put('token', token);
   }
